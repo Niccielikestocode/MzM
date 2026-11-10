@@ -239,7 +239,7 @@ export function startArena(o: ArenaOpts): void {
     s.asked++; if (ok) s.correct++;
     orbs.forEach(ob => { ob.gone = true; ob.el.remove(); });
     qFb.className = 'q-fb ' + (ok ? 'ok' : 'no'); qFb.replaceChildren(h('b', {}, why + ' '), 'Respuesta: ' + q.options[q.correct] + '. ', q.explain);
-    labels.replaceChildren(); nextProb = A.questionGap(1) * (ok ? 0.8 : 1); timerBar.style.width = '0%'; updHint(); legend.replaceChildren(); qMedia.replaceChildren();
+    labels.replaceChildren(); nextProb = (A.questionGap(1) / 1000) * (ok ? 0.8 : 1); timerBar.style.width = '0%'; updHint(); legend.replaceChildren(); qMedia.replaceChildren();
     hints = Math.min(2, hints + (ok && s.correct % 3 === 0 ? 1 : 0)); updHint();
   }
   function hitOrb(ob: Orb): void {

@@ -12,9 +12,9 @@ export const TIER_NAME = ['', '¡BIEN!', '¡GENIAL!', '¡INCREÍBLE!', '¡LEGEND
 /** Daño de un golpe básico de la cadena. */
 export function hitDamage(step: number, combo: number, extra = 0): number { return Math.max(1, Math.round((BASIC_DMG[step % 3] + extra) * comboMult(combo))); }
 /** Daño del orbe correcto: una fracción de la vida máxima del monstruo. */
-export const orbDamage = (maxHp: number, combo: number, n = 4): number => Math.max(3, Math.round(Math.ceil(maxHp / (Math.max(3, n) + 1)) * (1 + Math.min(0.15, combo * 0.01))));
+export const orbDamage = (maxHp: number, combo: number, n = 4): number => Math.max(3, Math.round(Math.ceil(maxHp / (Math.max(3, n) + 2)) * (1 + Math.min(0.15, combo * 0.01))));
 /** Los golpes y cartas sólo pueden quitar esta fracción de la vida: el resto exige acertar problemas. */
-export const CHIP_CAP = 0.35;
+export const CHIP_CAP = 0.3;
 export const chipLeft = (s: { maxHp: number; chip: number }): number => Math.max(0, Math.floor(s.maxHp * CHIP_CAP) - s.chip);
 
 export type Slot = { id: string; cd: number; max: number };
