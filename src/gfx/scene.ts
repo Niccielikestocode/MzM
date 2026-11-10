@@ -30,7 +30,7 @@ export const gfxFlags = { reduce: false };
       }
     }
   };
-  Actor.prototype.draw = function (ctx) { SG.drawPixels(ctx, getFrame(this.def, this.anim, this.t), this.def.size, this.x, this.y, this.scale); };
+  Actor.prototype.draw = function (ctx) { if (this.flip) { ctx.save(); ctx.translate(Math.round(this.x * 2 + this.def.size * this.scale), 0); ctx.scale(-1, 1); SG.drawPixels(ctx, getFrame(this.def, this.anim, this.t), this.def.size, this.x, this.y, this.scale); ctx.restore(); } else SG.drawPixels(ctx, getFrame(this.def, this.anim, this.t), this.def.size, this.x, this.y, this.scale); };
 
   export function rng(seed) { return function () { seed |= 0; seed = seed + 0x6D2B79F5 | 0; let t = Math.imul(seed ^ seed >>> 15, 1 | seed); t = t + Math.imul(t ^ t >>> 7, 61 | t) ^ t; return ((t ^ t >>> 14) >>> 0) / 4294967296; }; }
   export const R = (ctx, c, x, y, w, h) => { ctx.fillStyle = c; ctx.fillRect(Math.round(x), Math.round(y), w, h); };

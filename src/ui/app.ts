@@ -8,6 +8,7 @@ import { newSeed } from '../core/rng';
 import { h, ticker, spriteCanvas, heroSprite, monsterSprite, pct, glyph } from './dom';
 import { fullCard } from './cards';
 import { setSound, setVolumes, sfx, playMusic, playAmbient, unlockAudio } from './audio';
+import { loadoutOf } from '../game/arena';
 import { gfxFlags } from '../gfx/scene';
 import { Mode, startRun } from './run';
 import { playCinematic } from './cinematic';
@@ -141,10 +142,15 @@ export function collection(): void {
   const s = save!, own = new Set([...s.deck, ...s.relics]);
   const tf = ['todas', 'ataque', 'defensa', 'utilidad', 'riesgo', 'reliquia'];
   const grid = h('div', { class: 'cardgrid' });
-  const draw = (f: string) => grid.replaceChildren(...cards.filter(c => f === 'todas' || c.type === f).map(c => fullCard(c, own.has(c.id))));
+  const info = h('p', { class: 'lead' });
+  const eq = (): string[] => loadoutOf(s);
+  const showInfo = (): void => { info.textContent = 'Habilidades equipadas para el combate (' + eq().length + '/4): ' + (eq().map(id => cardById[id].name).join(', ') || 'ninguna') + '. Toca una carta que tengas para equiparla o quitarla.'; };
+  const toggleEq = (id: string): void => { const cur = eq(); const i = cur.indexOf(id); if (i >= 0) cur.splice(i, 1); else { if (cur.length >= 4) cur.shift(); cur.push(id); } s.loadout = cur; persist(); sfx('card'); draw(curF); };
+  let curF = 'todas';
+  const draw = (f: string): void => { curF = f; showInfo(); grid.replaceChildren(...cards.filter(c => f === 'todas' || c.type === f).map(c => { const el = fullCard(c, own.has(c.id)); const eqOk = s.deck.includes(c.id) && c.type !== 'reliquia' && c.id !== 'estocada_basica'; if (eqOk) { el.classList.add('equippable'); el.classList.toggle('equipped', eq().includes(c.id)); el.addEventListener('click', () => toggleEq(c.id)); el.tabIndex = 0; el.addEventListener('keydown', e => { if ((e as KeyboardEvent).key === 'Enter') toggleEq(c.id); }); } return el; })); };
   const tabs = h('div', { class: 'tabs' }, tf.map(f => h('button', { class: 'pbtn small ghost', onclick: () => { sfx('click'); draw(f); } }, f)));
   draw('todas');
-  mount(h('div', { class: 'screen wide' }, back(), h('h2', {}, `Cartas · ${own.size}/${cards.length}`), tabs, grid));
+  mount(h('div', { class: 'screen wide' }, back(), h('h2', {}, `Cartas · ${own.size}/${cards.length}`), info, tabs, grid));
 }
 
 /* ---------------- logros ---------------- */
@@ -181,7 +187,10 @@ export function settings(): void {
   const range = h('input', { type: 'range', min: 0.9, max: 1.5, step: 0.1, value: s.settings.textScale, 'aria-label': 'Tamaño del texto', oninput: (e: Event) => { s.settings.textScale = +(e.target as HTMLInputElement).value; persist(); applySettings(); } });
   const vol = (label: string, key: 'musicVol' | 'sfxVol' | 'ambVol', d: number) => h('label', { class: 'lbl' }, label, h('input', { type: 'range', min: 0, max: 1, step: 0.05, value: s.settings[key] ?? d, 'aria-label': label, oninput: (e: Event) => { s.settings[key] = +(e.target as HTMLInputElement).value; persist(); applySettings(); }, onchange: () => sfx('ok') }));
   mount(h('div', { class: 'screen' }, back(), h('h2', {}, 'Ajustes'), h('div', { class: 'col left' },
-    h('label', { class: 'lbl' }, 'Tamaño del texto', range), toggle('Sonido', 'sound'), vol('Música', 'musicVol', 0.5), vol('Efectos', 'sfxVol', 0.8), vol('Ambiente', 'ambVol', 0.6), toggle('Reducir movimiento', 'reduceMotion'), toggle('Modo daltónico (formas y etiquetas extra)', 'colorBlind'),
+    h('label', { class: 'lbl' }, 'Tamaño del texto', range), toggle('Sonido', 'sound'), vol('Música', 'musicVol', 0.5), vol('Efectos', 'sfxVol', 0.8), vol('Ambiente', 'ambVol', 0.6), toggle('Reducir movimiento', 'reduceMotion'),
+    h('label', { class: 'lbl' }, 'Velocidad del combate mientras resuelves un problema', h('select', { 'aria-label': 'Velocidad durante problemas', onchange: (e: Event) => { s.settings.timeMode = (e.target as HTMLSelectElement).value as any; persist(); } }, ([['normal', 'Normal'], ['slow', 'Lento (70 %)'], ['veryslow', 'Muy lento (45 %)']] as const).map(([v, t]) => h('option', { value: v, selected: (s.settings.timeMode ?? 'normal') === v }, t)))),
+    h('label', { class: 'chk' }, h('input', { type: 'checkbox', checked: !!s.settings.noTimeout, onchange: (e: Event) => { s.settings.noTimeout = (e.target as HTMLInputElement).checked; persist(); } }), 'Sin límite de tiempo para responder (accesibilidad)'),
+    toggle('Modo daltónico (formas y etiquetas extra)', 'colorBlind'),
     h('hr'), btn('Borrar partida', () => { mount(h('div', { class: 'screen' }, h('h2', {}, '¿Borrar todo el progreso?'), h('div', { class: 'row' }, btn('Cancelar', settings, 'ghost'), btn('Borrar', () => { repo.clear(); save = null; title(); })))); }, 'ghost'))));
 }
 

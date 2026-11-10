@@ -48,7 +48,8 @@ function noise(dur: number, v: number, f0: number, f1: number, type: BiquadFilte
 }
 
 export type Sfx = 'click' | 'ok' | 'bad' | 'hit' | 'hurt' | 'heal' | 'win' | 'lose' | 'card' | 'block'
-  | 'slash' | 'zap' | 'fire' | 'shield' | 'explode' | 'roar' | 'whoosh' | 'crit' | 'coin' | 'step' | 'swell' | 'tick' | 'freeze' | 'charge';
+  | 'slash' | 'zap' | 'fire' | 'shield' | 'explode' | 'roar' | 'whoosh' | 'crit' | 'coin' | 'step' | 'swell' | 'tick' | 'freeze' | 'charge'
+  | 'jump' | 'land' | 'dash' | 'swing1' | 'swing2' | 'swing3' | 'orb' | 'orbok' | 'orbbad' | 'combo1' | 'combo2' | 'combo3' | 'combo4' | 'alarm' | 'slam' | 'proj' | 'meteor' | 'break' | 'cd';
 export function sfx(n: Sfx): void {
   switch (n) {
     case 'click': tone(520, 0.05, 'square', 0.05); break;
@@ -73,6 +74,25 @@ export function sfx(n: Sfx): void {
     case 'coin': tone(988, 0.07, 'square', 0.06); tone(1319, 0.18, 'square', 0.06, 0.07); break;
     case 'step': noise(0.05, 0.12, 400, 200, 'lowpass'); break;
     case 'swell': tone(196, 1.2, 'sawtooth', 0.04, 0, 100, undefined, 0.4); tone(294, 1.2, 'triangle', 0.05, 0, 150, undefined, 0.4); break;
+    case 'jump': tone(300, 0.14, 'square', 0.06, 0, 380); break;
+    case 'land': noise(0.08, 0.2, 500, 150, 'lowpass'); tone(110, 0.08, 'triangle', 0.08, 0, -40); break;
+    case 'dash': noise(0.2, 0.3, 500, 4000, 'bandpass', 0, 1.2); tone(500, 0.12, 'sawtooth', 0.04, 0, -300); break;
+    case 'swing1': noise(0.1, 0.3, 1400, 4200, 'bandpass', 0, 2); tone(700, 0.07, 'sawtooth', 0.04, 0, -300); break;
+    case 'swing2': noise(0.1, 0.32, 1700, 5000, 'bandpass', 0, 2); tone(820, 0.07, 'sawtooth', 0.045, 0, -350); break;
+    case 'swing3': noise(0.18, 0.4, 900, 6000, 'bandpass', 0, 2); tone(520, 0.16, 'sawtooth', 0.07, 0, -380); tone(260, 0.2, 'square', 0.05, 0.02, -120); break;
+    case 'orb': tone(880, 0.1, 'sine', 0.05, 0, 0, undefined, 0.4); tone(1320, 0.14, 'sine', 0.04, 0.06, 0, undefined, 0.4); break;
+    case 'orbok': noise(0.5, 0.6, 2400, 80, 'lowpass'); tone(120, 0.4, 'sine', 0.2, 0, -70); [784, 1046, 1568].forEach((f, i) => tone(f, 0.2, 'square', 0.07, i * 0.06, 0, undefined, 0.3)); break;
+    case 'orbbad': noise(0.3, 0.45, 1000, 100, 'lowpass'); tone(170, 0.35, 'sawtooth', 0.1, 0, -110); tone(120, 0.35, 'square', 0.06, 0.05, -60); break;
+    case 'combo1': tone(660, 0.09, 'square', 0.06); tone(880, 0.12, 'square', 0.06, 0.06); break;
+    case 'combo2': [660, 880, 1100].forEach((f, i) => tone(f, 0.1, 'square', 0.065, i * 0.055, 0, undefined, 0.2)); break;
+    case 'combo3': [523, 659, 784, 1046].forEach((f, i) => tone(f, 0.12, 'square', 0.07, i * 0.055, 0, undefined, 0.3)); noise(0.3, 0.2, 3000, 800, 'highpass'); break;
+    case 'combo4': [523, 659, 784, 1046, 1318, 1568].forEach((f, i) => tone(f, 0.16, 'square', 0.07, i * 0.05, 0, undefined, 0.35)); tone(130, 0.6, 'sawtooth', 0.09, 0, 60); noise(0.5, 0.3, 4000, 400, 'bandpass'); break;
+    case 'alarm': tone(988, 0.07, 'square', 0.05); tone(988, 0.07, 'square', 0.05, 0.12); break;
+    case 'slam': noise(0.45, 0.6, 600, 60, 'lowpass'); tone(70, 0.4, 'sine', 0.25, 0, -30); break;
+    case 'proj': tone(380, 0.2, 'sawtooth', 0.05, 0, -200); noise(0.2, 0.2, 800, 300, 'bandpass'); break;
+    case 'meteor': tone(900, 0.4, 'sawtooth', 0.04, 0, -700); noise(0.5, 0.4, 1200, 80, 'lowpass', 0.3); break;
+    case 'break': noise(0.2, 0.3, 3000, 600, 'highpass'); tone(300, 0.15, 'triangle', 0.08, 0, -150); break;
+    case 'cd': tone(1200, 0.05, 'sine', 0.05); tone(1800, 0.08, 'sine', 0.05, 0.05); break;
     case 'win': [523, 659, 784, 1046, 1318].forEach((f, i) => tone(f, 0.22, 'square', 0.07, i * 0.1, 0, undefined, 0.3)); tone(523, 0.9, 'triangle', 0.06, 0.5); break;
     case 'lose': [330, 262, 220, 165].forEach((f, i) => tone(f, 0.34, 'triangle', 0.1, i * 0.2, 0, undefined, 0.3)); break;
   }

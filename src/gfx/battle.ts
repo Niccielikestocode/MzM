@@ -14,6 +14,7 @@ export class BattleView {
   bg!: HTMLCanvasElement; hero!: any; mon!: any; world = 'cavernas'; tk = 0; private acc = 0;
   fx: any[] = []; monVisible = true; heroVisible = true; shake = 0; flash = 0;
   freeze = 0; zoom = 0; tint: { col: string; left: number; total: number } | null = null; tweens: any[] = []; aura = 0; private tmp: HTMLCanvasElement | null = null;
+  backHook: ((ctx: CanvasRenderingContext2D) => void) | null = null; frontHook: ((ctx: CanvasRenderingContext2D) => void) | null = null; arena = false;
   stage: { impl: any; S: any; done: boolean; ok: boolean; cb: (ok: boolean) => void } | null = null;
   constructor(readonly cv: HTMLCanvasElement) { cv.width = 320; cv.height = 180; this.ctx = cv.getContext('2d')!; this.ctx.imageSmoothingEnabled = false; }
 
@@ -104,6 +105,7 @@ export class BattleView {
     if (st?.impl.back) st.impl.back(ctx, st.S);
     ctx.globalAlpha = 0.35; ctx.fillStyle = WCOL;
     const sh = (a: any, on: boolean) => { if (!on) return; const w = a.def.size * 0.7; ctx.fillRect(Math.round(a.x + (a.def.size - w) / 2), GY + 1, Math.round(w), 3); };
+    if (this.backHook) this.backHook(ctx);
     if (!st) { sh(this.hero, true); sh(this.mon, this.monVisible); } ctx.globalAlpha = 1;
     if (this.aura > 0 && !st && this.heroVisible && !gfxFlags.reduce) {
       const [ax, ay] = this.heroCenter(), pul = 0.5 + 0.5 * Math.sin(this.tk * 0.9), col = this.aura >= 5 ? '#ffd24d' : this.aura >= 3 ? '#ff9a3c' : '#6fb7ff';
@@ -122,6 +124,7 @@ export class BattleView {
       }
     }
     if (st?.impl.front) st.impl.front(ctx, st.S);
+    if (this.frontHook) this.frontHook(ctx);
     this.fx = this.fx.filter(f => { f.t += dt; const p = f.t / f.life; if (p >= 1) return false; f.draw(ctx, p); return true; });
     if (st) st.S.fx = this.fx;
     ctx.restore();
