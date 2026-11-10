@@ -1,0 +1,74 @@
+[
+  {
+    "id": "primera_sangre",
+    "name": "Primera victoria",
+    "icon": "sword",
+    "rule": "Gana tu primer combate"
+  },
+  {
+    "id": "racha_10",
+    "name": "Racha de 10",
+    "icon": "bolt",
+    "rule": "Acierta 10 preguntas seguidas"
+  },
+  {
+    "id": "sin_pistas",
+    "name": "Sin ayuda",
+    "icon": "book",
+    "rule": "Vence un parcial sin usar pistas"
+  },
+  {
+    "id": "errores_repasados",
+    "name": "Aprender del error",
+    "icon": "heart",
+    "rule": "Acierta 5 preguntas que antes fallaste"
+  },
+  {
+    "id": "tema_dominado",
+    "name": "Tema dominado",
+    "icon": "star",
+    "rule": "Llega a 0.7 de dominio en un tema"
+  },
+  {
+    "id": "mundo_1",
+    "name": "Cavernas recuperadas",
+    "icon": "fire",
+    "rule": "Vence el Parcial 1"
+  },
+  {
+    "id": "mundo_2",
+    "name": "Bosque en orden",
+    "icon": "fire",
+    "rule": "Vence el Parcial 2"
+  },
+  {
+    "id": "mundo_3",
+    "name": "Ciudad bien medida",
+    "icon": "fire",
+    "rule": "Vence el Parcial 3"
+  },
+  {
+    "id": "ecuacion_completa",
+    "name": "Ecuación completa",
+    "icon": "eq",
+    "rule": "Vence a El Divisor"
+  },
+  {
+    "id": "mazo_completo",
+    "name": "Coleccionista",
+    "icon": "chest",
+    "rule": "Consigue todas las cartas de tema"
+  },
+  {
+    "id": "libre_20",
+    "name": "Explorador libre",
+    "icon": "question",
+    "rule": "Completa 20 niveles del modo libre"
+  },
+  {
+    "id": "diario_5",
+    "name": "Lector de diarios",
+    "icon": "book",
+    "rule": "Encuentra 5 páginas de diario"
+  }
+]

@@ -1,0 +1,35 @@
+{
+  "seedAlgorithm": "mulberry32",
+  "rooms": {
+    "campaign": "manual",
+    "learning": [
+      4,
+      6
+    ],
+    "free": [
+      5,
+      10
+    ]
+  },
+  "difficultyCurve": "lineal de dificultad mínima a máxima, con salto en la última sala",
+  "placement": [
+    "sin dos descansos seguidos",
+    "el mini jefe va al final",
+    "al menos un combate antes de un tesoro"
+  ],
+  "questionPick": {
+    "templatesWithMinDifficultyLE": "dificultad de la sala",
+    "weakTopicWeight": "peso = 1 + (1 - dominio)",
+    "noRepeatTemplateInRow": true
+  },
+  "mastery": {
+    "alpha": 0.2,
+    "clearThreshold": 0.7,
+    "weightByDifficulty": true
+  },
+  "adaptive": {
+    "downAfterMisses": 3,
+    "upAfterHits": 5,
+    "neverBelowZoneMin": true
+  }
+}

@@ -1,0 +1,3760 @@
+{
+  "palettes": {
+    "ui": {
+      "ink": "#14101f",
+      "panel": "#231c36",
+      "panel2": "#2f2648",
+      "paper": "#f3ead8",
+      "muted": "#a99fc0",
+      "ok": "#6fcf8f",
+      "bad": "#e0505a",
+      "hint": "#6fb7ff",
+      "hp": "#d9434f",
+      "xp": "#f2c14e",
+      "mana": "#5f8bff",
+      "gold": "#e0b84c"
+    },
+    "cavernas": [
+      "#120f1f",
+      "#1f2b3a",
+      "#2f4a5c",
+      "#4f7d8a",
+      "#8fc1b5",
+      "#f2a541",
+      "#ffd77a",
+      "#e8e2d0"
+    ],
+    "bosque": [
+      "#0e1a14",
+      "#1d3a2a",
+      "#2f6b3f",
+      "#6fae55",
+      "#c4e87a",
+      "#e86ab5",
+      "#8a3f9e",
+      "#f3f0d6"
+    ],
+    "ciudadela": [
+      "#15121f",
+      "#2b2740",
+      "#4b4470",
+      "#8a82b8",
+      "#d6cfa8",
+      "#e0b84c",
+      "#4fd1d9",
+      "#f4f1e6"
+    ],
+    "vacio": [
+      "#050308",
+      "#150a1f",
+      "#2a1245",
+      "#5a2a8a",
+      "#b04fd1",
+      "#ff4f79",
+      "#f4f1e6",
+      "#14101f"
+    ]
+  },
+  "worlds": [
+    {
+      "id": "cavernas",
+      "order": 1,
+      "name": "Cavernas numéricas",
+      "unit": "Pensamiento numérico",
+      "mood": "Cueva azul grisácea con antorchas ámbar y cristales que brillan",
+      "music": "Percusión suave y eco, 80 bpm",
+      "palette": "cavernas",
+      "background": {
+        "layers": [
+          "cielo-roca",
+          "estalactitas",
+          "rocas-lejanas",
+          "suelo-ladrillo"
+        ],
+        "tile": 16,
+        "props": [
+          "antorcha",
+          "cristal",
+          "charco"
+        ]
+      },
+      "intro": "Los números reales se desmoronaron y rodaron hasta lo profundo. Hay que recogerlos uno por uno.",
+      "zones": [
+        "reales",
+        "porcentajes",
+        "factorizacion"
+      ],
+      "boss": "parcial1"
+    },
+    {
+      "id": "bosque",
+      "order": 2,
+      "name": "Bosque de las funciones",
+      "unit": "Pensamiento variacional",
+      "mood": "Bosque verde oscuro con flores rosadas y luciérnagas; las ramas dibujan curvas",
+      "music": "Flauta y arpa, 96 bpm",
+      "palette": "bosque",
+      "background": {
+        "layers": [
+          "cielo-noche",
+          "arboles-lejanos",
+          "arboles-cercanos",
+          "pasto"
+        ],
+        "tile": 16,
+        "props": [
+          "flor",
+          "luciernaga",
+          "tronco-curvo"
+        ]
+      },
+      "intro": "Aquí las curvas cobraron vida. Cada camino es una función y cada cruce, una ecuación.",
+      "zones": [
+        "ecuaciones",
+        "funciones",
+        "lineal",
+        "sistemas",
+        "cuadratica",
+        "ecuacionesCuadraticas",
+        "ondas"
+      ],
+      "boss": "parcial2"
+    },
+    {
+      "id": "ciudadela",
+      "order": 3,
+      "name": "Ciudadela métrica",
+      "unit": "Pensamiento métrico espacial",
+      "mood": "Ciudad de piedra violeta de noche, ventanas doradas y hologramas cian",
+      "music": "Sintetizador suave y bajo, 110 bpm",
+      "palette": "ciudadela",
+      "background": {
+        "layers": [
+          "cielo-estrellado",
+          "torres-lejanas",
+          "torres-cercanas",
+          "piso-cuadricula"
+        ],
+        "tile": 16,
+        "props": [
+          "holograma",
+          "ventana",
+          "puente"
+        ]
+      },
+      "intro": "La ciudad se midió mal y nada encaja. Hay que volver a medir, mover y convertir.",
+      "zones": [
+        "medidas",
+        "pitagoras",
+        "tales",
+        "unidades",
+        "transformaciones",
+        "plano"
+      ],
+      "boss": "parcial3"
+    },
+    {
+      "id": "vacio",
+      "order": 4,
+      "name": "Vacío del Divisor",
+      "unit": "Examen final",
+      "mood": "Espacio violeta con un agujero negro; las estrellas se parten en dos",
+      "music": "Bajo profundo y coros, 120 bpm",
+      "palette": "vacio",
+      "background": {
+        "layers": [
+          "estrellas",
+          "remolino",
+          "suelo-grieta"
+        ],
+        "tile": 16,
+        "props": [
+          "fragmento-ecuacion"
+        ]
+      },
+      "intro": "Tres fragmentos de la ecuación abren la puerta. Del otro lado espera quien lo divide todo entre cero.",
+      "zones": [],
+      "boss": "final"
+    }
+  ],
+  "topics": [
+    {
+      "id": "reales",
+      "name": "Números reales",
+      "world": "cavernas",
+      "emblem": "frac",
+      "templates": [
+        {
+          "id": "reales.recta.ubicar",
+          "minDifficulty": 1,
+          "input": "choice"
+        },
+        {
+          "id": "reales.fracciones.operar",
+          "minDifficulty": 1,
+          "input": "number"
+        },
+        {
+          "id": "reales.raices.simplificar",
+          "minDifficulty": 2,
+          "input": "expression"
+        },
+        {
+          "id": "reales.orden.comparar",
+          "minDifficulty": 2,
+          "input": "choice"
+        },
+        {
+          "id": "reales.potencias.reglas",
+          "minDifficulty": 3,
+          "input": "number"
+        }
+      ]
+    },
+    {
+      "id": "porcentajes",
+      "name": "Porcentajes y variación",
+      "world": "cavernas",
+      "emblem": "pct",
+      "templates": [
+        {
+          "id": "pct.de-cantidad",
+          "minDifficulty": 1,
+          "input": "number"
+        },
+        {
+          "id": "pct.aumento-descuento",
+          "minDifficulty": 2,
+          "input": "number"
+        },
+        {
+          "id": "pct.variacion",
+          "minDifficulty": 3,
+          "input": "number"
+        },
+        {
+          "id": "pct.hallar-base",
+          "minDifficulty": 4,
+          "input": "number"
+        }
+      ]
+    },
+    {
+      "id": "factorizacion",
+      "name": "Factorización",
+      "world": "cavernas",
+      "emblem": "fact",
+      "templates": [
+        {
+          "id": "fact.factor-comun",
+          "minDifficulty": 1,
+          "input": "expression"
+        },
+        {
+          "id": "fact.diferencia-cuadrados",
+          "minDifficulty": 2,
+          "input": "expression"
+        },
+        {
+          "id": "fact.trinomio",
+          "minDifficulty": 3,
+          "input": "expression"
+        },
+        {
+          "id": "fact.agrupacion",
+          "minDifficulty": 4,
+          "input": "expression"
+        }
+      ]
+    },
+    {
+      "id": "ecuaciones",
+      "name": "Ecuaciones",
+      "world": "bosque",
+      "emblem": "eq",
+      "templates": [
+        {
+          "id": "ec.lineal.una-incognita",
+          "minDifficulty": 1,
+          "input": "number"
+        },
+        {
+          "id": "ec.lineal.fracciones",
+          "minDifficulty": 2,
+          "input": "number"
+        },
+        {
+          "id": "ec.despejar-formula",
+          "minDifficulty": 3,
+          "input": "expression"
+        },
+        {
+          "id": "ec.problema-enunciado",
+          "minDifficulty": 4,
+          "input": "number"
+        }
+      ]
+    },
+    {
+      "id": "funciones",
+      "name": "Funciones y gráficas",
+      "world": "bosque",
+      "emblem": "axes",
+      "templates": [
+        {
+          "id": "fun.evaluar",
+          "minDifficulty": 1,
+          "input": "number"
+        },
+        {
+          "id": "fun.leer-grafica",
+          "minDifficulty": 2,
+          "input": "choice"
+        },
+        {
+          "id": "fun.dominio-rango",
+          "minDifficulty": 3,
+          "input": "choice"
+        },
+        {
+          "id": "fun.relacion-tabla-grafica",
+          "minDifficulty": 4,
+          "input": "choice"
+        }
+      ]
+    },
+    {
+      "id": "lineal",
+      "name": "Función lineal",
+      "world": "bosque",
+      "emblem": "slope",
+      "templates": [
+        {
+          "id": "lin.pendiente-dos-puntos",
+          "minDifficulty": 1,
+          "input": "number",
+          "stage": "slope"
+        },
+        {
+          "id": "lin.interceptos",
+          "minDifficulty": 2,
+          "input": "point",
+          "stage": "slope"
+        },
+        {
+          "id": "lin.ecuacion-recta",
+          "minDifficulty": 3,
+          "input": "expression"
+        },
+        {
+          "id": "lin.grafica-desde-ecuacion",
+          "minDifficulty": 4,
+          "input": "graph"
+        }
+      ]
+    },
+    {
+      "id": "sistemas",
+      "name": "Sistemas de ecuaciones",
+      "world": "bosque",
+      "emblem": "cross",
+      "templates": [
+        {
+          "id": "sis.interseccion-grafica",
+          "minDifficulty": 1,
+          "input": "point",
+          "stage": "aim-point-read"
+        },
+        {
+          "id": "sis.sustitucion",
+          "minDifficulty": 2,
+          "input": "point"
+        },
+        {
+          "id": "sis.eliminacion",
+          "minDifficulty": 3,
+          "input": "point"
+        },
+        {
+          "id": "sis.problema-enunciado",
+          "minDifficulty": 4,
+          "input": "point"
+        }
+      ]
+    },
+    {
+      "id": "cuadratica",
+      "name": "Función cuadrática",
+      "world": "bosque",
+      "emblem": "parab",
+      "templates": [
+        {
+          "id": "cua.vertice",
+          "minDifficulty": 1,
+          "input": "point",
+          "stage": "projectile"
+        },
+        {
+          "id": "cua.apertura-interceptos",
+          "minDifficulty": 2,
+          "input": "choice"
+        },
+        {
+          "id": "cua.proyectil-altura-maxima",
+          "minDifficulty": 3,
+          "input": "number",
+          "stage": "projectile"
+        },
+        {
+          "id": "cua.grafica-desde-ecuacion",
+          "minDifficulty": 4,
+          "input": "graph"
+        }
+      ]
+    },
+    {
+      "id": "ecuacionesCuadraticas",
+      "name": "Ecuaciones cuadráticas",
+      "world": "bosque",
+      "emblem": "root",
+      "templates": [
+        {
+          "id": "ecc.factorizar",
+          "minDifficulty": 1,
+          "input": "point"
+        },
+        {
+          "id": "ecc.formula-general",
+          "minDifficulty": 2,
+          "input": "point"
+        },
+        {
+          "id": "ecc.discriminante",
+          "minDifficulty": 3,
+          "input": "choice"
+        },
+        {
+          "id": "ecc.completar-cuadrado",
+          "minDifficulty": 4,
+          "input": "expression"
+        }
+      ]
+    },
+    {
+      "id": "ondas",
+      "name": "Ondas (opcional)",
+      "world": "bosque",
+      "emblem": "wave",
+      "optional": true,
+      "templates": [
+        {
+          "id": "ond.amplitud-periodo",
+          "minDifficulty": 1,
+          "input": "number"
+        },
+        {
+          "id": "ond.leer-grafica-seno",
+          "minDifficulty": 2,
+          "input": "choice"
+        },
+        {
+          "id": "ond.desplazamiento",
+          "minDifficulty": 3,
+          "input": "number"
+        }
+      ]
+    },
+    {
+      "id": "medidas",
+      "name": "Medidas, áreas y volúmenes",
+      "world": "ciudadela",
+      "emblem": "vol",
+      "templates": [
+        {
+          "id": "med.perimetro",
+          "minDifficulty": 1,
+          "input": "number"
+        },
+        {
+          "id": "med.area-figuras",
+          "minDifficulty": 2,
+          "input": "number"
+        },
+        {
+          "id": "med.volumen-solidos",
+          "minDifficulty": 3,
+          "input": "number"
+        },
+        {
+          "id": "med.area-superficie",
+          "minDifficulty": 4,
+          "input": "number"
+        }
+      ]
+    },
+    {
+      "id": "pitagoras",
+      "name": "Pitágoras",
+      "world": "ciudadela",
+      "emblem": "pyth",
+      "templates": [
+        {
+          "id": "pit.hipotenusa",
+          "minDifficulty": 1,
+          "input": "number",
+          "stage": "ladder"
+        },
+        {
+          "id": "pit.cateto",
+          "minDifficulty": 2,
+          "input": "number",
+          "stage": "ladder"
+        },
+        {
+          "id": "pit.problema-escalera",
+          "minDifficulty": 3,
+          "input": "number",
+          "stage": "ladder"
+        },
+        {
+          "id": "pit.terna",
+          "minDifficulty": 4,
+          "input": "choice"
+        }
+      ]
+    },
+    {
+      "id": "tales",
+      "name": "Tales y semejanza",
+      "world": "ciudadela",
+      "emblem": "similar",
+      "templates": [
+        {
+          "id": "tal.proporcion-segmentos",
+          "minDifficulty": 1,
+          "input": "number"
+        },
+        {
+          "id": "tal.altura-por-sombra",
+          "minDifficulty": 2,
+          "input": "number"
+        },
+        {
+          "id": "tal.semejanza-triangulos",
+          "minDifficulty": 3,
+          "input": "number"
+        }
+      ]
+    },
+    {
+      "id": "unidades",
+      "name": "Sistemas métricos y conversión",
+      "world": "ciudadela",
+      "emblem": "units",
+      "templates": [
+        {
+          "id": "uni.conversion-longitud",
+          "minDifficulty": 1,
+          "input": "number"
+        },
+        {
+          "id": "uni.conversion-volumen-masa",
+          "minDifficulty": 2,
+          "input": "number"
+        },
+        {
+          "id": "uni.escalas",
+          "minDifficulty": 3,
+          "input": "number"
+        },
+        {
+          "id": "uni.cadena-conversion",
+          "minDifficulty": 4,
+          "input": "number"
+        }
+      ]
+    },
+    {
+      "id": "transformaciones",
+      "name": "Traslación, rotación y reflexión",
+      "world": "ciudadela",
+      "emblem": "reflect",
+      "templates": [
+        {
+          "id": "tra.traslacion-coord",
+          "minDifficulty": 1,
+          "input": "point",
+          "stage": "translate"
+        },
+        {
+          "id": "tra.reflexion-eje",
+          "minDifficulty": 2,
+          "input": "point",
+          "stage": "reflect"
+        },
+        {
+          "id": "tra.rotacion-90",
+          "minDifficulty": 3,
+          "input": "point"
+        },
+        {
+          "id": "tra.composicion",
+          "minDifficulty": 4,
+          "input": "point"
+        }
+      ]
+    },
+    {
+      "id": "plano",
+      "name": "Figuras en el plano cartesiano",
+      "world": "ciudadela",
+      "emblem": "grid",
+      "templates": [
+        {
+          "id": "pla.ubicar-puntos",
+          "minDifficulty": 1,
+          "input": "point",
+          "stage": "aim-point-click"
+        },
+        {
+          "id": "pla.punto-medio",
+          "minDifficulty": 2,
+          "input": "point",
+          "stage": "aim-point-read"
+        },
+        {
+          "id": "pla.distancia-puntos",
+          "minDifficulty": 3,
+          "input": "number"
+        },
+        {
+          "id": "pla.area-poligono",
+          "minDifficulty": 4,
+          "input": "number"
+        }
+      ]
+    }
+  ],
+  "monsters": [
+    {
+      "id": "slime_fraccionario",
+      "name": "Slime Fraccionario",
+      "world": "cavernas",
+      "topic": "reales",
+      "hp": 12,
+      "questions": 3,
+      "difficulty": [
+        1,
+        2
+      ],
+      "attack": {
+        "name": "Salpicón partido",
+        "damage": 3,
+        "telegraph": "Se parte en dos y salta"
+      },
+      "line": "Soy un medio... ¡o un tercio! No me decido.",
+      "sprite": {
+        "archetype": "slime",
+        "size": 32,
+        "colors": {
+          "body": "#6fd6b0",
+          "shade": "#3f9c8a",
+          "light": "#c9fff0",
+          "accent": "#f2a541",
+          "emblem": "frac"
+        }
+      }
+    },
+    {
+      "id": "goblin_mercader",
+      "name": "Goblin Mercader",
+      "world": "cavernas",
+      "topic": "porcentajes",
+      "hp": 16,
+      "questions": 3,
+      "difficulty": [
+        1,
+        3
+      ],
+      "attack": {
+        "name": "Rebaja traicionera",
+        "damage": 4,
+        "telegraph": "Agita un letrero de descuento"
+      },
+      "line": "¡Todo con 30% de descuento! Pero ¿cuánto pagas?",
+      "sprite": {
+        "archetype": "humanoid",
+        "size": 32,
+        "colors": {
+          "body": "#8fbf4f",
+          "shade": "#5a8a2f",
+          "light": "#c4e87a",
+          "accent": "#f2a541",
+          "cloth": "#b8742f",
+          "clothShade": "#7a4a1f",
+          "emblem": "pct",
+          "glyph": "#ffd77a"
+        },
+        "opts": {
+          "hat": "cap",
+          "prop": "sack"
+        }
+      }
+    },
+    {
+      "id": "golem_bloques",
+      "name": "Golem de Bloques",
+      "world": "cavernas",
+      "topic": "factorizacion",
+      "hp": 22,
+      "questions": 4,
+      "difficulty": [
+        2,
+        4
+      ],
+      "attack": {
+        "name": "Puñetazo en bloque",
+        "damage": 5,
+        "telegraph": "Junta los bloques en un solo puño"
+      },
+      "line": "Para romperme tienes que separar mis factores.",
+      "sprite": {
+        "archetype": "golem",
+        "size": 32,
+        "colors": {
+          "body": "#8a8fa6",
+          "shade": "#555b75",
+          "light": "#c8cde0",
+          "accent": "#f2a541",
+          "emblem": "fact"
+        }
+      }
+    },
+    {
+      "id": "rey_irracional",
+      "name": "Rey Irracional",
+      "world": "cavernas",
+      "topic": "parcial1",
+      "boss": true,
+      "hp": 60,
+      "questions": 9,
+      "phases": [
+        "reales",
+        "porcentajes",
+        "factorizacion"
+      ],
+      "difficulty": [
+        2,
+        4
+      ],
+      "attack": {
+        "name": "Decimales sin fin",
+        "damage": 6,
+        "telegraph": "Su corona suelta cifras que no terminan"
+      },
+      "line": "Mi reino no tiene fin ni patrón. ¡Cuenta, si puedes!",
+      "sprite": {
+        "archetype": "ghost",
+        "size": 64,
+        "colors": {
+          "body": "#5f7fb8",
+          "shade": "#34507f",
+          "light": "#b9d0ff",
+          "accent": "#ffd77a",
+          "emblem": "pi"
+        },
+        "opts": {
+          "crown": true
+        }
+      }
+    },
+    {
+      "id": "murcielago_balanza",
+      "name": "Murciélago de la Balanza",
+      "world": "bosque",
+      "topic": "ecuaciones",
+      "hp": 14,
+      "questions": 3,
+      "difficulty": [
+        1,
+        3
+      ],
+      "attack": {
+        "name": "Picada desequilibrada",
+        "damage": 3,
+        "telegraph": "Se inclina hacia un lado"
+      },
+      "line": "Lo que hagas de un lado, hazlo del otro.",
+      "sprite": {
+        "archetype": "bat",
+        "size": 32,
+        "colors": {
+          "body": "#9a5fd1",
+          "shade": "#5e3a8a",
+          "light": "#d9b8ff",
+          "accent": "#e86ab5",
+          "emblem": "eq"
+        }
+      }
+    },
+    {
+      "id": "espectro_graficador",
+      "name": "Espectro Graficador",
+      "world": "bosque",
+      "topic": "funciones",
+      "hp": 16,
+      "questions": 3,
+      "difficulty": [
+        1,
+        3
+      ],
+      "attack": {
+        "name": "Eje helado",
+        "damage": 4,
+        "telegraph": "Traza dos ejes que se cierran"
+      },
+      "line": "Dame una x y te muestro una y.",
+      "sprite": {
+        "archetype": "ghost",
+        "size": 32,
+        "colors": {
+          "body": "#b8e0c8",
+          "shade": "#6fae90",
+          "light": "#f0fff6",
+          "accent": "#e86ab5",
+          "emblem": "axes"
+        }
+      }
+    },
+    {
+      "id": "serpiente_pendiente",
+      "name": "Serpiente de Pendiente",
+      "world": "bosque",
+      "topic": "lineal",
+      "hp": 18,
+      "questions": 4,
+      "difficulty": [
+        1,
+        4
+      ],
+      "attack": {
+        "name": "Mordida inclinada",
+        "damage": 4,
+        "telegraph": "Sube la cabeza en línea recta"
+      },
+      "line": "Subo dos, avanzo uno. ¿Qué tan empinada soy?",
+      "sprite": {
+        "archetype": "serpent",
+        "size": 32,
+        "colors": {
+          "body": "#6fae55",
+          "shade": "#2f6b3f",
+          "light": "#c4e87a",
+          "accent": "#e86ab5",
+          "emblem": "slope"
+        }
+      }
+    },
+    {
+      "id": "gemelos_intersecados",
+      "name": "Gemelos Intersecados",
+      "world": "bosque",
+      "topic": "sistemas",
+      "hp": 20,
+      "questions": 4,
+      "difficulty": [
+        1,
+        4
+      ],
+      "attack": {
+        "name": "Cruce de espadas",
+        "damage": 5,
+        "telegraph": "Cruzan sus espadas en un punto"
+      },
+      "line": "Somos dos rectas, pero solo nos encontramos una vez.",
+      "sprite": {
+        "archetype": "twins",
+        "size": 32,
+        "colors": {
+          "body": "#e8a35f",
+          "shade": "#a8642f",
+          "light": "#ffd9a8",
+          "accent": "#e86ab5",
+          "cloth": "#c0502f",
+          "clothShade": "#7a2f1f",
+          "emblem": "cross",
+          "glyph": "#ffd9a8"
+        }
+      }
+    },
+    {
+      "id": "arquero_parabolico",
+      "name": "Arquero Parabólico",
+      "world": "bosque",
+      "topic": "cuadratica",
+      "hp": 22,
+      "questions": 4,
+      "difficulty": [
+        2,
+        4
+      ],
+      "attack": {
+        "name": "Flecha en arco",
+        "damage": 5,
+        "telegraph": "Apunta al cielo y suelta la flecha"
+      },
+      "line": "Calcula mi vértice o la flecha te encuentra.",
+      "sprite": {
+        "archetype": "humanoid",
+        "size": 32,
+        "colors": {
+          "body": "#f0c8a0",
+          "shade": "#c08f6a",
+          "light": "#fde6cf",
+          "accent": "#e86ab5",
+          "cloth": "#2f8f5a",
+          "clothShade": "#1d5a3a",
+          "emblem": "parab",
+          "glyph": "#c4e87a"
+        },
+        "opts": {
+          "hat": "hood",
+          "prop": "bow"
+        }
+      }
+    },
+    {
+      "id": "dragon_raices",
+      "name": "Dragón de Raíces",
+      "world": "bosque",
+      "topic": "ecuacionesCuadraticas",
+      "hp": 28,
+      "questions": 5,
+      "difficulty": [
+        2,
+        4
+      ],
+      "attack": {
+        "name": "Aliento de raíces",
+        "damage": 6,
+        "telegraph": "Respira hondo, dos llamas listas"
+      },
+      "line": "Tengo dos raíces. ¿Las encuentras o te quemo?",
+      "sprite": {
+        "archetype": "dragon",
+        "size": 32,
+        "colors": {
+          "body": "#3fa86f",
+          "shade": "#1f6b45",
+          "light": "#9af0b8",
+          "accent": "#e86ab5",
+          "emblem": "root"
+        }
+      }
+    },
+    {
+      "id": "sirena_ondas",
+      "name": "Sirena de Ondas",
+      "world": "bosque",
+      "topic": "ondas",
+      "hp": 20,
+      "questions": 3,
+      "difficulty": [
+        1,
+        3
+      ],
+      "attack": {
+        "name": "Canto ondulante",
+        "damage": 4,
+        "telegraph": "Su canto sube y baja"
+      },
+      "line": "Mi canto sube y baja. ¿Cuánto mide mi amplitud?",
+      "sprite": {
+        "archetype": "siren",
+        "size": 32,
+        "colors": {
+          "body": "#f0c8a0",
+          "shade": "#c08f6a",
+          "light": "#fde6cf",
+          "accent": "#e86ab5",
+          "cloth": "#4fa8d9",
+          "clothShade": "#2f6b9e",
+          "emblem": "wave",
+          "glyph": "#d9fcff"
+        }
+      }
+    },
+    {
+      "id": "hidra_cuadratica",
+      "name": "Hidra Cuadrática",
+      "world": "bosque",
+      "topic": "parcial2",
+      "boss": true,
+      "hp": 85,
+      "questions": 12,
+      "phases": [
+        "ecuaciones",
+        "lineal",
+        "sistemas",
+        "cuadratica"
+      ],
+      "difficulty": [
+        2,
+        4
+      ],
+      "attack": {
+        "name": "Doble mordisco",
+        "damage": 7,
+        "telegraph": "Sus dos cabezas apuntan a ti"
+      },
+      "line": "Corta una cabeza y salen dos soluciones.",
+      "sprite": {
+        "archetype": "dragon",
+        "size": 64,
+        "colors": {
+          "body": "#7a3fa8",
+          "shade": "#4a2370",
+          "light": "#d9a8ff",
+          "accent": "#e86ab5",
+          "emblem": "parab"
+        },
+        "opts": {
+          "heads": 2
+        }
+      }
+    },
+    {
+      "id": "cubo_gelatinoso",
+      "name": "Cubo Gelatinoso",
+      "world": "ciudadela",
+      "topic": "medidas",
+      "hp": 20,
+      "questions": 3,
+      "difficulty": [
+        1,
+        3
+      ],
+      "attack": {
+        "name": "Aplastamiento cúbico",
+        "damage": 4,
+        "telegraph": "Se estira hasta tocar el techo"
+      },
+      "line": "¿Cuánto cabe dentro de mí?",
+      "sprite": {
+        "archetype": "cube",
+        "size": 32,
+        "colors": {
+          "body": "#4fd1d9",
+          "shade": "#2f8f9e",
+          "light": "#c8fbff",
+          "accent": "#e0b84c",
+          "emblem": "vol"
+        }
+      }
+    },
+    {
+      "id": "troll_puente",
+      "name": "Troll del Puente",
+      "world": "ciudadela",
+      "topic": "pitagoras",
+      "hp": 26,
+      "questions": 4,
+      "difficulty": [
+        1,
+        4
+      ],
+      "attack": {
+        "name": "Garrote en diagonal",
+        "damage": 5,
+        "telegraph": "Levanta el garrote en diagonal"
+      },
+      "line": "Para cruzar, dime cuánto mide la diagonal.",
+      "sprite": {
+        "archetype": "humanoid",
+        "size": 32,
+        "colors": {
+          "body": "#8a9a7a",
+          "shade": "#5a6a4f",
+          "light": "#c4d1b0",
+          "accent": "#e0b84c",
+          "cloth": "#6b5a3f",
+          "clothShade": "#4a3b27",
+          "emblem": "pyth",
+          "glyph": "#ffd77a"
+        },
+        "opts": {
+          "k": 1.12,
+          "prop": "club"
+        }
+      }
+    },
+    {
+      "id": "gnomo_sombras",
+      "name": "Gnomo de Sombras",
+      "world": "ciudadela",
+      "topic": "tales",
+      "hp": 16,
+      "questions": 3,
+      "difficulty": [
+        1,
+        3
+      ],
+      "attack": {
+        "name": "Sombra estirada",
+        "damage": 3,
+        "telegraph": "Su sombra crece hacia ti"
+      },
+      "line": "Mi sombra mide tanto, la torre mide cuánto?",
+      "sprite": {
+        "archetype": "humanoid",
+        "size": 32,
+        "colors": {
+          "body": "#e0b8a0",
+          "shade": "#b08568",
+          "light": "#f5d9c8",
+          "accent": "#4fd1d9",
+          "cloth": "#4b4470",
+          "clothShade": "#2b2740",
+          "emblem": "similar",
+          "glyph": "#4fd1d9"
+        },
+        "opts": {
+          "k": 0.82,
+          "hat": "pointy"
+        }
+      }
+    },
+    {
+      "id": "alquimista_sobrecargado",
+      "name": "Alquimista Sobrecargado",
+      "world": "ciudadela",
+      "topic": "unidades",
+      "hp": 20,
+      "questions": 4,
+      "difficulty": [
+        1,
+        4
+      ],
+      "attack": {
+        "name": "Poción desbordada",
+        "damage": 4,
+        "telegraph": "Mezcla frascos de distintos tamaños"
+      },
+      "line": "Dame los mililitros en litros o la poción explota.",
+      "sprite": {
+        "archetype": "humanoid",
+        "size": 32,
+        "colors": {
+          "body": "#f0c8a0",
+          "shade": "#c08f6a",
+          "light": "#fde6cf",
+          "accent": "#4fd1d9",
+          "cloth": "#2f8f9e",
+          "clothShade": "#1d5a66",
+          "emblem": "units",
+          "glyph": "#d9fcff",
+          "flask": "#9af06f"
+        },
+        "opts": {
+          "hat": "goggles",
+          "prop": "flask"
+        }
+      }
+    },
+    {
+      "id": "espejo_maldito",
+      "name": "Espejo Maldito",
+      "world": "ciudadela",
+      "topic": "transformaciones",
+      "hp": 22,
+      "questions": 4,
+      "difficulty": [
+        1,
+        4
+      ],
+      "attack": {
+        "name": "Reflejo robado",
+        "damage": 5,
+        "telegraph": "Copia tu último movimiento al revés"
+      },
+      "line": "Soy tu reflejo, pero al revés. ¿Dónde caigo?",
+      "sprite": {
+        "archetype": "mirror",
+        "size": 32,
+        "colors": {
+          "body": "#d6cfa8",
+          "shade": "#a89860",
+          "light": "#f4f1e6",
+          "accent": "#4fd1d9",
+          "emblem": "reflect"
+        }
+      }
+    },
+    {
+      "id": "caballero_coordenado",
+      "name": "Caballero Coordenado",
+      "world": "ciudadela",
+      "topic": "plano",
+      "hp": 28,
+      "questions": 5,
+      "difficulty": [
+        1,
+        4
+      ],
+      "attack": {
+        "name": "Estocada en (x, y)",
+        "damage": 6,
+        "telegraph": "Marca un punto y apunta a él"
+      },
+      "line": "Dime mi posición exacta: primero x, luego y.",
+      "sprite": {
+        "archetype": "humanoid",
+        "size": 32,
+        "colors": {
+          "body": "#8a82b8",
+          "shade": "#5b4e7a",
+          "light": "#d6cfe8",
+          "accent": "#e0b84c",
+          "cloth": "#4b4470",
+          "clothShade": "#2b2740",
+          "emblem": "grid",
+          "glyph": "#e0b84c"
+        },
+        "opts": {
+          "hat": "helm",
+          "prop": "sword"
+        }
+      }
+    },
+    {
+      "id": "coloso_medidas",
+      "name": "Coloso de las Medidas",
+      "world": "ciudadela",
+      "topic": "parcial3",
+      "boss": true,
+      "hp": 100,
+      "questions": 15,
+      "phases": [
+        "medidas",
+        "pitagoras",
+        "tales",
+        "unidades",
+        "transformaciones",
+        "plano"
+      ],
+      "difficulty": [
+        2,
+        4
+      ],
+      "attack": {
+        "name": "Pisotón a escala",
+        "damage": 8,
+        "telegraph": "Crece una escala con cada paso"
+      },
+      "line": "Todo lo mido y nada se me escapa.",
+      "sprite": {
+        "archetype": "golem",
+        "size": 64,
+        "colors": {
+          "body": "#b8a878",
+          "shade": "#7a6a48",
+          "light": "#e8dfb8",
+          "accent": "#4fd1d9",
+          "emblem": "ruler"
+        }
+      }
+    },
+    {
+      "id": "el_divisor",
+      "name": "El Divisor",
+      "world": "vacio",
+      "topic": "final",
+      "boss": true,
+      "final": true,
+      "hp": 160,
+      "questions": 20,
+      "phases": [
+        "porcentajes",
+        "ecuaciones",
+        "cuadratica",
+        "pitagoras",
+        "plano"
+      ],
+      "difficulty": [
+        3,
+        4
+      ],
+      "attack": {
+        "name": "División entre cero",
+        "damage": 9,
+        "telegraph": "El agujero negro se traga la mitad del escenario"
+      },
+      "line": "Todo lo divido. Todo lo reduzco a cero.",
+      "sprite": {
+        "archetype": "void",
+        "size": 64,
+        "colors": {
+          "body": "#2a1245",
+          "shade": "#5a2a8a",
+          "light": "#b04fd1",
+          "accent": "#ff4f79",
+          "emblem": "div"
+        }
+      }
+    }
+  ],
+  "heroes": [
+    {
+      "id": "lia",
+      "name": "Lía, la Hechicera",
+      "style": "Álgebra y ecuaciones",
+      "hp": 28,
+      "passive": {
+        "id": "pista_gratis",
+        "text": "Una pista gratis por combate"
+      },
+      "startingDeck": [
+        "estocada_basica",
+        "escudo_de_balanza",
+        "pista_del_sabio",
+        "doble_o_nada"
+      ],
+      "color": "#6a4fc8",
+      "sprite": {
+        "kind": "hero",
+        "archetype": "humanoid",
+        "size": 32,
+        "facing": "right",
+        "colors": {
+          "body": "#f0c8a0",
+          "shade": "#c08f6a",
+          "light": "#fde6cf",
+          "accent": "#e86ab5",
+          "cloth": "#6a4fc8",
+          "clothShade": "#41318a",
+          "emblem": "eq",
+          "glyph": "#e8e2d0",
+          "orb": "#7af0ff"
+        },
+        "opts": {
+          "hat": "pointy",
+          "prop": "staff"
+        }
+      }
+    },
+    {
+      "id": "teo",
+      "name": "Teo, el Guardián",
+      "style": "Geometría y medidas",
+      "hp": 34,
+      "passive": {
+        "id": "primer_fallo",
+        "text": "El primer fallo de cada combate no hiere"
+      },
+      "startingDeck": [
+        "estocada_basica",
+        "barrera_metrica",
+        "cubo_de_volumen",
+        "doble_o_nada"
+      ],
+      "color": "#3f6fc0",
+      "sprite": {
+        "kind": "hero",
+        "archetype": "humanoid",
+        "size": 32,
+        "facing": "right",
+        "colors": {
+          "body": "#d9a47a",
+          "shade": "#a8754f",
+          "light": "#f0c8a0",
+          "accent": "#e0b84c",
+          "cloth": "#3f6fc0",
+          "clothShade": "#264a8a",
+          "emblem": "pyth",
+          "glyph": "#e8e2d0",
+          "shield": "#4f7dd9"
+        },
+        "opts": {
+          "hat": "helm",
+          "prop": "shield"
+        }
+      }
+    },
+    {
+      "id": "mara",
+      "name": "Mara, la Arquera",
+      "style": "Números y funciones",
+      "hp": 26,
+      "passive": {
+        "id": "racha_dano",
+        "text": "Cada acierto seguido suma 1 de daño (máximo 5)"
+      },
+      "startingDeck": [
+        "estocada_basica",
+        "regla_real",
+        "recta_guia",
+        "doble_o_nada"
+      ],
+      "color": "#2f8f5a",
+      "sprite": {
+        "kind": "hero",
+        "archetype": "humanoid",
+        "size": 32,
+        "facing": "right",
+        "colors": {
+          "body": "#e0b88f",
+          "shade": "#b08560",
+          "light": "#f5d9c0",
+          "accent": "#c4e87a",
+          "cloth": "#2f8f5a",
+          "clothShade": "#1d5a3a",
+          "emblem": "slope",
+          "glyph": "#e8e2d0"
+        },
+        "opts": {
+          "hat": "hood",
+          "prop": "bow"
+        }
+      }
+    }
+  ],
+  "cards": [
+    {
+      "id": "estocada_basica",
+      "name": "Golpe básico",
+      "type": "ataque",
+      "topic": null,
+      "rarity": "comun",
+      "icon": "sword",
+      "effect": "Daño si aciertas",
+      "params": {
+        "damage": 3
+      },
+      "unlock": {
+        "type": "start"
+      },
+      "artSheet": "assets/cards/estocada_basica.png"
+    },
+    {
+      "id": "estocada_pitagorica",
+      "name": "Estocada Pitagórica",
+      "type": "ataque",
+      "topic": "pitagoras",
+      "rarity": "comun",
+      "icon": "pyth",
+      "effect": "Daño si aciertas una pregunta de cualquier tema",
+      "params": {
+        "damage": 6
+      },
+      "unlock": {
+        "type": "mastery",
+        "topic": "pitagoras",
+        "threshold": 0.7
+      },
+      "artSheet": "assets/cards/estocada_pitagorica.png"
+    },
+    {
+      "id": "flecha_parabolica",
+      "name": "Flecha Parabólica",
+      "type": "ataque",
+      "topic": "cuadratica",
+      "rarity": "comun",
+      "icon": "parab",
+      "effect": "Daño si aciertas; +2 si la pregunta era una gráfica",
+      "params": {
+        "damage": 7,
+        "bonusIfGraph": 2
+      },
+      "unlock": {
+        "type": "mastery",
+        "topic": "cuadratica",
+        "threshold": 0.7
+      },
+      "artSheet": "assets/cards/flecha_parabolica.png"
+    },
+    {
+      "id": "rayo_de_raiz",
+      "name": "Rayo de Raíz",
+      "type": "ataque",
+      "topic": "ecuacionesCuadraticas",
+      "rarity": "rara",
+      "icon": "root",
+      "effect": "Daño si aciertas; golpea dos veces si hallas ambas raíces",
+      "params": {
+        "damage": 8,
+        "hits": 2
+      },
+      "unlock": {
+        "type": "mastery",
+        "topic": "ecuacionesCuadraticas",
+        "threshold": 0.7
+      },
+      "artSheet": "assets/cards/rayo_de_raiz.png"
+    },
+    {
+      "id": "golpe_porcentual",
+      "name": "Golpe Porcentual",
+      "type": "ataque",
+      "topic": "porcentajes",
+      "rarity": "comun",
+      "icon": "pct",
+      "effect": "Quita el 15% de la vida máxima del monstruo (mínimo 4)",
+      "params": {
+        "percentMaxHp": 15,
+        "min": 4
+      },
+      "unlock": {
+        "type": "mastery",
+        "topic": "porcentajes",
+        "threshold": 0.7
+      },
+      "artSheet": "assets/cards/golpe_porcentual.png"
+    },
+    {
+      "id": "corte_de_factor",
+      "name": "Corte de Factor",
+      "type": "ataque",
+      "topic": "factorizacion",
+      "rarity": "comun",
+      "icon": "fact",
+      "effect": "Daño que ignora el escudo del monstruo",
+      "params": {
+        "damage": 6,
+        "piercing": true
+      },
+      "unlock": {
+        "type": "mastery",
+        "topic": "factorizacion",
+        "threshold": 0.7
+      },
+      "artSheet": "assets/cards/corte_de_factor.png"
+    },
+    {
+      "id": "onda_de_choque",
+      "name": "Onda de Choque",
+      "type": "ataque",
+      "topic": "ondas",
+      "rarity": "rara",
+      "icon": "wave",
+      "effect": "Daño si aciertas; el doble si fallaste la pregunta anterior",
+      "params": {
+        "damage": 5,
+        "doubleAfterMiss": true
+      },
+      "unlock": {
+        "type": "mastery",
+        "topic": "ondas",
+        "threshold": 0.7
+      },
+      "artSheet": "assets/cards/onda_de_choque.png"
+    },
+    {
+      "id": "escudo_de_balanza",
+      "name": "Escudo de Balanza",
+      "type": "defensa",
+      "topic": "ecuaciones",
+      "rarity": "comun",
+      "icon": "eq",
+      "effect": "Bloquea daño del próximo golpe",
+      "params": {
+        "block": 6
+      },
+      "unlock": {
+        "type": "mastery",
+        "topic": "ecuaciones",
+        "threshold": 0.7
+      },
+      "artSheet": "assets/cards/escudo_de_balanza.png"
+    },
+    {
+      "id": "espejo_reflejo",
+      "name": "Espejo Reflejo",
+      "type": "defensa",
+      "topic": "transformaciones",
+      "rarity": "rara",
+      "icon": "reflect",
+      "effect": "Devuelve la mitad del próximo daño recibido",
+      "params": {
+        "reflectPercent": 50
+      },
+      "unlock": {
+        "type": "mastery",
+        "topic": "transformaciones",
+        "threshold": 0.7
+      },
+      "artSheet": "assets/cards/espejo_reflejo.png"
+    },
+    {
+      "id": "barrera_metrica",
+      "name": "Barrera Métrica",
+      "type": "defensa",
+      "topic": "unidades",
+      "rarity": "comun",
+      "icon": "units",
+      "effect": "Bloquea daño y cura vida",
+      "params": {
+        "block": 4,
+        "heal": 2
+      },
+      "unlock": {
+        "type": "mastery",
+        "topic": "unidades",
+        "threshold": 0.7
+      },
+      "artSheet": "assets/cards/barrera_metrica.png"
+    },
+    {
+      "id": "muralla_cartesiana",
+      "name": "Muralla Cartesiana",
+      "type": "defensa",
+      "topic": "plano",
+      "rarity": "comun",
+      "icon": "grid",
+      "effect": "Bloquea daño del próximo golpe",
+      "params": {
+        "block": 5
+      },
+      "unlock": {
+        "type": "mastery",
+        "topic": "plano",
+        "threshold": 0.7
+      },
+      "artSheet": "assets/cards/muralla_cartesiana.png"
+    },
+    {
+      "id": "pista_del_sabio",
+      "name": "Pista del Sabio",
+      "type": "utilidad",
+      "topic": null,
+      "rarity": "comun",
+      "icon": "book",
+      "effect": "Revela el primer paso de la solución sin perder racha",
+      "params": {
+        "hints": 1
+      },
+      "unlock": {
+        "type": "start"
+      },
+      "artSheet": "assets/cards/pista_del_sabio.png"
+    },
+    {
+      "id": "conoce_funcion",
+      "name": "Ojo de Función",
+      "type": "utilidad",
+      "topic": "funciones",
+      "rarity": "comun",
+      "icon": "axes",
+      "effect": "Elimina dos opciones incorrectas",
+      "params": {
+        "removeOptions": 2
+      },
+      "unlock": {
+        "type": "mastery",
+        "topic": "funciones",
+        "threshold": 0.7
+      },
+      "artSheet": "assets/cards/conoce_funcion.png"
+    },
+    {
+      "id": "interseca",
+      "name": "Intersección",
+      "type": "utilidad",
+      "topic": "sistemas",
+      "rarity": "comun",
+      "icon": "cross",
+      "effect": "Elimina una opción incorrecta y muestra la gráfica de ambas rectas",
+      "params": {
+        "removeOptions": 1,
+        "showGraph": true
+      },
+      "unlock": {
+        "type": "mastery",
+        "topic": "sistemas",
+        "threshold": 0.7
+      },
+      "artSheet": "assets/cards/interseca.png"
+    },
+    {
+      "id": "recta_guia",
+      "name": "Recta Guía",
+      "type": "utilidad",
+      "topic": "lineal",
+      "rarity": "comun",
+      "icon": "slope",
+      "effect": "Muestra la gráfica de la pregunta",
+      "params": {
+        "showGraph": true
+      },
+      "unlock": {
+        "type": "mastery",
+        "topic": "lineal",
+        "threshold": 0.7
+      },
+      "artSheet": "assets/cards/recta_guia.png"
+    },
+    {
+      "id": "sombra_de_tales",
+      "name": "Sombra de Tales",
+      "type": "utilidad",
+      "topic": "tales",
+      "rarity": "comun",
+      "icon": "similar",
+      "effect": "La siguiente pregunta baja un nivel de dificultad",
+      "params": {
+        "difficultyDelta": -1
+      },
+      "unlock": {
+        "type": "mastery",
+        "topic": "tales",
+        "threshold": 0.7
+      },
+      "artSheet": "assets/cards/sombra_de_tales.png"
+    },
+    {
+      "id": "cubo_de_volumen",
+      "name": "Cubo de Volumen",
+      "type": "utilidad",
+      "topic": "medidas",
+      "rarity": "comun",
+      "icon": "vol",
+      "effect": "Cura vida",
+      "params": {
+        "heal": 4
+      },
+      "unlock": {
+        "type": "mastery",
+        "topic": "medidas",
+        "threshold": 0.7
+      },
+      "artSheet": "assets/cards/cubo_de_volumen.png"
+    },
+    {
+      "id": "regla_real",
+      "name": "Regla Real",
+      "type": "utilidad",
+      "topic": "reales",
+      "rarity": "comun",
+      "icon": "ruler",
+      "effect": "Cura vida y muestra la recta numérica",
+      "params": {
+        "heal": 3,
+        "showNumberLine": true
+      },
+      "unlock": {
+        "type": "mastery",
+        "topic": "reales",
+        "threshold": 0.7
+      },
+      "artSheet": "assets/cards/regla_real.png"
+    },
+    {
+      "id": "doble_o_nada",
+      "name": "Doble o Nada",
+      "type": "riesgo",
+      "topic": null,
+      "rarity": "rara",
+      "icon": "star",
+      "effect": "Pregunta un nivel más difícil con el doble de daño; si fallas, pierdes vida",
+      "params": {
+        "difficultyDelta": 1,
+        "damageMultiplier": 2,
+        "selfDamageOnMiss": 4
+      },
+      "unlock": {
+        "type": "start"
+      },
+      "artSheet": "assets/cards/doble_o_nada.png"
+    },
+    {
+      "id": "raiz_ardiente",
+      "name": "Raíz Ardiente",
+      "type": "ataque",
+      "topic": "reales",
+      "rarity": "rara",
+      "icon": "root",
+      "effect": "Daño y quema: 2 de daño al final de los 2 turnos siguientes",
+      "params": {
+        "damage": 4,
+        "burn": {
+          "n": 2,
+          "turns": 2
+        }
+      },
+      "unlock": {
+        "type": "mastery",
+        "topic": "reales",
+        "threshold": 0.9
+      },
+      "artSheet": "assets/cards/raiz_ardiente.png"
+    },
+    {
+      "id": "interes_compuesto",
+      "name": "Interés Compuesto",
+      "type": "ataque",
+      "topic": "porcentajes",
+      "rarity": "rara",
+      "icon": "pct",
+      "effect": "Daño que crece +1 por cada acierto seguido de tu racha",
+      "params": {
+        "damage": 3,
+        "streakDamage": 1
+      },
+      "unlock": {
+        "type": "mastery",
+        "topic": "porcentajes",
+        "threshold": 0.9
+      },
+      "artSheet": "assets/cards/interes_compuesto.png"
+    },
+    {
+      "id": "descomposicion_prima",
+      "name": "Descomposición Prima",
+      "type": "ataque",
+      "topic": "factorizacion",
+      "rarity": "rara",
+      "icon": "fact",
+      "effect": "Daño y debilita: el próximo golpe del monstruo hace 3 menos",
+      "params": {
+        "damage": 5,
+        "weak": 3
+      },
+      "unlock": {
+        "type": "mastery",
+        "topic": "factorizacion",
+        "threshold": 0.9
+      },
+      "artSheet": "assets/cards/descomposicion_prima.png"
+    },
+    {
+      "id": "ecuacion_gemela",
+      "name": "Ecuación Gemela",
+      "type": "ataque",
+      "topic": "ecuaciones",
+      "rarity": "rara",
+      "icon": "eq",
+      "effect": "Daño y robas una carta extra en el próximo turno",
+      "params": {
+        "damage": 5,
+        "drawExtra": 1
+      },
+      "unlock": {
+        "type": "mastery",
+        "topic": "ecuaciones",
+        "threshold": 0.9
+      },
+      "artSheet": "assets/cards/ecuacion_gemela.png"
+    },
+    {
+      "id": "lanza_secante",
+      "name": "Lanza Secante",
+      "type": "ataque",
+      "topic": "sistemas",
+      "rarity": "rara",
+      "icon": "cross",
+      "effect": "Daño; robas vida igual a la mitad del daño",
+      "params": {
+        "damage": 6,
+        "lifesteal": 50
+      },
+      "unlock": {
+        "type": "mastery",
+        "topic": "sistemas",
+        "threshold": 0.9
+      },
+      "artSheet": "assets/cards/lanza_secante.png"
+    },
+    {
+      "id": "tangente_pendiente",
+      "name": "Tangente Pendiente",
+      "type": "ataque",
+      "topic": "lineal",
+      "rarity": "rara",
+      "icon": "slope",
+      "effect": "Daño; +4 si llevas 3 o más aciertos seguidos",
+      "params": {
+        "damage": 5,
+        "bonusIfStreak": {
+          "n": 3,
+          "bonus": 4
+        }
+      },
+      "unlock": {
+        "type": "mastery",
+        "topic": "lineal",
+        "threshold": 0.9
+      },
+      "artSheet": "assets/cards/tangente_pendiente.png"
+    },
+    {
+      "id": "ancla_de_origen",
+      "name": "Ancla de Origen",
+      "type": "defensa",
+      "topic": "plano",
+      "rarity": "rara",
+      "icon": "grid",
+      "effect": "Bloquea mucho daño del próximo golpe",
+      "params": {
+        "block": 10
+      },
+      "unlock": {
+        "type": "mastery",
+        "topic": "plano",
+        "threshold": 0.9
+      },
+      "artSheet": "assets/cards/ancla_de_origen.png"
+    },
+    {
+      "id": "rotacion_estelar",
+      "name": "Rotación Estelar",
+      "type": "defensa",
+      "topic": "transformaciones",
+      "rarity": "rara",
+      "icon": "reflect",
+      "effect": "Bloquea daño y aturde: el monstruo pierde su próximo ataque",
+      "params": {
+        "block": 4,
+        "stun": true
+      },
+      "unlock": {
+        "type": "mastery",
+        "topic": "transformaciones",
+        "threshold": 0.9
+      },
+      "artSheet": "assets/cards/rotacion_estelar.png"
+    },
+    {
+      "id": "escala_de_tales",
+      "name": "Escala de Tales",
+      "type": "defensa",
+      "topic": "tales",
+      "rarity": "rara",
+      "icon": "similar",
+      "effect": "Bloquea daño y debilita el próximo golpe del monstruo",
+      "params": {
+        "block": 5,
+        "weak": 2
+      },
+      "unlock": {
+        "type": "mastery",
+        "topic": "tales",
+        "threshold": 0.9
+      },
+      "artSheet": "assets/cards/escala_de_tales.png"
+    },
+    {
+      "id": "compas_de_oro",
+      "name": "Compás de Oro",
+      "type": "utilidad",
+      "topic": "medidas",
+      "rarity": "rara",
+      "icon": "vol",
+      "effect": "Cura vida y robas una carta extra en el próximo turno",
+      "params": {
+        "heal": 3,
+        "drawExtra": 1
+      },
+      "unlock": {
+        "type": "mastery",
+        "topic": "medidas",
+        "threshold": 0.9
+      },
+      "artSheet": "assets/cards/compas_de_oro.png"
+    },
+    {
+      "id": "conversion_alquimica",
+      "name": "Conversión Alquímica",
+      "type": "utilidad",
+      "topic": "unidades",
+      "rarity": "rara",
+      "icon": "units",
+      "effect": "Cura mucha vida",
+      "params": {
+        "heal": 7
+      },
+      "unlock": {
+        "type": "mastery",
+        "topic": "unidades",
+        "threshold": 0.9
+      },
+      "artSheet": "assets/cards/conversion_alquimica.png"
+    },
+    {
+      "id": "sinusoide_calmante",
+      "name": "Sinusoide Calmante",
+      "type": "utilidad",
+      "topic": "ondas",
+      "rarity": "rara",
+      "icon": "wave",
+      "effect": "Daño leve y aturde: el monstruo pierde su próximo ataque",
+      "params": {
+        "damage": 2,
+        "stun": true
+      },
+      "unlock": {
+        "type": "mastery",
+        "topic": "ondas",
+        "threshold": 0.9
+      },
+      "artSheet": "assets/cards/sinusoide_calmante.png"
+    },
+    {
+      "id": "vertice_dorado",
+      "name": "Vértice Dorado",
+      "type": "riesgo",
+      "topic": "cuadratica",
+      "rarity": "epica",
+      "icon": "parab",
+      "effect": "Mucho daño; si fallas, pierdes 3 de vida",
+      "params": {
+        "damage": 11,
+        "selfDamageOnMiss": 3
+      },
+      "unlock": {
+        "type": "mastery",
+        "topic": "cuadratica",
+        "threshold": 0.9
+      },
+      "artSheet": "assets/cards/vertice_dorado.png"
+    },
+    {
+      "id": "funcion_inversa",
+      "name": "Función Inversa",
+      "type": "utilidad",
+      "topic": "funciones",
+      "rarity": "rara",
+      "icon": "axes",
+      "effect": "Elimina una opción incorrecta y da una pista",
+      "params": {
+        "removeOptions": 1,
+        "hints": 1
+      },
+      "unlock": {
+        "type": "mastery",
+        "topic": "funciones",
+        "threshold": 0.9
+      },
+      "artSheet": "assets/cards/funcion_inversa.png"
+    },
+    {
+      "id": "hipotenusa_celeste",
+      "name": "Hipotenusa Celeste",
+      "type": "ataque",
+      "topic": "pitagoras",
+      "rarity": "epica",
+      "icon": "pyth",
+      "effect": "Rayo que ignora el escudo; +3 si la pregunta era un reto animado",
+      "params": {
+        "damage": 8,
+        "piercing": true,
+        "bonusIfGraph": 3
+      },
+      "unlock": {
+        "type": "mastery",
+        "topic": "pitagoras",
+        "threshold": 0.9
+      },
+      "artSheet": "assets/cards/hipotenusa_celeste.png"
+    },
+    {
+      "id": "discriminante",
+      "name": "Discriminante",
+      "type": "ataque",
+      "topic": "ecuacionesCuadraticas",
+      "rarity": "epica",
+      "icon": "root",
+      "effect": "Daño y quema: 3 de daño al final de los 2 turnos siguientes",
+      "params": {
+        "damage": 6,
+        "burn": {
+          "n": 3,
+          "turns": 2
+        }
+      },
+      "unlock": {
+        "type": "mastery",
+        "topic": "ecuacionesCuadraticas",
+        "threshold": 0.9
+      },
+      "artSheet": "assets/cards/discriminante.png"
+    },
+    {
+      "id": "anillo_del_cero",
+      "name": "Anillo del Cero",
+      "type": "reliquia",
+      "topic": null,
+      "rarity": "epica",
+      "icon": "shield",
+      "effect": "El primer fallo de cada combate no hiere",
+      "params": {
+        "passive": "firstMissFree"
+      },
+      "unlock": {
+        "type": "drop",
+        "source": "rey_irracional"
+      },
+      "artSheet": "assets/cards/anillo_del_cero.png"
+    },
+    {
+      "id": "lente_del_vertice",
+      "name": "Lente del Vértice",
+      "type": "reliquia",
+      "topic": null,
+      "rarity": "epica",
+      "icon": "star",
+      "effect": "Las preguntas gráficas dan 1 de daño extra",
+      "params": {
+        "passive": "graphDamage",
+        "value": 1
+      },
+      "unlock": {
+        "type": "drop",
+        "source": "hidra_cuadratica"
+      },
+      "artSheet": "assets/cards/lente_del_vertice.png"
+    },
+    {
+      "id": "brujula_de_escala",
+      "name": "Brújula de Escala",
+      "type": "reliquia",
+      "topic": null,
+      "rarity": "epica",
+      "icon": "ruler",
+      "effect": "Las preguntas de conversión muestran las unidades equivalentes",
+      "params": {
+        "passive": "showUnits"
+      },
+      "unlock": {
+        "type": "drop",
+        "source": "coloso_medidas"
+      },
+      "artSheet": "assets/cards/brujula_de_escala.png"
+    },
+    {
+      "id": "ecuacion_restaurada",
+      "name": "Ecuación Restaurada",
+      "type": "reliquia",
+      "topic": null,
+      "rarity": "legendaria",
+      "icon": "eq",
+      "effect": "Recuperas 1 de vida por cada 3 aciertos seguidos",
+      "params": {
+        "passive": "streakHeal",
+        "every": 3,
+        "heal": 1
+      },
+      "unlock": {
+        "type": "drop",
+        "source": "el_divisor"
+      },
+      "artSheet": "assets/cards/ecuacion_restaurada.png"
+    }
+  ],
+  "levels": [
+    {
+      "id": "zona_reales",
+      "world": "cavernas",
+      "topic": "reales",
+      "name": "Números reales",
+      "order": 1,
+      "intro": "dialogo.reales.intro",
+      "rooms": [
+        {
+          "type": "combat",
+          "monster": "slime_fraccionario",
+          "difficulty": 1,
+          "questions": 3
+        },
+        {
+          "type": "combat",
+          "monster": "slime_fraccionario",
+          "difficulty": 2,
+          "questions": 3
+        },
+        {
+          "type": "treasure"
+        },
+        {
+          "type": "combat",
+          "monster": "slime_fraccionario",
+          "difficulty": 3,
+          "questions": 4
+        },
+        {
+          "type": "combat",
+          "monster": "slime_fraccionario",
+          "difficulty": 4,
+          "questions": 5,
+          "miniBoss": true,
+          "hpMultiplier": 1.5
+        }
+      ],
+      "optional": false,
+      "unlocks": [
+        "zona_porcentajes"
+      ],
+      "masteryToClear": 0.7
+    },
+    {
+      "id": "zona_porcentajes",
+      "world": "cavernas",
+      "topic": "porcentajes",
+      "name": "Porcentajes y variación",
+      "order": 2,
+      "intro": "dialogo.porcentajes.intro",
+      "rooms": [
+        {
+          "type": "combat",
+          "monster": "goblin_mercader",
+          "difficulty": 1,
+          "questions": 3
+        },
+        {
+          "type": "combat",
+          "monster": "goblin_mercader",
+          "difficulty": 2,
+          "questions": 3
+        },
+        {
+          "type": "rest"
+        },
+        {
+          "type": "combat",
+          "monster": "goblin_mercader",
+          "difficulty": 3,
+          "questions": 4
+        },
+        {
+          "type": "combat",
+          "monster": "goblin_mercader",
+          "difficulty": 4,
+          "questions": 5,
+          "miniBoss": true,
+          "hpMultiplier": 1.5
+        }
+      ],
+      "optional": false,
+      "unlocks": [
+        "zona_factorizacion"
+      ],
+      "masteryToClear": 0.7
+    },
+    {
+      "id": "zona_factorizacion",
+      "world": "cavernas",
+      "topic": "factorizacion",
+      "name": "Factorización",
+      "order": 3,
+      "intro": "dialogo.factorizacion.intro",
+      "rooms": [
+        {
+          "type": "combat",
+          "monster": "golem_bloques",
+          "difficulty": 1,
+          "questions": 3
+        },
+        {
+          "type": "combat",
+          "monster": "golem_bloques",
+          "difficulty": 2,
+          "questions": 3
+        },
+        {
+          "type": "treasure"
+        },
+        {
+          "type": "combat",
+          "monster": "golem_bloques",
+          "difficulty": 3,
+          "questions": 4
+        },
+        {
+          "type": "combat",
+          "monster": "golem_bloques",
+          "difficulty": 4,
+          "questions": 5,
+          "miniBoss": true,
+          "hpMultiplier": 1.5
+        }
+      ],
+      "optional": false,
+      "unlocks": [
+        "parcial_cavernas"
+      ],
+      "masteryToClear": 0.7
+    },
+    {
+      "id": "parcial_cavernas",
+      "world": "cavernas",
+      "topic": "parcial1",
+      "name": "Parcial 1",
+      "order": 4,
+      "boss": true,
+      "intro": "dialogo.parcial1.intro",
+      "rooms": [
+        {
+          "type": "combat",
+          "monster": "slime_fraccionario",
+          "difficulty": 2,
+          "questions": 3
+        },
+        {
+          "type": "rest"
+        },
+        {
+          "type": "combat",
+          "monster": "golem_bloques",
+          "difficulty": 3,
+          "questions": 4
+        },
+        {
+          "type": "treasure"
+        },
+        {
+          "type": "boss",
+          "monster": "rey_irracional",
+          "phases": [
+            "reales",
+            "porcentajes",
+            "factorizacion"
+          ],
+          "questions": 9,
+          "difficulty": 4
+        }
+      ],
+      "unlocks": [
+        "zona_ecuaciones"
+      ],
+      "requires": [
+        "zona_reales",
+        "zona_porcentajes",
+        "zona_factorizacion"
+      ]
+    },
+    {
+      "id": "zona_ecuaciones",
+      "world": "bosque",
+      "topic": "ecuaciones",
+      "name": "Ecuaciones",
+      "order": 5,
+      "intro": "dialogo.ecuaciones.intro",
+      "rooms": [
+        {
+          "type": "combat",
+          "monster": "murcielago_balanza",
+          "difficulty": 1,
+          "questions": 3
+        },
+        {
+          "type": "combat",
+          "monster": "murcielago_balanza",
+          "difficulty": 2,
+          "questions": 3
+        },
+        {
+          "type": "treasure"
+        },
+        {
+          "type": "combat",
+          "monster": "murcielago_balanza",
+          "difficulty": 3,
+          "questions": 4
+        },
+        {
+          "type": "combat",
+          "monster": "murcielago_balanza",
+          "difficulty": 4,
+          "questions": 5,
+          "miniBoss": true,
+          "hpMultiplier": 1.5
+        }
+      ],
+      "optional": false,
+      "unlocks": [
+        "zona_funciones"
+      ],
+      "masteryToClear": 0.7
+    },
+    {
+      "id": "zona_funciones",
+      "world": "bosque",
+      "topic": "funciones",
+      "name": "Funciones y gráficas",
+      "order": 6,
+      "intro": "dialogo.funciones.intro",
+      "rooms": [
+        {
+          "type": "combat",
+          "monster": "espectro_graficador",
+          "difficulty": 1,
+          "questions": 3
+        },
+        {
+          "type": "combat",
+          "monster": "espectro_graficador",
+          "difficulty": 2,
+          "questions": 3
+        },
+        {
+          "type": "rest"
+        },
+        {
+          "type": "combat",
+          "monster": "espectro_graficador",
+          "difficulty": 3,
+          "questions": 4
+        },
+        {
+          "type": "combat",
+          "monster": "espectro_graficador",
+          "difficulty": 4,
+          "questions": 5,
+          "miniBoss": true,
+          "hpMultiplier": 1.5
+        }
+      ],
+      "optional": false,
+      "unlocks": [
+        "zona_lineal"
+      ],
+      "masteryToClear": 0.7
+    },
+    {
+      "id": "zona_lineal",
+      "world": "bosque",
+      "topic": "lineal",
+      "name": "Función lineal",
+      "order": 7,
+      "intro": "dialogo.lineal.intro",
+      "rooms": [
+        {
+          "type": "combat",
+          "monster": "serpiente_pendiente",
+          "difficulty": 1,
+          "questions": 3
+        },
+        {
+          "type": "combat",
+          "monster": "serpiente_pendiente",
+          "difficulty": 2,
+          "questions": 3
+        },
+        {
+          "type": "treasure"
+        },
+        {
+          "type": "combat",
+          "monster": "serpiente_pendiente",
+          "difficulty": 3,
+          "questions": 4
+        },
+        {
+          "type": "combat",
+          "monster": "serpiente_pendiente",
+          "difficulty": 4,
+          "questions": 5,
+          "miniBoss": true,
+          "hpMultiplier": 1.5
+        }
+      ],
+      "optional": false,
+      "unlocks": [
+        "zona_sistemas"
+      ],
+      "masteryToClear": 0.7
+    },
+    {
+      "id": "zona_sistemas",
+      "world": "bosque",
+      "topic": "sistemas",
+      "name": "Sistemas de ecuaciones",
+      "order": 8,
+      "intro": "dialogo.sistemas.intro",
+      "rooms": [
+        {
+          "type": "combat",
+          "monster": "gemelos_intersecados",
+          "difficulty": 1,
+          "questions": 3
+        },
+        {
+          "type": "combat",
+          "monster": "gemelos_intersecados",
+          "difficulty": 2,
+          "questions": 3
+        },
+        {
+          "type": "rest"
+        },
+        {
+          "type": "combat",
+          "monster": "gemelos_intersecados",
+          "difficulty": 3,
+          "questions": 4
+        },
+        {
+          "type": "combat",
+          "monster": "gemelos_intersecados",
+          "difficulty": 4,
+          "questions": 5,
+          "miniBoss": true,
+          "hpMultiplier": 1.5
+        }
+      ],
+      "optional": false,
+      "unlocks": [
+        "zona_cuadratica"
+      ],
+      "masteryToClear": 0.7
+    },
+    {
+      "id": "zona_cuadratica",
+      "world": "bosque",
+      "topic": "cuadratica",
+      "name": "Función cuadrática",
+      "order": 9,
+      "intro": "dialogo.cuadratica.intro",
+      "rooms": [
+        {
+          "type": "combat",
+          "monster": "arquero_parabolico",
+          "difficulty": 1,
+          "questions": 3
+        },
+        {
+          "type": "combat",
+          "monster": "arquero_parabolico",
+          "difficulty": 2,
+          "questions": 3
+        },
+        {
+          "type": "treasure"
+        },
+        {
+          "type": "combat",
+          "monster": "arquero_parabolico",
+          "difficulty": 3,
+          "questions": 4
+        },
+        {
+          "type": "combat",
+          "monster": "arquero_parabolico",
+          "difficulty": 4,
+          "questions": 5,
+          "miniBoss": true,
+          "hpMultiplier": 1.5
+        }
+      ],
+      "optional": false,
+      "unlocks": [
+        "zona_ecuacionesCuadraticas"
+      ],
+      "masteryToClear": 0.7
+    },
+    {
+      "id": "zona_ecuacionesCuadraticas",
+      "world": "bosque",
+      "topic": "ecuacionesCuadraticas",
+      "name": "Ecuaciones cuadráticas",
+      "order": 10,
+      "intro": "dialogo.ecuacionesCuadraticas.intro",
+      "rooms": [
+        {
+          "type": "combat",
+          "monster": "dragon_raices",
+          "difficulty": 1,
+          "questions": 3
+        },
+        {
+          "type": "combat",
+          "monster": "dragon_raices",
+          "difficulty": 2,
+          "questions": 3
+        },
+        {
+          "type": "rest"
+        },
+        {
+          "type": "combat",
+          "monster": "dragon_raices",
+          "difficulty": 3,
+          "questions": 4
+        },
+        {
+          "type": "combat",
+          "monster": "dragon_raices",
+          "difficulty": 4,
+          "questions": 5,
+          "miniBoss": true,
+          "hpMultiplier": 1.5
+        }
+      ],
+      "optional": false,
+      "unlocks": [
+        "zona_ondas",
+        "parcial_bosque"
+      ],
+      "masteryToClear": 0.7
+    },
+    {
+      "id": "zona_ondas",
+      "world": "bosque",
+      "topic": "ondas",
+      "name": "Ondas (opcional)",
+      "order": 11,
+      "intro": "dialogo.ondas.intro",
+      "rooms": [
+        {
+          "type": "combat",
+          "monster": "sirena_ondas",
+          "difficulty": 1,
+          "questions": 3
+        },
+        {
+          "type": "combat",
+          "monster": "sirena_ondas",
+          "difficulty": 2,
+          "questions": 3
+        },
+        {
+          "type": "treasure"
+        },
+        {
+          "type": "combat",
+          "monster": "sirena_ondas",
+          "difficulty": 3,
+          "questions": 4
+        },
+        {
+          "type": "combat",
+          "monster": "sirena_ondas",
+          "difficulty": 4,
+          "questions": 5,
+          "miniBoss": true,
+          "hpMultiplier": 1.5
+        }
+      ],
+      "optional": true,
+      "unlocks": [],
+      "masteryToClear": 0.7
+    },
+    {
+      "id": "parcial_bosque",
+      "world": "bosque",
+      "topic": "parcial2",
+      "name": "Parcial 2",
+      "order": 12,
+      "boss": true,
+      "intro": "dialogo.parcial2.intro",
+      "rooms": [
+        {
+          "type": "combat",
+          "monster": "murcielago_balanza",
+          "difficulty": 2,
+          "questions": 3
+        },
+        {
+          "type": "rest"
+        },
+        {
+          "type": "combat",
+          "monster": "sirena_ondas",
+          "difficulty": 3,
+          "questions": 4
+        },
+        {
+          "type": "treasure"
+        },
+        {
+          "type": "boss",
+          "monster": "hidra_cuadratica",
+          "phases": [
+            "ecuaciones",
+            "lineal",
+            "sistemas",
+            "cuadratica"
+          ],
+          "questions": 12,
+          "difficulty": 4
+        }
+      ],
+      "unlocks": [
+        "zona_medidas"
+      ],
+      "requires": [
+        "zona_ecuaciones",
+        "zona_funciones",
+        "zona_lineal",
+        "zona_sistemas",
+        "zona_cuadratica",
+        "zona_ecuacionesCuadraticas"
+      ]
+    },
+    {
+      "id": "zona_medidas",
+      "world": "ciudadela",
+      "topic": "medidas",
+      "name": "Medidas, áreas y volúmenes",
+      "order": 13,
+      "intro": "dialogo.medidas.intro",
+      "rooms": [
+        {
+          "type": "combat",
+          "monster": "cubo_gelatinoso",
+          "difficulty": 1,
+          "questions": 3
+        },
+        {
+          "type": "combat",
+          "monster": "cubo_gelatinoso",
+          "difficulty": 2,
+          "questions": 3
+        },
+        {
+          "type": "treasure"
+        },
+        {
+          "type": "combat",
+          "monster": "cubo_gelatinoso",
+          "difficulty": 3,
+          "questions": 4
+        },
+        {
+          "type": "combat",
+          "monster": "cubo_gelatinoso",
+          "difficulty": 4,
+          "questions": 5,
+          "miniBoss": true,
+          "hpMultiplier": 1.5
+        }
+      ],
+      "optional": false,
+      "unlocks": [
+        "zona_pitagoras"
+      ],
+      "masteryToClear": 0.7
+    },
+    {
+      "id": "zona_pitagoras",
+      "world": "ciudadela",
+      "topic": "pitagoras",
+      "name": "Pitágoras",
+      "order": 14,
+      "intro": "dialogo.pitagoras.intro",
+      "rooms": [
+        {
+          "type": "combat",
+          "monster": "troll_puente",
+          "difficulty": 1,
+          "questions": 3
+        },
+        {
+          "type": "combat",
+          "monster": "troll_puente",
+          "difficulty": 2,
+          "questions": 3
+        },
+        {
+          "type": "rest"
+        },
+        {
+          "type": "combat",
+          "monster": "troll_puente",
+          "difficulty": 3,
+          "questions": 4
+        },
+        {
+          "type": "combat",
+          "monster": "troll_puente",
+          "difficulty": 4,
+          "questions": 5,
+          "miniBoss": true,
+          "hpMultiplier": 1.5
+        }
+      ],
+      "optional": false,
+      "unlocks": [
+        "zona_tales"
+      ],
+      "masteryToClear": 0.7
+    },
+    {
+      "id": "zona_tales",
+      "world": "ciudadela",
+      "topic": "tales",
+      "name": "Tales y semejanza",
+      "order": 15,
+      "intro": "dialogo.tales.intro",
+      "rooms": [
+        {
+          "type": "combat",
+          "monster": "gnomo_sombras",
+          "difficulty": 1,
+          "questions": 3
+        },
+        {
+          "type": "combat",
+          "monster": "gnomo_sombras",
+          "difficulty": 2,
+          "questions": 3
+        },
+        {
+          "type": "treasure"
+        },
+        {
+          "type": "combat",
+          "monster": "gnomo_sombras",
+          "difficulty": 3,
+          "questions": 4
+        },
+        {
+          "type": "combat",
+          "monster": "gnomo_sombras",
+          "difficulty": 4,
+          "questions": 5,
+          "miniBoss": true,
+          "hpMultiplier": 1.5
+        }
+      ],
+      "optional": false,
+      "unlocks": [
+        "zona_unidades"
+      ],
+      "masteryToClear": 0.7
+    },
+    {
+      "id": "zona_unidades",
+      "world": "ciudadela",
+      "topic": "unidades",
+      "name": "Sistemas métricos y conversión",
+      "order": 16,
+      "intro": "dialogo.unidades.intro",
+      "rooms": [
+        {
+          "type": "combat",
+          "monster": "alquimista_sobrecargado",
+          "difficulty": 1,
+          "questions": 3
+        },
+        {
+          "type": "combat",
+          "monster": "alquimista_sobrecargado",
+          "difficulty": 2,
+          "questions": 3
+        },
+        {
+          "type": "rest"
+        },
+        {
+          "type": "combat",
+          "monster": "alquimista_sobrecargado",
+          "difficulty": 3,
+          "questions": 4
+        },
+        {
+          "type": "combat",
+          "monster": "alquimista_sobrecargado",
+          "difficulty": 4,
+          "questions": 5,
+          "miniBoss": true,
+          "hpMultiplier": 1.5
+        }
+      ],
+      "optional": false,
+      "unlocks": [
+        "zona_transformaciones"
+      ],
+      "masteryToClear": 0.7
+    },
+    {
+      "id": "zona_transformaciones",
+      "world": "ciudadela",
+      "topic": "transformaciones",
+      "name": "Traslación, rotación y reflexión",
+      "order": 17,
+      "intro": "dialogo.transformaciones.intro",
+      "rooms": [
+        {
+          "type": "combat",
+          "monster": "espejo_maldito",
+          "difficulty": 1,
+          "questions": 3
+        },
+        {
+          "type": "combat",
+          "monster": "espejo_maldito",
+          "difficulty": 2,
+          "questions": 3
+        },
+        {
+          "type": "treasure"
+        },
+        {
+          "type": "combat",
+          "monster": "espejo_maldito",
+          "difficulty": 3,
+          "questions": 4
+        },
+        {
+          "type": "combat",
+          "monster": "espejo_maldito",
+          "difficulty": 4,
+          "questions": 5,
+          "miniBoss": true,
+          "hpMultiplier": 1.5
+        }
+      ],
+      "optional": false,
+      "unlocks": [
+        "zona_plano"
+      ],
+      "masteryToClear": 0.7
+    },
+    {
+      "id": "zona_plano",
+      "world": "ciudadela",
+      "topic": "plano",
+      "name": "Figuras en el plano cartesiano",
+      "order": 18,
+      "intro": "dialogo.plano.intro",
+      "rooms": [
+        {
+          "type": "combat",
+          "monster": "caballero_coordenado",
+          "difficulty": 1,
+          "questions": 3
+        },
+        {
+          "type": "combat",
+          "monster": "caballero_coordenado",
+          "difficulty": 2,
+          "questions": 3
+        },
+        {
+          "type": "rest"
+        },
+        {
+          "type": "combat",
+          "monster": "caballero_coordenado",
+          "difficulty": 3,
+          "questions": 4
+        },
+        {
+          "type": "combat",
+          "monster": "caballero_coordenado",
+          "difficulty": 4,
+          "questions": 5,
+          "miniBoss": true,
+          "hpMultiplier": 1.5
+        }
+      ],
+      "optional": false,
+      "unlocks": [
+        "parcial_ciudadela"
+      ],
+      "masteryToClear": 0.7
+    },
+    {
+      "id": "parcial_ciudadela",
+      "world": "ciudadela",
+      "topic": "parcial3",
+      "name": "Parcial 3",
+      "order": 19,
+      "boss": true,
+      "intro": "dialogo.parcial3.intro",
+      "rooms": [
+        {
+          "type": "combat",
+          "monster": "cubo_gelatinoso",
+          "difficulty": 2,
+          "questions": 3
+        },
+        {
+          "type": "rest"
+        },
+        {
+          "type": "combat",
+          "monster": "caballero_coordenado",
+          "difficulty": 3,
+          "questions": 4
+        },
+        {
+          "type": "treasure"
+        },
+        {
+          "type": "boss",
+          "monster": "coloso_medidas",
+          "phases": [
+            "medidas",
+            "pitagoras",
+            "tales",
+            "unidades",
+            "transformaciones",
+            "plano"
+          ],
+          "questions": 15,
+          "difficulty": 4
+        }
+      ],
+      "unlocks": [
+        "final"
+      ],
+      "requires": [
+        "zona_medidas",
+        "zona_pitagoras",
+        "zona_tales",
+        "zona_unidades",
+        "zona_transformaciones",
+        "zona_plano"
+      ]
+    },
+    {
+      "id": "final",
+      "world": "vacio",
+      "topic": "final",
+      "name": "El Divisor",
+      "order": 20,
+      "boss": true,
+      "final": true,
+      "intro": "dialogo.final.intro",
+      "rooms": [
+        {
+          "type": "combat",
+          "monster": "dragon_raices",
+          "difficulty": 3,
+          "questions": 4
+        },
+        {
+          "type": "rest"
+        },
+        {
+          "type": "combat",
+          "monster": "troll_puente",
+          "difficulty": 3,
+          "questions": 4
+        },
+        {
+          "type": "treasure"
+        },
+        {
+          "type": "boss",
+          "monster": "el_divisor",
+          "phases": [
+            "porcentajes",
+            "ecuaciones",
+            "cuadratica",
+            "pitagoras",
+            "plano"
+          ],
+          "questions": 20,
+          "difficulty": 4
+        }
+      ],
+      "requires": [
+        "parcial_cavernas",
+        "parcial_bosque",
+        "parcial_ciudadela"
+      ]
+    },
+    {
+      "id": "campo_coordenadas",
+      "world": "ciudadela",
+      "topic": "plano",
+      "name": "Campo de coordenadas",
+      "order": 21,
+      "bonus": true,
+      "requires": [
+        "zona_plano"
+      ],
+      "intro": "dialogo.plano.intro",
+      "rooms": [
+        {
+          "type": "combat",
+          "monster": "caballero_coordenado",
+          "difficulty": 1,
+          "questions": 3,
+          "stage": "aim-point-click"
+        },
+        {
+          "type": "combat",
+          "monster": "caballero_coordenado",
+          "difficulty": 2,
+          "questions": 3,
+          "stage": "aim-point-read"
+        },
+        {
+          "type": "combat",
+          "monster": "espejo_maldito",
+          "difficulty": 2,
+          "questions": 3,
+          "stage": "translate"
+        },
+        {
+          "type": "combat",
+          "monster": "espejo_maldito",
+          "difficulty": 3,
+          "questions": 4,
+          "stage": "reflect"
+        },
+        {
+          "type": "combat",
+          "monster": "caballero_coordenado",
+          "difficulty": 4,
+          "questions": 5,
+          "stage": "aim-point-click",
+          "miniBoss": true,
+          "hpMultiplier": 1.5
+        }
+      ]
+    },
+    {
+      "id": "campo_proyectiles",
+      "world": "bosque",
+      "topic": "cuadratica",
+      "name": "Campo de proyectiles",
+      "order": 22,
+      "bonus": true,
+      "requires": [
+        "zona_cuadratica"
+      ],
+      "intro": "dialogo.cuadratica.intro",
+      "rooms": [
+        {
+          "type": "combat",
+          "monster": "arquero_parabolico",
+          "difficulty": 1,
+          "questions": 3,
+          "stage": "projectile"
+        },
+        {
+          "type": "combat",
+          "monster": "arquero_parabolico",
+          "difficulty": 2,
+          "questions": 3,
+          "stage": "projectile"
+        },
+        {
+          "type": "combat",
+          "monster": "arquero_parabolico",
+          "difficulty": 3,
+          "questions": 4,
+          "stage": "projectile"
+        },
+        {
+          "type": "combat",
+          "monster": "arquero_parabolico",
+          "difficulty": 4,
+          "questions": 5,
+          "stage": "projectile",
+          "miniBoss": true,
+          "hpMultiplier": 1.5
+        }
+      ]
+    },
+    {
+      "id": "rampa_pendientes",
+      "world": "bosque",
+      "topic": "lineal",
+      "name": "Rampa de pendientes",
+      "order": 23,
+      "bonus": true,
+      "requires": [
+        "zona_lineal"
+      ],
+      "intro": "dialogo.lineal.intro",
+      "rooms": [
+        {
+          "type": "combat",
+          "monster": "serpiente_pendiente",
+          "difficulty": 1,
+          "questions": 3,
+          "stage": "slope"
+        },
+        {
+          "type": "combat",
+          "monster": "serpiente_pendiente",
+          "difficulty": 2,
+          "questions": 3,
+          "stage": "slope"
+        },
+        {
+          "type": "combat",
+          "monster": "serpiente_pendiente",
+          "difficulty": 3,
+          "questions": 4,
+          "stage": "slope"
+        },
+        {
+          "type": "combat",
+          "monster": "serpiente_pendiente",
+          "difficulty": 4,
+          "questions": 5,
+          "stage": "slope",
+          "miniBoss": true,
+          "hpMultiplier": 1.5
+        }
+      ]
+    },
+    {
+      "id": "puente_pitagoras",
+      "world": "ciudadela",
+      "topic": "pitagoras",
+      "name": "Puente de Pitágoras",
+      "order": 24,
+      "bonus": true,
+      "requires": [
+        "zona_pitagoras"
+      ],
+      "intro": "dialogo.pitagoras.intro",
+      "rooms": [
+        {
+          "type": "combat",
+          "monster": "troll_puente",
+          "difficulty": 1,
+          "questions": 3,
+          "stage": "ladder"
+        },
+        {
+          "type": "combat",
+          "monster": "troll_puente",
+          "difficulty": 2,
+          "questions": 3,
+          "stage": "ladder"
+        },
+        {
+          "type": "combat",
+          "monster": "troll_puente",
+          "difficulty": 3,
+          "questions": 4,
+          "stage": "ladder"
+        },
+        {
+          "type": "combat",
+          "monster": "troll_puente",
+          "difficulty": 4,
+          "questions": 5,
+          "stage": "ladder",
+          "miniBoss": true,
+          "hpMultiplier": 1.5
+        }
+      ]
+    }
+  ],
+  "challengeStages": [
+    {
+      "id": "projectile",
+      "name": "Proyectil",
+      "topic": "cuadratica",
+      "world": "bosque",
+      "plane": true,
+      "hero": "mara",
+      "monster": "arquero_parabolico",
+      "question": "y = -x² + 2h·x; ¿cuál es la altura máxima?",
+      "params": {
+        "h": [
+          3,
+          5
+        ],
+        "answerFormula": "k = h²",
+        "options": [
+          "k",
+          "h",
+          "2h",
+          "k + h"
+        ]
+      },
+      "animation": [
+        "La heroína tensa el arco (ataque, cuadro 2)",
+        "La flecha sale por la parábola de la respuesta elegida: y = -x² + 2·√k·x",
+        "Deja un rastro de puntos y marca la cima",
+        "Si k es correcto, aterriza exactamente sobre el monstruo; si no, cae antes o se pasa",
+        "Al terminar se dibuja la parábola correcta con su vértice como explicación"
+      ],
+      "success": "El monstruo recibe el daño y muestra el número",
+      "fail": "La flecha se clava en el suelo y el monstruo contraataca"
+    },
+    {
+      "id": "aim-point-click",
+      "name": "Ubicar un punto",
+      "topic": "plano",
+      "world": "ciudadela",
+      "plane": true,
+      "hero": "lia",
+      "monster": "caballero_coordenado",
+      "question": "Lanza el hechizo al punto (x, y): el jugador toca la intersección en el plano",
+      "params": {
+        "x": [
+          2,
+          9
+        ],
+        "y": [
+          1,
+          5
+        ]
+      },
+      "animation": [
+        "El plano muestra una cuadrícula con ejes numerados",
+        "Al pasar el cursor se marca la intersección con sus coordenadas",
+        "El hechizo vuela en línea recta hasta el punto tocado",
+        "El monstruo está oculto en la niebla del punto correcto y aparece al acertar"
+      ],
+      "success": "La niebla se disipa y el hechizo golpea al monstruo",
+      "fail": "El hechizo estalla en vacío y el monstruo aparece en su lugar real"
+    },
+    {
+      "id": "aim-point-read",
+      "name": "Leer coordenadas",
+      "topic": "plano",
+      "world": "ciudadela",
+      "plane": true,
+      "hero": "lia",
+      "monster": "caballero_coordenado",
+      "question": "El monstruo está sobre una plataforma; el jugador elige sus coordenadas entre varias opciones",
+      "params": {
+        "distractors": [
+          "(y, x) invertido",
+          "x + 1",
+          "y + 1"
+        ]
+      },
+      "animation": [
+        "Se resalta la plataforma con líneas guía hasta los ejes",
+        "El hechizo vuela a las coordenadas elegidas",
+        "Si coinciden, golpea al monstruo"
+      ],
+      "success": "Impacto directo",
+      "fail": "El hechizo cae en otra plataforma y el monstruo ataca"
+    },
+    {
+      "id": "slope",
+      "name": "Pendiente de la rampa",
+      "topic": "lineal",
+      "world": "bosque",
+      "plane": true,
+      "hero": "mara",
+      "monster": "serpiente_pendiente",
+      "question": "La rampa pasa por A y B; ¿cuál es la pendiente?",
+      "params": {
+        "m": [
+          1,
+          3
+        ],
+        "run": [
+          2,
+          3
+        ]
+      },
+      "animation": [
+        "Se dibuja la recta por los puntos A y B",
+        "La heroína sube por una rampa de luz con la pendiente elegida",
+        "Si es la correcta, llega justo a B y ataca a la serpiente",
+        "Si no, la rampa termina en el aire o bajo el punto y la heroína cae"
+      ],
+      "success": "La heroína llega a B y golpea",
+      "fail": "La rampa de luz no llega: caída y mordida"
+    },
+    {
+      "id": "ladder",
+      "name": "Escalera de Pitágoras",
+      "topic": "pitagoras",
+      "world": "ciudadela",
+      "plane": false,
+      "hero": "teo",
+      "monster": "troll_puente",
+      "question": "Muro de altura a, base b: ¿cuánto mide la escalera?",
+      "params": {
+        "triples": [
+          [
+            3,
+            4,
+            5
+          ],
+          [
+            6,
+            8,
+            10
+          ],
+          [
+            5,
+            12,
+            13
+          ]
+        ],
+        "options": [
+          "c",
+          "a + b",
+          "c + 1",
+          "c - 1"
+        ]
+      },
+      "animation": [
+        "La escalera gira desde el suelo con el largo elegido",
+        "Se apoya en el muro: si es corta, queda bajo el borde; si es larga, pasa de largo y resbala",
+        "Si es justa, el héroe sube peldaño a peldaño y ataca al troll"
+      ],
+      "success": "La escalera encaja en el borde",
+      "fail": "La escalera resbala o no alcanza"
+    },
+    {
+      "id": "translate",
+      "name": "Traslación",
+      "topic": "transformaciones",
+      "world": "ciudadela",
+      "plane": true,
+      "hero": "lia",
+      "monster": "espejo_maldito",
+      "question": "El triángulo se traslada (dx, dy); ¿dónde queda el vértice A?",
+      "params": {
+        "dx": [
+          2,
+          5
+        ],
+        "dy": [
+          0,
+          2
+        ]
+      },
+      "animation": [
+        "El triángulo se desliza sobre el plano hasta la posición elegida",
+        "Si es correcta, encaja en su contorno y se activa un rayo",
+        "Si no, aterriza fuera de lugar y se rompe en pedazos"
+      ],
+      "success": "El rayo golpea al Espejo Maldito",
+      "fail": "La figura se rompe y el espejo contraataca"
+    },
+    {
+      "id": "reflect",
+      "name": "Reflexión",
+      "topic": "transformaciones",
+      "world": "ciudadela",
+      "plane": true,
+      "hero": "lia",
+      "monster": "espejo_maldito",
+      "question": "Refleja el triángulo sobre la línea x = m; ¿dónde queda A?",
+      "params": {
+        "m": [
+          4,
+          6
+        ]
+      },
+      "animation": [
+        "El triángulo se voltea sobre la línea como una hoja al girar",
+        "Termina en la posición elegida",
+        "Si coincide con el reflejo exacto, activa un rayo"
+      ],
+      "success": "El reflejo exacto abre el rayo",
+      "fail": "La figura cae en otro sitio y se rompe"
+    }
+  ],
+  "roomTypes": [
+    {
+      "id": "combat",
+      "name": "Combate",
+      "icon": "sword",
+      "desc": "Un monstruo del tema lanza retos"
+    },
+    {
+      "id": "treasure",
+      "name": "Tesoro",
+      "icon": "chest",
+      "desc": "Una carta nueva o mejora de carta"
+    },
+    {
+      "id": "rest",
+      "name": "Descanso",
+      "icon": "fire",
+      "desc": "Cura vida o repasa el Libro de errores"
+    },
+    {
+      "id": "event",
+      "name": "Evento",
+      "icon": "question",
+      "desc": "Diario o dilema con recompensa"
+    },
+    {
+      "id": "boss",
+      "name": "Jefe",
+      "icon": "skull",
+      "desc": "Parcial por fases, mezcla de temas"
+    }
+  ],
+  "fsm": {
+    "initial": "sala_intro",
+    "states": {
+      "sala_intro": {
+        "desc": "Aparece el monstruo y su frase",
+        "on": {
+          "START": "turno_inicio"
+        }
+      },
+      "turno_inicio": {
+        "desc": "Se anuncia el ataque del monstruo",
+        "on": {
+          "DRAW": "robar_mano"
+        }
+      },
+      "robar_mano": {
+        "desc": "Se reparten 3 cartas",
+        "on": {
+          "READY": "elegir_carta"
+        }
+      },
+      "elegir_carta": {
+        "desc": "El jugador elige una carta o el golpe básico",
+        "on": {
+          "PLAY_CARD": "pregunta",
+          "USE_BASIC": "pregunta"
+        }
+      },
+      "pregunta": {
+        "desc": "La UI muestra la pregunta; puede pedir ayuda",
+        "on": {
+          "ANSWER": "evaluar",
+          "HINT": "pregunta",
+          "GIVE_UP": "revision_error"
+        }
+      },
+      "evaluar": {
+        "desc": "El verificador compara la respuesta",
+        "on": {
+          "CORRECT": "efecto_carta",
+          "WRONG": "revision_error"
+        }
+      },
+      "efecto_carta": {
+        "desc": "Se aplica la carta: daño, bloqueo o curación",
+        "on": {
+          "MONSTER_DEAD": "victoria",
+          "MONSTER_ALIVE": "turno_monstruo"
+        }
+      },
+      "revision_error": {
+        "desc": "Se muestra la solución y se guarda en el Libro de errores",
+        "on": {
+          "CONTINUE": "turno_monstruo"
+        }
+      },
+      "turno_monstruo": {
+        "desc": "El monstruo ataca y se descuenta vida",
+        "on": {
+          "PLAYER_DEAD": "derrota",
+          "PLAYER_ALIVE": "turno_inicio"
+        }
+      },
+      "victoria": {
+        "desc": "Se actualiza el dominio del tema y se dan recompensas",
+        "on": {
+          "CONTINUE": "recompensa"
+        }
+      },
+      "recompensa": {
+        "desc": "Carta, XP y página de diario",
+        "on": {
+          "NEXT_ROOM": "sala_intro",
+          "ZONE_CLEAR": "mapa"
+        }
+      },
+      "derrota": {
+        "desc": "Se ofrece repetir con otras preguntas",
+        "on": {
+          "RETRY": "sala_intro",
+          "LEAVE": "mapa"
+        }
+      },
+      "mapa": {
+        "desc": "Pantalla de zonas",
+        "on": {
+          "ENTER_ZONE": "sala_intro"
+        }
+      }
+    }
+  },
+  "ui": {
+    "fonts": {
+      "display": "Press Start 2P",
+      "label": "Pixelify Sans",
+      "body": "Atkinson Hyperlegible",
+      "math": "KaTeX_Main"
+    },
+    "scale": {
+      "logicalWidth": 320,
+      "logicalHeight": 180,
+      "integerScaling": true,
+      "imageRendering": "pixelated"
+    },
+    "spacing": [
+      4,
+      8,
+      12,
+      16,
+      24,
+      32
+    ],
+    "radius": 0,
+    "border": {
+      "pixel": 2,
+      "color": "ink"
+    },
+    "touch": {
+      "minTarget": 48,
+      "pcMinTarget": 32
+    },
+    "breakpoints": {
+      "mobile": 0,
+      "tablet": 720,
+      "pc": 1024
+    },
+    "animation": {
+      "cardPlayMs": 250,
+      "damageNumberMs": 600,
+      "shakeMs": 180,
+      "hitStopMs": 60,
+      "textBoxCharMs": 22
+    },
+    "layout": {
+      "pc": {
+        "hud": {
+          "x": 0,
+          "y": 0,
+          "w": 0.68,
+          "h": 0.08
+        },
+        "canvas": {
+          "x": 0,
+          "y": 0.08,
+          "w": 0.68,
+          "h": 0.68
+        },
+        "hand": {
+          "x": 0,
+          "y": 0.76,
+          "w": 0.68,
+          "h": 0.24
+        },
+        "questionPanel": {
+          "x": 0.68,
+          "y": 0,
+          "w": 0.32,
+          "h": 0.6
+        },
+        "answerPanel": {
+          "x": 0.68,
+          "y": 0.6,
+          "w": 0.32,
+          "h": 0.4
+        }
+      },
+      "mobile": {
+        "hud": {
+          "x": 0,
+          "y": 0,
+          "w": 1,
+          "h": 0.06
+        },
+        "canvas": {
+          "x": 0,
+          "y": 0.06,
+          "w": 1,
+          "h": 0.26
+        },
+        "questionPanel": {
+          "x": 0,
+          "y": 0.32,
+          "w": 1,
+          "h": 0.2
+        },
+        "answerPanel": {
+          "x": 0,
+          "y": 0.52,
+          "w": 1,
+          "h": 0.28
+        },
+        "hand": {
+          "x": 0,
+          "y": 0.8,
+          "w": 1,
+          "h": 0.2
+        }
+      }
+    },
+    "feedback": {
+      "correct": "ok",
+      "wrong": "bad",
+      "hint": "hint",
+      "colorBlindExtra": "icono + forma además del color"
+    }
+  },
+  "achievements": [
+    {
+      "id": "primera_sangre",
+      "name": "Primera victoria",
+      "icon": "sword",
+      "rule": "Gana tu primer combate"
+    },
+    {
+      "id": "racha_10",
+      "name": "Racha de 10",
+      "icon": "bolt",
+      "rule": "Acierta 10 preguntas seguidas"
+    },
+    {
+      "id": "sin_pistas",
+      "name": "Sin ayuda",
+      "icon": "book",
+      "rule": "Vence un parcial sin usar pistas"
+    },
+    {
+      "id": "errores_repasados",
+      "name": "Aprender del error",
+      "icon": "heart",
+      "rule": "Acierta 5 preguntas que antes fallaste"
+    },
+    {
+      "id": "tema_dominado",
+      "name": "Tema dominado",
+      "icon": "star",
+      "rule": "Llega a 0.7 de dominio en un tema"
+    },
+    {
+      "id": "mundo_1",
+      "name": "Cavernas recuperadas",
+      "icon": "fire",
+      "rule": "Vence el Parcial 1"
+    },
+    {
+      "id": "mundo_2",
+      "name": "Bosque en orden",
+      "icon": "fire",
+      "rule": "Vence el Parcial 2"
+    },
+    {
+      "id": "mundo_3",
+      "name": "Ciudad bien medida",
+      "icon": "fire",
+      "rule": "Vence el Parcial 3"
+    },
+    {
+      "id": "ecuacion_completa",
+      "name": "Ecuación completa",
+      "icon": "eq",
+      "rule": "Vence a El Divisor"
+    },
+    {
+      "id": "mazo_completo",
+      "name": "Coleccionista",
+      "icon": "chest",
+      "rule": "Consigue todas las cartas de tema"
+    },
+    {
+      "id": "libre_20",
+      "name": "Explorador libre",
+      "icon": "question",
+      "rule": "Completa 20 niveles del modo libre"
+    },
+    {
+      "id": "diario_5",
+      "name": "Lector de diarios",
+      "icon": "book",
+      "rule": "Encuentra 5 páginas de diario"
+    }
+  ]
+}

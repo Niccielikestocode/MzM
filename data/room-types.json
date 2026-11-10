@@ -1,0 +1,32 @@
+[
+  {
+    "id": "combat",
+    "name": "Combate",
+    "icon": "sword",
+    "desc": "Un monstruo del tema lanza retos"
+  },
+  {
+    "id": "treasure",
+    "name": "Tesoro",
+    "icon": "chest",
+    "desc": "Una carta nueva o mejora de carta"
+  },
+  {
+    "id": "rest",
+    "name": "Descanso",
+    "icon": "fire",
+    "desc": "Cura vida o repasa el Libro de errores"
+  },
+  {
+    "id": "event",
+    "name": "Evento",
+    "icon": "question",
+    "desc": "Diario o dilema con recompensa"
+  },
+  {
+    "id": "boss",
+    "name": "Jefe",
+    "icon": "skull",
+    "desc": "Parcial por fases, mezcla de temas"
+  }
+]

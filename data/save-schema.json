@@ -1,0 +1,60 @@
+{
+  "version": 1,
+  "profile": {
+    "heroId": "string",
+    "createdAt": "ISO date",
+    "name": "string"
+  },
+  "progress": {
+    "levelsCleared": [
+      "levelId"
+    ],
+    "bossesDefeated": [
+      "monsterId"
+    ],
+    "currentLevel": "levelId",
+    "currentRoom": "number"
+  },
+  "mastery": {
+    "<topicId>": {
+      "m": "number 0..1",
+      "attempts": "number",
+      "correct": "number",
+      "lastSeen": "ISO date"
+    }
+  },
+  "deck": [
+    "cardId"
+  ],
+  "relics": [
+    "cardId"
+  ],
+  "achievements": [
+    "achievementId"
+  ],
+  "errorBook": [
+    {
+      "templateId": "string",
+      "seed": "number",
+      "given": "string",
+      "date": "ISO date",
+      "resolved": "boolean"
+    }
+  ],
+  "diaryPages": [
+    "pageId"
+  ],
+  "settings": {
+    "textScale": "number 0.8..1.6",
+    "colorBlind": "boolean",
+    "sound": "boolean",
+    "music": "boolean",
+    "language": "es",
+    "timer": "boolean"
+  },
+  "stats": {
+    "questionsAnswered": "number",
+    "bestStreak": "number",
+    "freePlayLevels": "number"
+  }
+}

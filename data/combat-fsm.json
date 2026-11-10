@@ -1,0 +1,91 @@
+{
+  "initial": "sala_intro",
+  "states": {
+    "sala_intro": {
+      "desc": "Aparece el monstruo y su frase",
+      "on": {
+        "START": "turno_inicio"
+      }
+    },
+    "turno_inicio": {
+      "desc": "Se anuncia el ataque del monstruo",
+      "on": {
+        "DRAW": "robar_mano"
+      }
+    },
+    "robar_mano": {
+      "desc": "Se reparten 3 cartas",
+      "on": {
+        "READY": "elegir_carta"
+      }
+    },
+    "elegir_carta": {
+      "desc": "El jugador elige una carta o el golpe básico",
+      "on": {
+        "PLAY_CARD": "pregunta",
+        "USE_BASIC": "pregunta"
+      }
+    },
+    "pregunta": {
+      "desc": "La UI muestra la pregunta; puede pedir ayuda",
+      "on": {
+        "ANSWER": "evaluar",
+        "HINT": "pregunta",
+        "GIVE_UP": "revision_error"
+      }
+    },
+    "evaluar": {
+      "desc": "El verificador compara la respuesta",
+      "on": {
+        "CORRECT": "efecto_carta",
+        "WRONG": "revision_error"
+      }
+    },
+    "efecto_carta": {
+      "desc": "Se aplica la carta: daño, bloqueo o curación",
+      "on": {
+        "MONSTER_DEAD": "victoria",
+        "MONSTER_ALIVE": "turno_monstruo"
+      }
+    },
+    "revision_error": {
+      "desc": "Se muestra la solución y se guarda en el Libro de errores",
+      "on": {
+        "CONTINUE": "turno_monstruo"
+      }
+    },
+    "turno_monstruo": {
+      "desc": "El monstruo ataca y se descuenta vida",
+      "on": {
+        "PLAYER_DEAD": "derrota",
+        "PLAYER_ALIVE": "turno_inicio"
+      }
+    },
+    "victoria": {
+      "desc": "Se actualiza el dominio del tema y se dan recompensas",
+      "on": {
+        "CONTINUE": "recompensa"
+      }
+    },
+    "recompensa": {
+      "desc": "Carta, XP y página de diario",
+      "on": {
+        "NEXT_ROOM": "sala_intro",
+        "ZONE_CLEAR": "mapa"
+      }
+    },
+    "derrota": {
+      "desc": "Se ofrece repetir con otras preguntas",
+      "on": {
+        "RETRY": "sala_intro",
+        "LEAVE": "mapa"
+      }
+    },
+    "mapa": {
+      "desc": "Pantalla de zonas",
+      "on": {
+        "ENTER_ZONE": "sala_intro"
+      }
+    }
+  }
+}

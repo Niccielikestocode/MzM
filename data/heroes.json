@@ -1,0 +1,56 @@
+[
+  {
+    "id": "lia",
+    "name": "Lía, la Hechicera",
+    "style": "Álgebra y ecuaciones",
+    "hp": 28,
+    "passive": {
+      "id": "pista_gratis",
+      "text": "Una pista gratis por combate"
+    },
+    "startingDeck": [
+      "estocada_basica",
+      "escudo_de_balanza",
+      "pista_del_sabio",
+      "doble_o_nada"
+    ],
+    "color": "#6a4fc8",
+    "spriteSheet": "assets/sprites/lia.png"
+  },
+  {
+    "id": "teo",
+    "name": "Teo, el Guardián",
+    "style": "Geometría y medidas",
+    "hp": 34,
+    "passive": {
+      "id": "primer_fallo",
+      "text": "El primer fallo de cada combate no hiere"
+    },
+    "startingDeck": [
+      "estocada_basica",
+      "barrera_metrica",
+      "cubo_de_volumen",
+      "doble_o_nada"
+    ],
+    "color": "#3f6fc0",
+    "spriteSheet": "assets/sprites/teo.png"
+  },
+  {
+    "id": "mara",
+    "name": "Mara, la Arquera",
+    "style": "Números y funciones",
+    "hp": 26,
+    "passive": {
+      "id": "racha_dano",
+      "text": "Cada acierto seguido suma 1 de daño (máximo 5)"
+    },
+    "startingDeck": [
+      "estocada_basica",
+      "regla_real",
+      "recta_guia",
+      "doble_o_nada"
+    ],
+    "color": "#2f8f5a",
+    "spriteSheet": "assets/sprites/mara.png"
+  }
+]

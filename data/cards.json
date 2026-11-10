@@ -1,0 +1,731 @@
+[
+  {
+    "id": "estocada_basica",
+    "name": "Golpe básico",
+    "type": "ataque",
+    "topic": null,
+    "rarity": "comun",
+    "icon": "sword",
+    "effect": "Daño si aciertas",
+    "params": {
+      "damage": 3
+    },
+    "unlock": {
+      "type": "start"
+    },
+    "artSheet": "assets/cards/estocada_basica.png"
+  },
+  {
+    "id": "estocada_pitagorica",
+    "name": "Estocada Pitagórica",
+    "type": "ataque",
+    "topic": "pitagoras",
+    "rarity": "comun",
+    "icon": "pyth",
+    "effect": "Daño si aciertas una pregunta de cualquier tema",
+    "params": {
+      "damage": 6
+    },
+    "unlock": {
+      "type": "mastery",
+      "topic": "pitagoras",
+      "threshold": 0.7
+    },
+    "artSheet": "assets/cards/estocada_pitagorica.png"
+  },
+  {
+    "id": "flecha_parabolica",
+    "name": "Flecha Parabólica",
+    "type": "ataque",
+    "topic": "cuadratica",
+    "rarity": "comun",
+    "icon": "parab",
+    "effect": "Daño si aciertas; +2 si la pregunta era una gráfica",
+    "params": {
+      "damage": 7,
+      "bonusIfGraph": 2
+    },
+    "unlock": {
+      "type": "mastery",
+      "topic": "cuadratica",
+      "threshold": 0.7
+    },
+    "artSheet": "assets/cards/flecha_parabolica.png"
+  },
+  {
+    "id": "rayo_de_raiz",
+    "name": "Rayo de Raíz",
+    "type": "ataque",
+    "topic": "ecuacionesCuadraticas",
+    "rarity": "rara",
+    "icon": "root",
+    "effect": "Daño si aciertas; golpea dos veces si hallas ambas raíces",
+    "params": {
+      "damage": 8,
+      "hits": 2
+    },
+    "unlock": {
+      "type": "mastery",
+      "topic": "ecuacionesCuadraticas",
+      "threshold": 0.7
+    },
+    "artSheet": "assets/cards/rayo_de_raiz.png"
+  },
+  {
+    "id": "golpe_porcentual",
+    "name": "Golpe Porcentual",
+    "type": "ataque",
+    "topic": "porcentajes",
+    "rarity": "comun",
+    "icon": "pct",
+    "effect": "Quita el 15% de la vida máxima del monstruo (mínimo 4)",
+    "params": {
+      "percentMaxHp": 15,
+      "min": 4
+    },
+    "unlock": {
+      "type": "mastery",
+      "topic": "porcentajes",
+      "threshold": 0.7
+    },
+    "artSheet": "assets/cards/golpe_porcentual.png"
+  },
+  {
+    "id": "corte_de_factor",
+    "name": "Corte de Factor",
+    "type": "ataque",
+    "topic": "factorizacion",
+    "rarity": "comun",
+    "icon": "fact",
+    "effect": "Daño que ignora el escudo del monstruo",
+    "params": {
+      "damage": 6,
+      "piercing": true
+    },
+    "unlock": {
+      "type": "mastery",
+      "topic": "factorizacion",
+      "threshold": 0.7
+    },
+    "artSheet": "assets/cards/corte_de_factor.png"
+  },
+  {
+    "id": "onda_de_choque",
+    "name": "Onda de Choque",
+    "type": "ataque",
+    "topic": "ondas",
+    "rarity": "rara",
+    "icon": "wave",
+    "effect": "Daño si aciertas; el doble si fallaste la pregunta anterior",
+    "params": {
+      "damage": 5,
+      "doubleAfterMiss": true
+    },
+    "unlock": {
+      "type": "mastery",
+      "topic": "ondas",
+      "threshold": 0.7
+    },
+    "artSheet": "assets/cards/onda_de_choque.png"
+  },
+  {
+    "id": "escudo_de_balanza",
+    "name": "Escudo de Balanza",
+    "type": "defensa",
+    "topic": "ecuaciones",
+    "rarity": "comun",
+    "icon": "eq",
+    "effect": "Bloquea daño del próximo golpe",
+    "params": {
+      "block": 6
+    },
+    "unlock": {
+      "type": "mastery",
+      "topic": "ecuaciones",
+      "threshold": 0.7
+    },
+    "artSheet": "assets/cards/escudo_de_balanza.png"
+  },
+  {
+    "id": "espejo_reflejo",
+    "name": "Espejo Reflejo",
+    "type": "defensa",
+    "topic": "transformaciones",
+    "rarity": "rara",
+    "icon": "reflect",
+    "effect": "Devuelve la mitad del próximo daño recibido",
+    "params": {
+      "reflectPercent": 50
+    },
+    "unlock": {
+      "type": "mastery",
+      "topic": "transformaciones",
+      "threshold": 0.7
+    },
+    "artSheet": "assets/cards/espejo_reflejo.png"
+  },
+  {
+    "id": "barrera_metrica",
+    "name": "Barrera Métrica",
+    "type": "defensa",
+    "topic": "unidades",
+    "rarity": "comun",
+    "icon": "units",
+    "effect": "Bloquea daño y cura vida",
+    "params": {
+      "block": 4,
+      "heal": 2
+    },
+    "unlock": {
+      "type": "mastery",
+      "topic": "unidades",
+      "threshold": 0.7
+    },
+    "artSheet": "assets/cards/barrera_metrica.png"
+  },
+  {
+    "id": "muralla_cartesiana",
+    "name": "Muralla Cartesiana",
+    "type": "defensa",
+    "topic": "plano",
+    "rarity": "comun",
+    "icon": "grid",
+    "effect": "Bloquea daño del próximo golpe",
+    "params": {
+      "block": 5
+    },
+    "unlock": {
+      "type": "mastery",
+      "topic": "plano",
+      "threshold": 0.7
+    },
+    "artSheet": "assets/cards/muralla_cartesiana.png"
+  },
+  {
+    "id": "pista_del_sabio",
+    "name": "Pista del Sabio",
+    "type": "utilidad",
+    "topic": null,
+    "rarity": "comun",
+    "icon": "book",
+    "effect": "Revela el primer paso de la solución sin perder racha",
+    "params": {
+      "hints": 1
+    },
+    "unlock": {
+      "type": "start"
+    },
+    "artSheet": "assets/cards/pista_del_sabio.png"
+  },
+  {
+    "id": "conoce_funcion",
+    "name": "Ojo de Función",
+    "type": "utilidad",
+    "topic": "funciones",
+    "rarity": "comun",
+    "icon": "axes",
+    "effect": "Elimina dos opciones incorrectas",
+    "params": {
+      "removeOptions": 2
+    },
+    "unlock": {
+      "type": "mastery",
+      "topic": "funciones",
+      "threshold": 0.7
+    },
+    "artSheet": "assets/cards/conoce_funcion.png"
+  },
+  {
+    "id": "interseca",
+    "name": "Intersección",
+    "type": "utilidad",
+    "topic": "sistemas",
+    "rarity": "comun",
+    "icon": "cross",
+    "effect": "Elimina una opción incorrecta y muestra la gráfica de ambas rectas",
+    "params": {
+      "removeOptions": 1,
+      "showGraph": true
+    },
+    "unlock": {
+      "type": "mastery",
+      "topic": "sistemas",
+      "threshold": 0.7
+    },
+    "artSheet": "assets/cards/interseca.png"
+  },
+  {
+    "id": "recta_guia",
+    "name": "Recta Guía",
+    "type": "utilidad",
+    "topic": "lineal",
+    "rarity": "comun",
+    "icon": "slope",
+    "effect": "Muestra la gráfica de la pregunta",
+    "params": {
+      "showGraph": true
+    },
+    "unlock": {
+      "type": "mastery",
+      "topic": "lineal",
+      "threshold": 0.7
+    },
+    "artSheet": "assets/cards/recta_guia.png"
+  },
+  {
+    "id": "sombra_de_tales",
+    "name": "Sombra de Tales",
+    "type": "utilidad",
+    "topic": "tales",
+    "rarity": "comun",
+    "icon": "similar",
+    "effect": "La siguiente pregunta baja un nivel de dificultad",
+    "params": {
+      "difficultyDelta": -1
+    },
+    "unlock": {
+      "type": "mastery",
+      "topic": "tales",
+      "threshold": 0.7
+    },
+    "artSheet": "assets/cards/sombra_de_tales.png"
+  },
+  {
+    "id": "cubo_de_volumen",
+    "name": "Cubo de Volumen",
+    "type": "utilidad",
+    "topic": "medidas",
+    "rarity": "comun",
+    "icon": "vol",
+    "effect": "Cura vida",
+    "params": {
+      "heal": 4
+    },
+    "unlock": {
+      "type": "mastery",
+      "topic": "medidas",
+      "threshold": 0.7
+    },
+    "artSheet": "assets/cards/cubo_de_volumen.png"
+  },
+  {
+    "id": "regla_real",
+    "name": "Regla Real",
+    "type": "utilidad",
+    "topic": "reales",
+    "rarity": "comun",
+    "icon": "ruler",
+    "effect": "Cura vida y muestra la recta numérica",
+    "params": {
+      "heal": 3,
+      "showNumberLine": true
+    },
+    "unlock": {
+      "type": "mastery",
+      "topic": "reales",
+      "threshold": 0.7
+    },
+    "artSheet": "assets/cards/regla_real.png"
+  },
+  {
+    "id": "doble_o_nada",
+    "name": "Doble o Nada",
+    "type": "riesgo",
+    "topic": null,
+    "rarity": "rara",
+    "icon": "star",
+    "effect": "Pregunta un nivel más difícil con el doble de daño; si fallas, pierdes vida",
+    "params": {
+      "difficultyDelta": 1,
+      "damageMultiplier": 2,
+      "selfDamageOnMiss": 4
+    },
+    "unlock": {
+      "type": "start"
+    },
+    "artSheet": "assets/cards/doble_o_nada.png"
+  },
+  {
+    "id": "raiz_ardiente",
+    "name": "Raíz Ardiente",
+    "type": "ataque",
+    "topic": "reales",
+    "rarity": "rara",
+    "icon": "root",
+    "effect": "Daño y quema: 2 de daño al final de los 2 turnos siguientes",
+    "params": {
+      "damage": 4,
+      "burn": {
+        "n": 2,
+        "turns": 2
+      }
+    },
+    "unlock": {
+      "type": "mastery",
+      "topic": "reales",
+      "threshold": 0.9
+    },
+    "artSheet": "assets/cards/raiz_ardiente.png"
+  },
+  {
+    "id": "interes_compuesto",
+    "name": "Interés Compuesto",
+    "type": "ataque",
+    "topic": "porcentajes",
+    "rarity": "rara",
+    "icon": "pct",
+    "effect": "Daño que crece +1 por cada acierto seguido de tu racha",
+    "params": {
+      "damage": 3,
+      "streakDamage": 1
+    },
+    "unlock": {
+      "type": "mastery",
+      "topic": "porcentajes",
+      "threshold": 0.9
+    },
+    "artSheet": "assets/cards/interes_compuesto.png"
+  },
+  {
+    "id": "descomposicion_prima",
+    "name": "Descomposición Prima",
+    "type": "ataque",
+    "topic": "factorizacion",
+    "rarity": "rara",
+    "icon": "fact",
+    "effect": "Daño y debilita: el próximo golpe del monstruo hace 3 menos",
+    "params": {
+      "damage": 5,
+      "weak": 3
+    },
+    "unlock": {
+      "type": "mastery",
+      "topic": "factorizacion",
+      "threshold": 0.9
+    },
+    "artSheet": "assets/cards/descomposicion_prima.png"
+  },
+  {
+    "id": "ecuacion_gemela",
+    "name": "Ecuación Gemela",
+    "type": "ataque",
+    "topic": "ecuaciones",
+    "rarity": "rara",
+    "icon": "eq",
+    "effect": "Daño y robas una carta extra en el próximo turno",
+    "params": {
+      "damage": 5,
+      "drawExtra": 1
+    },
+    "unlock": {
+      "type": "mastery",
+      "topic": "ecuaciones",
+      "threshold": 0.9
+    },
+    "artSheet": "assets/cards/ecuacion_gemela.png"
+  },
+  {
+    "id": "lanza_secante",
+    "name": "Lanza Secante",
+    "type": "ataque",
+    "topic": "sistemas",
+    "rarity": "rara",
+    "icon": "cross",
+    "effect": "Daño; robas vida igual a la mitad del daño",
+    "params": {
+      "damage": 6,
+      "lifesteal": 50
+    },
+    "unlock": {
+      "type": "mastery",
+      "topic": "sistemas",
+      "threshold": 0.9
+    },
+    "artSheet": "assets/cards/lanza_secante.png"
+  },
+  {
+    "id": "tangente_pendiente",
+    "name": "Tangente Pendiente",
+    "type": "ataque",
+    "topic": "lineal",
+    "rarity": "rara",
+    "icon": "slope",
+    "effect": "Daño; +4 si llevas 3 o más aciertos seguidos",
+    "params": {
+      "damage": 5,
+      "bonusIfStreak": {
+        "n": 3,
+        "bonus": 4
+      }
+    },
+    "unlock": {
+      "type": "mastery",
+      "topic": "lineal",
+      "threshold": 0.9
+    },
+    "artSheet": "assets/cards/tangente_pendiente.png"
+  },
+  {
+    "id": "ancla_de_origen",
+    "name": "Ancla de Origen",
+    "type": "defensa",
+    "topic": "plano",
+    "rarity": "rara",
+    "icon": "grid",
+    "effect": "Bloquea mucho daño del próximo golpe",
+    "params": {
+      "block": 10
+    },
+    "unlock": {
+      "type": "mastery",
+      "topic": "plano",
+      "threshold": 0.9
+    },
+    "artSheet": "assets/cards/ancla_de_origen.png"
+  },
+  {
+    "id": "rotacion_estelar",
+    "name": "Rotación Estelar",
+    "type": "defensa",
+    "topic": "transformaciones",
+    "rarity": "rara",
+    "icon": "reflect",
+    "effect": "Bloquea daño y aturde: el monstruo pierde su próximo ataque",
+    "params": {
+      "block": 4,
+      "stun": true
+    },
+    "unlock": {
+      "type": "mastery",
+      "topic": "transformaciones",
+      "threshold": 0.9
+    },
+    "artSheet": "assets/cards/rotacion_estelar.png"
+  },
+  {
+    "id": "escala_de_tales",
+    "name": "Escala de Tales",
+    "type": "defensa",
+    "topic": "tales",
+    "rarity": "rara",
+    "icon": "similar",
+    "effect": "Bloquea daño y debilita el próximo golpe del monstruo",
+    "params": {
+      "block": 5,
+      "weak": 2
+    },
+    "unlock": {
+      "type": "mastery",
+      "topic": "tales",
+      "threshold": 0.9
+    },
+    "artSheet": "assets/cards/escala_de_tales.png"
+  },
+  {
+    "id": "compas_de_oro",
+    "name": "Compás de Oro",
+    "type": "utilidad",
+    "topic": "medidas",
+    "rarity": "rara",
+    "icon": "vol",
+    "effect": "Cura vida y robas una carta extra en el próximo turno",
+    "params": {
+      "heal": 3,
+      "drawExtra": 1
+    },
+    "unlock": {
+      "type": "mastery",
+      "topic": "medidas",
+      "threshold": 0.9
+    },
+    "artSheet": "assets/cards/compas_de_oro.png"
+  },
+  {
+    "id": "conversion_alquimica",
+    "name": "Conversión Alquímica",
+    "type": "utilidad",
+    "topic": "unidades",
+    "rarity": "rara",
+    "icon": "units",
+    "effect": "Cura mucha vida",
+    "params": {
+      "heal": 7
+    },
+    "unlock": {
+      "type": "mastery",
+      "topic": "unidades",
+      "threshold": 0.9
+    },
+    "artSheet": "assets/cards/conversion_alquimica.png"
+  },
+  {
+    "id": "sinusoide_calmante",
+    "name": "Sinusoide Calmante",
+    "type": "utilidad",
+    "topic": "ondas",
+    "rarity": "rara",
+    "icon": "wave",
+    "effect": "Daño leve y aturde: el monstruo pierde su próximo ataque",
+    "params": {
+      "damage": 2,
+      "stun": true
+    },
+    "unlock": {
+      "type": "mastery",
+      "topic": "ondas",
+      "threshold": 0.9
+    },
+    "artSheet": "assets/cards/sinusoide_calmante.png"
+  },
+  {
+    "id": "vertice_dorado",
+    "name": "Vértice Dorado",
+    "type": "riesgo",
+    "topic": "cuadratica",
+    "rarity": "epica",
+    "icon": "parab",
+    "effect": "Mucho daño; si fallas, pierdes 3 de vida",
+    "params": {
+      "damage": 11,
+      "selfDamageOnMiss": 3
+    },
+    "unlock": {
+      "type": "mastery",
+      "topic": "cuadratica",
+      "threshold": 0.9
+    },
+    "artSheet": "assets/cards/vertice_dorado.png"
+  },
+  {
+    "id": "funcion_inversa",
+    "name": "Función Inversa",
+    "type": "utilidad",
+    "topic": "funciones",
+    "rarity": "rara",
+    "icon": "axes",
+    "effect": "Elimina una opción incorrecta y da una pista",
+    "params": {
+      "removeOptions": 1,
+      "hints": 1
+    },
+    "unlock": {
+      "type": "mastery",
+      "topic": "funciones",
+      "threshold": 0.9
+    },
+    "artSheet": "assets/cards/funcion_inversa.png"
+  },
+  {
+    "id": "hipotenusa_celeste",
+    "name": "Hipotenusa Celeste",
+    "type": "ataque",
+    "topic": "pitagoras",
+    "rarity": "epica",
+    "icon": "pyth",
+    "effect": "Rayo que ignora el escudo; +3 si la pregunta era un reto animado",
+    "params": {
+      "damage": 8,
+      "piercing": true,
+      "bonusIfGraph": 3
+    },
+    "unlock": {
+      "type": "mastery",
+      "topic": "pitagoras",
+      "threshold": 0.9
+    },
+    "artSheet": "assets/cards/hipotenusa_celeste.png"
+  },
+  {
+    "id": "discriminante",
+    "name": "Discriminante",
+    "type": "ataque",
+    "topic": "ecuacionesCuadraticas",
+    "rarity": "epica",
+    "icon": "root",
+    "effect": "Daño y quema: 3 de daño al final de los 2 turnos siguientes",
+    "params": {
+      "damage": 6,
+      "burn": {
+        "n": 3,
+        "turns": 2
+      }
+    },
+    "unlock": {
+      "type": "mastery",
+      "topic": "ecuacionesCuadraticas",
+      "threshold": 0.9
+    },
+    "artSheet": "assets/cards/discriminante.png"
+  },
+  {
+    "id": "anillo_del_cero",
+    "name": "Anillo del Cero",
+    "type": "reliquia",
+    "topic": null,
+    "rarity": "epica",
+    "icon": "shield",
+    "effect": "El primer fallo de cada combate no hiere",
+    "params": {
+      "passive": "firstMissFree"
+    },
+    "unlock": {
+      "type": "drop",
+      "source": "rey_irracional"
+    },
+    "artSheet": "assets/cards/anillo_del_cero.png"
+  },
+  {
+    "id": "lente_del_vertice",
+    "name": "Lente del Vértice",
+    "type": "reliquia",
+    "topic": null,
+    "rarity": "epica",
+    "icon": "star",
+    "effect": "Las preguntas gráficas dan 1 de daño extra",
+    "params": {
+      "passive": "graphDamage",
+      "value": 1
+    },
+    "unlock": {
+      "type": "drop",
+      "source": "hidra_cuadratica"
+    },
+    "artSheet": "assets/cards/lente_del_vertice.png"
+  },
+  {
+    "id": "brujula_de_escala",
+    "name": "Brújula de Escala",
+    "type": "reliquia",
+    "topic": null,
+    "rarity": "epica",
+    "icon": "ruler",
+    "effect": "Las preguntas de conversión muestran las unidades equivalentes",
+    "params": {
+      "passive": "showUnits"
+    },
+    "unlock": {
+      "type": "drop",
+      "source": "coloso_medidas"
+    },
+    "artSheet": "assets/cards/brujula_de_escala.png"
+  },
+  {
+    "id": "ecuacion_restaurada",
+    "name": "Ecuación Restaurada",
+    "type": "reliquia",
+    "topic": null,
+    "rarity": "legendaria",
+    "icon": "eq",
+    "effect": "Recuperas 1 de vida por cada 3 aciertos seguidos",
+    "params": {
+      "passive": "streakHeal",
+      "every": 3,
+      "heal": 1
+    },
+    "unlock": {
+      "type": "drop",
+      "source": "el_divisor"
+    },
+    "artSheet": "assets/cards/ecuacion_restaurada.png"
+  }
+]

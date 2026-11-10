@@ -1,0 +1,206 @@
+[
+  {
+    "id": "projectile",
+    "name": "Proyectil",
+    "topic": "cuadratica",
+    "world": "bosque",
+    "plane": true,
+    "hero": "mara",
+    "monster": "arquero_parabolico",
+    "question": "y = -x² + 2h·x; ¿cuál es la altura máxima?",
+    "params": {
+      "h": [
+        3,
+        5
+      ],
+      "answerFormula": "k = h²",
+      "options": [
+        "k",
+        "h",
+        "2h",
+        "k + h"
+      ]
+    },
+    "animation": [
+      "La heroína tensa el arco (ataque, cuadro 2)",
+      "La flecha sale por la parábola de la respuesta elegida: y = -x² + 2·√k·x",
+      "Deja un rastro de puntos y marca la cima",
+      "Si k es correcto, aterriza exactamente sobre el monstruo; si no, cae antes o se pasa",
+      "Al terminar se dibuja la parábola correcta con su vértice como explicación"
+    ],
+    "success": "El monstruo recibe el daño y muestra el número",
+    "fail": "La flecha se clava en el suelo y el monstruo contraataca"
+  },
+  {
+    "id": "aim-point-click",
+    "name": "Ubicar un punto",
+    "topic": "plano",
+    "world": "ciudadela",
+    "plane": true,
+    "hero": "lia",
+    "monster": "caballero_coordenado",
+    "question": "Lanza el hechizo al punto (x, y): el jugador toca la intersección en el plano",
+    "params": {
+      "x": [
+        2,
+        9
+      ],
+      "y": [
+        1,
+        5
+      ]
+    },
+    "animation": [
+      "El plano muestra una cuadrícula con ejes numerados",
+      "Al pasar el cursor se marca la intersección con sus coordenadas",
+      "El hechizo vuela en línea recta hasta el punto tocado",
+      "El monstruo está oculto en la niebla del punto correcto y aparece al acertar"
+    ],
+    "success": "La niebla se disipa y el hechizo golpea al monstruo",
+    "fail": "El hechizo estalla en vacío y el monstruo aparece en su lugar real"
+  },
+  {
+    "id": "aim-point-read",
+    "name": "Leer coordenadas",
+    "topic": "plano",
+    "world": "ciudadela",
+    "plane": true,
+    "hero": "lia",
+    "monster": "caballero_coordenado",
+    "question": "El monstruo está sobre una plataforma; el jugador elige sus coordenadas entre varias opciones",
+    "params": {
+      "distractors": [
+        "(y, x) invertido",
+        "x + 1",
+        "y + 1"
+      ]
+    },
+    "animation": [
+      "Se resalta la plataforma con líneas guía hasta los ejes",
+      "El hechizo vuela a las coordenadas elegidas",
+      "Si coinciden, golpea al monstruo"
+    ],
+    "success": "Impacto directo",
+    "fail": "El hechizo cae en otra plataforma y el monstruo ataca"
+  },
+  {
+    "id": "slope",
+    "name": "Pendiente de la rampa",
+    "topic": "lineal",
+    "world": "bosque",
+    "plane": true,
+    "hero": "mara",
+    "monster": "serpiente_pendiente",
+    "question": "La rampa pasa por A y B; ¿cuál es la pendiente?",
+    "params": {
+      "m": [
+        1,
+        3
+      ],
+      "run": [
+        2,
+        3
+      ]
+    },
+    "animation": [
+      "Se dibuja la recta por los puntos A y B",
+      "La heroína sube por una rampa de luz con la pendiente elegida",
+      "Si es la correcta, llega justo a B y ataca a la serpiente",
+      "Si no, la rampa termina en el aire o bajo el punto y la heroína cae"
+    ],
+    "success": "La heroína llega a B y golpea",
+    "fail": "La rampa de luz no llega: caída y mordida"
+  },
+  {
+    "id": "ladder",
+    "name": "Escalera de Pitágoras",
+    "topic": "pitagoras",
+    "world": "ciudadela",
+    "plane": false,
+    "hero": "teo",
+    "monster": "troll_puente",
+    "question": "Muro de altura a, base b: ¿cuánto mide la escalera?",
+    "params": {
+      "triples": [
+        [
+          3,
+          4,
+          5
+        ],
+        [
+          6,
+          8,
+          10
+        ],
+        [
+          5,
+          12,
+          13
+        ]
+      ],
+      "options": [
+        "c",
+        "a + b",
+        "c + 1",
+        "c - 1"
+      ]
+    },
+    "animation": [
+      "La escalera gira desde el suelo con el largo elegido",
+      "Se apoya en el muro: si es corta, queda bajo el borde; si es larga, pasa de largo y resbala",
+      "Si es justa, el héroe sube peldaño a peldaño y ataca al troll"
+    ],
+    "success": "La escalera encaja en el borde",
+    "fail": "La escalera resbala o no alcanza"
+  },
+  {
+    "id": "translate",
+    "name": "Traslación",
+    "topic": "transformaciones",
+    "world": "ciudadela",
+    "plane": true,
+    "hero": "lia",
+    "monster": "espejo_maldito",
+    "question": "El triángulo se traslada (dx, dy); ¿dónde queda el vértice A?",
+    "params": {
+      "dx": [
+        2,
+        5
+      ],
+      "dy": [
+        0,
+        2
+      ]
+    },
+    "animation": [
+      "El triángulo se desliza sobre el plano hasta la posición elegida",
+      "Si es correcta, encaja en su contorno y se activa un rayo",
+      "Si no, aterriza fuera de lugar y se rompe en pedazos"
+    ],
+    "success": "El rayo golpea al Espejo Maldito",
+    "fail": "La figura se rompe y el espejo contraataca"
+  },
+  {
+    "id": "reflect",
+    "name": "Reflexión",
+    "topic": "transformaciones",
+    "world": "ciudadela",
+    "plane": true,
+    "hero": "lia",
+    "monster": "espejo_maldito",
+    "question": "Refleja el triángulo sobre la línea x = m; ¿dónde queda A?",
+    "params": {
+      "m": [
+        4,
+        6
+      ]
+    },
+    "animation": [
+      "El triángulo se voltea sobre la línea como una hoja al girar",
+      "Termina en la posición elegida",
+      "Si coincide con el reflejo exacto, activa un rayo"
+    ],
+    "success": "El reflejo exacto abre el rayo",
+    "fail": "La figura cae en otro sitio y se rompe"
+  }
+]

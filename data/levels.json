@@ -1,0 +1,1090 @@
+[
+  {
+    "id": "zona_reales",
+    "world": "cavernas",
+    "topic": "reales",
+    "name": "Números reales",
+    "order": 1,
+    "intro": "dialogo.reales.intro",
+    "rooms": [
+      {
+        "type": "combat",
+        "monster": "slime_fraccionario",
+        "difficulty": 1,
+        "questions": 3
+      },
+      {
+        "type": "combat",
+        "monster": "slime_fraccionario",
+        "difficulty": 2,
+        "questions": 3
+      },
+      {
+        "type": "treasure"
+      },
+      {
+        "type": "combat",
+        "monster": "slime_fraccionario",
+        "difficulty": 3,
+        "questions": 4
+      },
+      {
+        "type": "combat",
+        "monster": "slime_fraccionario",
+        "difficulty": 4,
+        "questions": 5,
+        "miniBoss": true,
+        "hpMultiplier": 1.5
+      }
+    ],
+    "optional": false,
+    "unlocks": [
+      "zona_porcentajes"
+    ],
+    "masteryToClear": 0.7
+  },
+  {
+    "id": "zona_porcentajes",
+    "world": "cavernas",
+    "topic": "porcentajes",
+    "name": "Porcentajes y variación",
+    "order": 2,
+    "intro": "dialogo.porcentajes.intro",
+    "rooms": [
+      {
+        "type": "combat",
+        "monster": "goblin_mercader",
+        "difficulty": 1,
+        "questions": 3
+      },
+      {
+        "type": "combat",
+        "monster": "goblin_mercader",
+        "difficulty": 2,
+        "questions": 3
+      },
+      {
+        "type": "rest"
+      },
+      {
+        "type": "combat",
+        "monster": "goblin_mercader",
+        "difficulty": 3,
+        "questions": 4
+      },
+      {
+        "type": "combat",
+        "monster": "goblin_mercader",
+        "difficulty": 4,
+        "questions": 5,
+        "miniBoss": true,
+        "hpMultiplier": 1.5
+      }
+    ],
+    "optional": false,
+    "unlocks": [
+      "zona_factorizacion"
+    ],
+    "masteryToClear": 0.7
+  },
+  {
+    "id": "zona_factorizacion",
+    "world": "cavernas",
+    "topic": "factorizacion",
+    "name": "Factorización",
+    "order": 3,
+    "intro": "dialogo.factorizacion.intro",
+    "rooms": [
+      {
+        "type": "combat",
+        "monster": "golem_bloques",
+        "difficulty": 1,
+        "questions": 3
+      },
+      {
+        "type": "combat",
+        "monster": "golem_bloques",
+        "difficulty": 2,
+        "questions": 3
+      },
+      {
+        "type": "treasure"
+      },
+      {
+        "type": "combat",
+        "monster": "golem_bloques",
+        "difficulty": 3,
+        "questions": 4
+      },
+      {
+        "type": "combat",
+        "monster": "golem_bloques",
+        "difficulty": 4,
+        "questions": 5,
+        "miniBoss": true,
+        "hpMultiplier": 1.5
+      }
+    ],
+    "optional": false,
+    "unlocks": [
+      "parcial_cavernas"
+    ],
+    "masteryToClear": 0.7
+  },
+  {
+    "id": "parcial_cavernas",
+    "world": "cavernas",
+    "topic": "parcial1",
+    "name": "Parcial 1",
+    "order": 4,
+    "boss": true,
+    "intro": "dialogo.parcial1.intro",
+    "rooms": [
+      {
+        "type": "combat",
+        "monster": "slime_fraccionario",
+        "difficulty": 2,
+        "questions": 3
+      },
+      {
+        "type": "rest"
+      },
+      {
+        "type": "combat",
+        "monster": "golem_bloques",
+        "difficulty": 3,
+        "questions": 4
+      },
+      {
+        "type": "treasure"
+      },
+      {
+        "type": "boss",
+        "monster": "rey_irracional",
+        "phases": [
+          "reales",
+          "porcentajes",
+          "factorizacion"
+        ],
+        "questions": 9,
+        "difficulty": 4
+      }
+    ],
+    "unlocks": [
+      "zona_ecuaciones"
+    ],
+    "requires": [
+      "zona_reales",
+      "zona_porcentajes",
+      "zona_factorizacion"
+    ]
+  },
+  {
+    "id": "zona_ecuaciones",
+    "world": "bosque",
+    "topic": "ecuaciones",
+    "name": "Ecuaciones",
+    "order": 5,
+    "intro": "dialogo.ecuaciones.intro",
+    "rooms": [
+      {
+        "type": "combat",
+        "monster": "murcielago_balanza",
+        "difficulty": 1,
+        "questions": 3
+      },
+      {
+        "type": "combat",
+        "monster": "murcielago_balanza",
+        "difficulty": 2,
+        "questions": 3
+      },
+      {
+        "type": "treasure"
+      },
+      {
+        "type": "combat",
+        "monster": "murcielago_balanza",
+        "difficulty": 3,
+        "questions": 4
+      },
+      {
+        "type": "combat",
+        "monster": "murcielago_balanza",
+        "difficulty": 4,
+        "questions": 5,
+        "miniBoss": true,
+        "hpMultiplier": 1.5
+      }
+    ],
+    "optional": false,
+    "unlocks": [
+      "zona_funciones"
+    ],
+    "masteryToClear": 0.7
+  },
+  {
+    "id": "zona_funciones",
+    "world": "bosque",
+    "topic": "funciones",
+    "name": "Funciones y gráficas",
+    "order": 6,
+    "intro": "dialogo.funciones.intro",
+    "rooms": [
+      {
+        "type": "combat",
+        "monster": "espectro_graficador",
+        "difficulty": 1,
+        "questions": 3
+      },
+      {
+        "type": "combat",
+        "monster": "espectro_graficador",
+        "difficulty": 2,
+        "questions": 3
+      },
+      {
+        "type": "rest"
+      },
+      {
+        "type": "combat",
+        "monster": "espectro_graficador",
+        "difficulty": 3,
+        "questions": 4
+      },
+      {
+        "type": "combat",
+        "monster": "espectro_graficador",
+        "difficulty": 4,
+        "questions": 5,
+        "miniBoss": true,
+        "hpMultiplier": 1.5
+      }
+    ],
+    "optional": false,
+    "unlocks": [
+      "zona_lineal"
+    ],
+    "masteryToClear": 0.7
+  },
+  {
+    "id": "zona_lineal",
+    "world": "bosque",
+    "topic": "lineal",
+    "name": "Función lineal",
+    "order": 7,
+    "intro": "dialogo.lineal.intro",
+    "rooms": [
+      {
+        "type": "combat",
+        "monster": "serpiente_pendiente",
+        "difficulty": 1,
+        "questions": 3
+      },
+      {
+        "type": "combat",
+        "monster": "serpiente_pendiente",
+        "difficulty": 2,
+        "questions": 3
+      },
+      {
+        "type": "treasure"
+      },
+      {
+        "type": "combat",
+        "monster": "serpiente_pendiente",
+        "difficulty": 3,
+        "questions": 4
+      },
+      {
+        "type": "combat",
+        "monster": "serpiente_pendiente",
+        "difficulty": 4,
+        "questions": 5,
+        "miniBoss": true,
+        "hpMultiplier": 1.5
+      }
+    ],
+    "optional": false,
+    "unlocks": [
+      "zona_sistemas"
+    ],
+    "masteryToClear": 0.7
+  },
+  {
+    "id": "zona_sistemas",
+    "world": "bosque",
+    "topic": "sistemas",
+    "name": "Sistemas de ecuaciones",
+    "order": 8,
+    "intro": "dialogo.sistemas.intro",
+    "rooms": [
+      {
+        "type": "combat",
+        "monster": "gemelos_intersecados",
+        "difficulty": 1,
+        "questions": 3
+      },
+      {
+        "type": "combat",
+        "monster": "gemelos_intersecados",
+        "difficulty": 2,
+        "questions": 3
+      },
+      {
+        "type": "rest"
+      },
+      {
+        "type": "combat",
+        "monster": "gemelos_intersecados",
+        "difficulty": 3,
+        "questions": 4
+      },
+      {
+        "type": "combat",
+        "monster": "gemelos_intersecados",
+        "difficulty": 4,
+        "questions": 5,
+        "miniBoss": true,
+        "hpMultiplier": 1.5
+      }
+    ],
+    "optional": false,
+    "unlocks": [
+      "zona_cuadratica"
+    ],
+    "masteryToClear": 0.7
+  },
+  {
+    "id": "zona_cuadratica",
+    "world": "bosque",
+    "topic": "cuadratica",
+    "name": "Función cuadrática",
+    "order": 9,
+    "intro": "dialogo.cuadratica.intro",
+    "rooms": [
+      {
+        "type": "combat",
+        "monster": "arquero_parabolico",
+        "difficulty": 1,
+        "questions": 3
+      },
+      {
+        "type": "combat",
+        "monster": "arquero_parabolico",
+        "difficulty": 2,
+        "questions": 3
+      },
+      {
+        "type": "treasure"
+      },
+      {
+        "type": "combat",
+        "monster": "arquero_parabolico",
+        "difficulty": 3,
+        "questions": 4
+      },
+      {
+        "type": "combat",
+        "monster": "arquero_parabolico",
+        "difficulty": 4,
+        "questions": 5,
+        "miniBoss": true,
+        "hpMultiplier": 1.5
+      }
+    ],
+    "optional": false,
+    "unlocks": [
+      "zona_ecuacionesCuadraticas"
+    ],
+    "masteryToClear": 0.7
+  },
+  {
+    "id": "zona_ecuacionesCuadraticas",
+    "world": "bosque",
+    "topic": "ecuacionesCuadraticas",
+    "name": "Ecuaciones cuadráticas",
+    "order": 10,
+    "intro": "dialogo.ecuacionesCuadraticas.intro",
+    "rooms": [
+      {
+        "type": "combat",
+        "monster": "dragon_raices",
+        "difficulty": 1,
+        "questions": 3
+      },
+      {
+        "type": "combat",
+        "monster": "dragon_raices",
+        "difficulty": 2,
+        "questions": 3
+      },
+      {
+        "type": "rest"
+      },
+      {
+        "type": "combat",
+        "monster": "dragon_raices",
+        "difficulty": 3,
+        "questions": 4
+      },
+      {
+        "type": "combat",
+        "monster": "dragon_raices",
+        "difficulty": 4,
+        "questions": 5,
+        "miniBoss": true,
+        "hpMultiplier": 1.5
+      }
+    ],
+    "optional": false,
+    "unlocks": [
+      "zona_ondas",
+      "parcial_bosque"
+    ],
+    "masteryToClear": 0.7
+  },
+  {
+    "id": "zona_ondas",
+    "world": "bosque",
+    "topic": "ondas",
+    "name": "Ondas (opcional)",
+    "order": 11,
+    "intro": "dialogo.ondas.intro",
+    "rooms": [
+      {
+        "type": "combat",
+        "monster": "sirena_ondas",
+        "difficulty": 1,
+        "questions": 3
+      },
+      {
+        "type": "combat",
+        "monster": "sirena_ondas",
+        "difficulty": 2,
+        "questions": 3
+      },
+      {
+        "type": "treasure"
+      },
+      {
+        "type": "combat",
+        "monster": "sirena_ondas",
+        "difficulty": 3,
+        "questions": 4
+      },
+      {
+        "type": "combat",
+        "monster": "sirena_ondas",
+        "difficulty": 4,
+        "questions": 5,
+        "miniBoss": true,
+        "hpMultiplier": 1.5
+      }
+    ],
+    "optional": true,
+    "unlocks": [],
+    "masteryToClear": 0.7
+  },
+  {
+    "id": "parcial_bosque",
+    "world": "bosque",
+    "topic": "parcial2",
+    "name": "Parcial 2",
+    "order": 12,
+    "boss": true,
+    "intro": "dialogo.parcial2.intro",
+    "rooms": [
+      {
+        "type": "combat",
+        "monster": "murcielago_balanza",
+        "difficulty": 2,
+        "questions": 3
+      },
+      {
+        "type": "rest"
+      },
+      {
+        "type": "combat",
+        "monster": "sirena_ondas",
+        "difficulty": 3,
+        "questions": 4
+      },
+      {
+        "type": "treasure"
+      },
+      {
+        "type": "boss",
+        "monster": "hidra_cuadratica",
+        "phases": [
+          "ecuaciones",
+          "lineal",
+          "sistemas",
+          "cuadratica"
+        ],
+        "questions": 12,
+        "difficulty": 4
+      }
+    ],
+    "unlocks": [
+      "zona_medidas"
+    ],
+    "requires": [
+      "zona_ecuaciones",
+      "zona_funciones",
+      "zona_lineal",
+      "zona_sistemas",
+      "zona_cuadratica",
+      "zona_ecuacionesCuadraticas"
+    ]
+  },
+  {
+    "id": "zona_medidas",
+    "world": "ciudadela",
+    "topic": "medidas",
+    "name": "Medidas, áreas y volúmenes",
+    "order": 13,
+    "intro": "dialogo.medidas.intro",
+    "rooms": [
+      {
+        "type": "combat",
+        "monster": "cubo_gelatinoso",
+        "difficulty": 1,
+        "questions": 3
+      },
+      {
+        "type": "combat",
+        "monster": "cubo_gelatinoso",
+        "difficulty": 2,
+        "questions": 3
+      },
+      {
+        "type": "treasure"
+      },
+      {
+        "type": "combat",
+        "monster": "cubo_gelatinoso",
+        "difficulty": 3,
+        "questions": 4
+      },
+      {
+        "type": "combat",
+        "monster": "cubo_gelatinoso",
+        "difficulty": 4,
+        "questions": 5,
+        "miniBoss": true,
+        "hpMultiplier": 1.5
+      }
+    ],
+    "optional": false,
+    "unlocks": [
+      "zona_pitagoras"
+    ],
+    "masteryToClear": 0.7
+  },
+  {
+    "id": "zona_pitagoras",
+    "world": "ciudadela",
+    "topic": "pitagoras",
+    "name": "Pitágoras",
+    "order": 14,
+    "intro": "dialogo.pitagoras.intro",
+    "rooms": [
+      {
+        "type": "combat",
+        "monster": "troll_puente",
+        "difficulty": 1,
+        "questions": 3
+      },
+      {
+        "type": "combat",
+        "monster": "troll_puente",
+        "difficulty": 2,
+        "questions": 3
+      },
+      {
+        "type": "rest"
+      },
+      {
+        "type": "combat",
+        "monster": "troll_puente",
+        "difficulty": 3,
+        "questions": 4
+      },
+      {
+        "type": "combat",
+        "monster": "troll_puente",
+        "difficulty": 4,
+        "questions": 5,
+        "miniBoss": true,
+        "hpMultiplier": 1.5
+      }
+    ],
+    "optional": false,
+    "unlocks": [
+      "zona_tales"
+    ],
+    "masteryToClear": 0.7
+  },
+  {
+    "id": "zona_tales",
+    "world": "ciudadela",
+    "topic": "tales",
+    "name": "Tales y semejanza",
+    "order": 15,
+    "intro": "dialogo.tales.intro",
+    "rooms": [
+      {
+        "type": "combat",
+        "monster": "gnomo_sombras",
+        "difficulty": 1,
+        "questions": 3
+      },
+      {
+        "type": "combat",
+        "monster": "gnomo_sombras",
+        "difficulty": 2,
+        "questions": 3
+      },
+      {
+        "type": "treasure"
+      },
+      {
+        "type": "combat",
+        "monster": "gnomo_sombras",
+        "difficulty": 3,
+        "questions": 4
+      },
+      {
+        "type": "combat",
+        "monster": "gnomo_sombras",
+        "difficulty": 4,
+        "questions": 5,
+        "miniBoss": true,
+        "hpMultiplier": 1.5
+      }
+    ],
+    "optional": false,
+    "unlocks": [
+      "zona_unidades"
+    ],
+    "masteryToClear": 0.7
+  },
+  {
+    "id": "zona_unidades",
+    "world": "ciudadela",
+    "topic": "unidades",
+    "name": "Sistemas métricos y conversión",
+    "order": 16,
+    "intro": "dialogo.unidades.intro",
+    "rooms": [
+      {
+        "type": "combat",
+        "monster": "alquimista_sobrecargado",
+        "difficulty": 1,
+        "questions": 3
+      },
+      {
+        "type": "combat",
+        "monster": "alquimista_sobrecargado",
+        "difficulty": 2,
+        "questions": 3
+      },
+      {
+        "type": "rest"
+      },
+      {
+        "type": "combat",
+        "monster": "alquimista_sobrecargado",
+        "difficulty": 3,
+        "questions": 4
+      },
+      {
+        "type": "combat",
+        "monster": "alquimista_sobrecargado",
+        "difficulty": 4,
+        "questions": 5,
+        "miniBoss": true,
+        "hpMultiplier": 1.5
+      }
+    ],
+    "optional": false,
+    "unlocks": [
+      "zona_transformaciones"
+    ],
+    "masteryToClear": 0.7
+  },
+  {
+    "id": "zona_transformaciones",
+    "world": "ciudadela",
+    "topic": "transformaciones",
+    "name": "Traslación, rotación y reflexión",
+    "order": 17,
+    "intro": "dialogo.transformaciones.intro",
+    "rooms": [
+      {
+        "type": "combat",
+        "monster": "espejo_maldito",
+        "difficulty": 1,
+        "questions": 3
+      },
+      {
+        "type": "combat",
+        "monster": "espejo_maldito",
+        "difficulty": 2,
+        "questions": 3
+      },
+      {
+        "type": "treasure"
+      },
+      {
+        "type": "combat",
+        "monster": "espejo_maldito",
+        "difficulty": 3,
+        "questions": 4
+      },
+      {
+        "type": "combat",
+        "monster": "espejo_maldito",
+        "difficulty": 4,
+        "questions": 5,
+        "miniBoss": true,
+        "hpMultiplier": 1.5
+      }
+    ],
+    "optional": false,
+    "unlocks": [
+      "zona_plano"
+    ],
+    "masteryToClear": 0.7
+  },
+  {
+    "id": "zona_plano",
+    "world": "ciudadela",
+    "topic": "plano",
+    "name": "Figuras en el plano cartesiano",
+    "order": 18,
+    "intro": "dialogo.plano.intro",
+    "rooms": [
+      {
+        "type": "combat",
+        "monster": "caballero_coordenado",
+        "difficulty": 1,
+        "questions": 3
+      },
+      {
+        "type": "combat",
+        "monster": "caballero_coordenado",
+        "difficulty": 2,
+        "questions": 3
+      },
+      {
+        "type": "rest"
+      },
+      {
+        "type": "combat",
+        "monster": "caballero_coordenado",
+        "difficulty": 3,
+        "questions": 4
+      },
+      {
+        "type": "combat",
+        "monster": "caballero_coordenado",
+        "difficulty": 4,
+        "questions": 5,
+        "miniBoss": true,
+        "hpMultiplier": 1.5
+      }
+    ],
+    "optional": false,
+    "unlocks": [
+      "parcial_ciudadela"
+    ],
+    "masteryToClear": 0.7
+  },
+  {
+    "id": "parcial_ciudadela",
+    "world": "ciudadela",
+    "topic": "parcial3",
+    "name": "Parcial 3",
+    "order": 19,
+    "boss": true,
+    "intro": "dialogo.parcial3.intro",
+    "rooms": [
+      {
+        "type": "combat",
+        "monster": "cubo_gelatinoso",
+        "difficulty": 2,
+        "questions": 3
+      },
+      {
+        "type": "rest"
+      },
+      {
+        "type": "combat",
+        "monster": "caballero_coordenado",
+        "difficulty": 3,
+        "questions": 4
+      },
+      {
+        "type": "treasure"
+      },
+      {
+        "type": "boss",
+        "monster": "coloso_medidas",
+        "phases": [
+          "medidas",
+          "pitagoras",
+          "tales",
+          "unidades",
+          "transformaciones",
+          "plano"
+        ],
+        "questions": 15,
+        "difficulty": 4
+      }
+    ],
+    "unlocks": [
+      "final"
+    ],
+    "requires": [
+      "zona_medidas",
+      "zona_pitagoras",
+      "zona_tales",
+      "zona_unidades",
+      "zona_transformaciones",
+      "zona_plano"
+    ]
+  },
+  {
+    "id": "final",
+    "world": "vacio",
+    "topic": "final",
+    "name": "El Divisor",
+    "order": 20,
+    "boss": true,
+    "final": true,
+    "intro": "dialogo.final.intro",
+    "rooms": [
+      {
+        "type": "combat",
+        "monster": "dragon_raices",
+        "difficulty": 3,
+        "questions": 4
+      },
+      {
+        "type": "rest"
+      },
+      {
+        "type": "combat",
+        "monster": "troll_puente",
+        "difficulty": 3,
+        "questions": 4
+      },
+      {
+        "type": "treasure"
+      },
+      {
+        "type": "boss",
+        "monster": "el_divisor",
+        "phases": [
+          "porcentajes",
+          "ecuaciones",
+          "cuadratica",
+          "pitagoras",
+          "plano"
+        ],
+        "questions": 20,
+        "difficulty": 4
+      }
+    ],
+    "requires": [
+      "parcial_cavernas",
+      "parcial_bosque",
+      "parcial_ciudadela"
+    ]
+  },
+  {
+    "id": "campo_coordenadas",
+    "world": "ciudadela",
+    "topic": "plano",
+    "name": "Campo de coordenadas",
+    "order": 21,
+    "bonus": true,
+    "requires": [
+      "zona_plano"
+    ],
+    "intro": "dialogo.plano.intro",
+    "rooms": [
+      {
+        "type": "combat",
+        "monster": "caballero_coordenado",
+        "difficulty": 1,
+        "questions": 3,
+        "stage": "aim-point-click"
+      },
+      {
+        "type": "combat",
+        "monster": "caballero_coordenado",
+        "difficulty": 2,
+        "questions": 3,
+        "stage": "aim-point-read"
+      },
+      {
+        "type": "combat",
+        "monster": "espejo_maldito",
+        "difficulty": 2,
+        "questions": 3,
+        "stage": "translate"
+      },
+      {
+        "type": "combat",
+        "monster": "espejo_maldito",
+        "difficulty": 3,
+        "questions": 4,
+        "stage": "reflect"
+      },
+      {
+        "type": "combat",
+        "monster": "caballero_coordenado",
+        "difficulty": 4,
+        "questions": 5,
+        "stage": "aim-point-click",
+        "miniBoss": true,
+        "hpMultiplier": 1.5
+      }
+    ]
+  },
+  {
+    "id": "campo_proyectiles",
+    "world": "bosque",
+    "topic": "cuadratica",
+    "name": "Campo de proyectiles",
+    "order": 22,
+    "bonus": true,
+    "requires": [
+      "zona_cuadratica"
+    ],
+    "intro": "dialogo.cuadratica.intro",
+    "rooms": [
+      {
+        "type": "combat",
+        "monster": "arquero_parabolico",
+        "difficulty": 1,
+        "questions": 3,
+        "stage": "projectile"
+      },
+      {
+        "type": "combat",
+        "monster": "arquero_parabolico",
+        "difficulty": 2,
+        "questions": 3,
+        "stage": "projectile"
+      },
+      {
+        "type": "combat",
+        "monster": "arquero_parabolico",
+        "difficulty": 3,
+        "questions": 4,
+        "stage": "projectile"
+      },
+      {
+        "type": "combat",
+        "monster": "arquero_parabolico",
+        "difficulty": 4,
+        "questions": 5,
+        "stage": "projectile",
+        "miniBoss": true,
+        "hpMultiplier": 1.5
+      }
+    ]
+  },
+  {
+    "id": "rampa_pendientes",
+    "world": "bosque",
+    "topic": "lineal",
+    "name": "Rampa de pendientes",
+    "order": 23,
+    "bonus": true,
+    "requires": [
+      "zona_lineal"
+    ],
+    "intro": "dialogo.lineal.intro",
+    "rooms": [
+      {
+        "type": "combat",
+        "monster": "serpiente_pendiente",
+        "difficulty": 1,
+        "questions": 3,
+        "stage": "slope"
+      },
+      {
+        "type": "combat",
+        "monster": "serpiente_pendiente",
+        "difficulty": 2,
+        "questions": 3,
+        "stage": "slope"
+      },
+      {
+        "type": "combat",
+        "monster": "serpiente_pendiente",
+        "difficulty": 3,
+        "questions": 4,
+        "stage": "slope"
+      },
+      {
+        "type": "combat",
+        "monster": "serpiente_pendiente",
+        "difficulty": 4,
+        "questions": 5,
+        "stage": "slope",
+        "miniBoss": true,
+        "hpMultiplier": 1.5
+      }
+    ]
+  },
+  {
+    "id": "puente_pitagoras",
+    "world": "ciudadela",
+    "topic": "pitagoras",
+    "name": "Puente de Pitágoras",
+    "order": 24,
+    "bonus": true,
+    "requires": [
+      "zona_pitagoras"
+    ],
+    "intro": "dialogo.pitagoras.intro",
+    "rooms": [
+      {
+        "type": "combat",
+        "monster": "troll_puente",
+        "difficulty": 1,
+        "questions": 3,
+        "stage": "ladder"
+      },
+      {
+        "type": "combat",
+        "monster": "troll_puente",
+        "difficulty": 2,
+        "questions": 3,
+        "stage": "ladder"
+      },
+      {
+        "type": "combat",
+        "monster": "troll_puente",
+        "difficulty": 3,
+        "questions": 4,
+        "stage": "ladder"
+      },
+      {
+        "type": "combat",
+        "monster": "troll_puente",
+        "difficulty": 4,
+        "questions": 5,
+        "stage": "ladder",
+        "miniBoss": true,
+        "hpMultiplier": 1.5
+      }
+    ]
+  }
+]

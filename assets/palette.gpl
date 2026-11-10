@@ -1,0 +1,45 @@
+GIMP Palette
+Name: Juego Mate
+Columns: 8
+#
+ 20  16  31  ui-ink #14101f
+ 35  28  54  ui-panel #231c36
+ 47  38  72  ui-panel2 #2f2648
+243 234 216  ui-paper #f3ead8
+169 159 192  ui-muted #a99fc0
+111 207 143  ui-ok #6fcf8f
+224  80  90  ui-bad #e0505a
+111 183 255  ui-hint #6fb7ff
+217  67  79  ui-hp #d9434f
+242 193  78  ui-xp #f2c14e
+ 95 139 255  ui-mana #5f8bff
+224 184  76  ui-gold #e0b84c
+ 18  15  31  cavernas-0 #120f1f
+ 31  43  58  cavernas-1 #1f2b3a
+ 47  74  92  cavernas-2 #2f4a5c
+ 79 125 138  cavernas-3 #4f7d8a
+143 193 181  cavernas-4 #8fc1b5
+242 165  65  cavernas-5 #f2a541
+255 215 122  cavernas-6 #ffd77a
+232 226 208  cavernas-7 #e8e2d0
+ 14  26  20  bosque-0 #0e1a14
+ 29  58  42  bosque-1 #1d3a2a
+ 47 107  63  bosque-2 #2f6b3f
+111 174  85  bosque-3 #6fae55
+196 232 122  bosque-4 #c4e87a
+232 106 181  bosque-5 #e86ab5
+138  63 158  bosque-6 #8a3f9e
+243 240 214  bosque-7 #f3f0d6
+ 21  18  31  ciudadela-0 #15121f
+ 43  39  64  ciudadela-1 #2b2740
+ 75  68 112  ciudadela-2 #4b4470
+138 130 184  ciudadela-3 #8a82b8
+214 207 168  ciudadela-4 #d6cfa8
+ 79 209 217  ciudadela-6 #4fd1d9
+244 241 230  ciudadela-7 #f4f1e6
+  5   3   8  vacio-0 #050308
+ 21  10  31  vacio-1 #150a1f
+ 42  18  69  vacio-2 #2a1245
+ 90  42 138  vacio-3 #5a2a8a
+176  79 209  vacio-4 #b04fd1
+255  79 121  vacio-5 #ff4f79

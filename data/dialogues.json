@@ -1,0 +1,202 @@
+{
+  "dialogo.reales.intro": [
+    {
+      "speaker": "Slime Fraccionario",
+      "text": "Soy un medio... ¡o un tercio! No me decido."
+    },
+    {
+      "speaker": "heroe",
+      "text": "Muy bien. Veamos qué sabes hacer."
+    }
+  ],
+  "dialogo.porcentajes.intro": [
+    {
+      "speaker": "Goblin Mercader",
+      "text": "¡Todo con 30% de descuento! Pero ¿cuánto pagas?"
+    },
+    {
+      "speaker": "heroe",
+      "text": "Muy bien. Veamos qué sabes hacer."
+    }
+  ],
+  "dialogo.factorizacion.intro": [
+    {
+      "speaker": "Golem de Bloques",
+      "text": "Para romperme tienes que separar mis factores."
+    },
+    {
+      "speaker": "heroe",
+      "text": "Muy bien. Veamos qué sabes hacer."
+    }
+  ],
+  "dialogo.parcial1.intro": [
+    {
+      "speaker": "Rey Irracional",
+      "text": "Mi reino no tiene fin ni patrón. ¡Cuenta, si puedes!"
+    },
+    {
+      "speaker": "heroe",
+      "text": "Muy bien. Veamos qué sabes hacer."
+    }
+  ],
+  "dialogo.ecuaciones.intro": [
+    {
+      "speaker": "Murciélago de la Balanza",
+      "text": "Lo que hagas de un lado, hazlo del otro."
+    },
+    {
+      "speaker": "heroe",
+      "text": "Muy bien. Veamos qué sabes hacer."
+    }
+  ],
+  "dialogo.funciones.intro": [
+    {
+      "speaker": "Espectro Graficador",
+      "text": "Dame una x y te muestro una y."
+    },
+    {
+      "speaker": "heroe",
+      "text": "Muy bien. Veamos qué sabes hacer."
+    }
+  ],
+  "dialogo.lineal.intro": [
+    {
+      "speaker": "Serpiente de Pendiente",
+      "text": "Subo dos, avanzo uno. ¿Qué tan empinada soy?"
+    },
+    {
+      "speaker": "heroe",
+      "text": "Muy bien. Veamos qué sabes hacer."
+    }
+  ],
+  "dialogo.sistemas.intro": [
+    {
+      "speaker": "Gemelos Intersecados",
+      "text": "Somos dos rectas, pero solo nos encontramos una vez."
+    },
+    {
+      "speaker": "heroe",
+      "text": "Muy bien. Veamos qué sabes hacer."
+    }
+  ],
+  "dialogo.cuadratica.intro": [
+    {
+      "speaker": "Arquero Parabólico",
+      "text": "Calcula mi vértice o la flecha te encuentra."
+    },
+    {
+      "speaker": "heroe",
+      "text": "Muy bien. Veamos qué sabes hacer."
+    }
+  ],
+  "dialogo.ecuacionesCuadraticas.intro": [
+    {
+      "speaker": "Dragón de Raíces",
+      "text": "Tengo dos raíces. ¿Las encuentras o te quemo?"
+    },
+    {
+      "speaker": "heroe",
+      "text": "Muy bien. Veamos qué sabes hacer."
+    }
+  ],
+  "dialogo.ondas.intro": [
+    {
+      "speaker": "Sirena de Ondas",
+      "text": "Mi canto sube y baja. ¿Cuánto mide mi amplitud?"
+    },
+    {
+      "speaker": "heroe",
+      "text": "Muy bien. Veamos qué sabes hacer."
+    }
+  ],
+  "dialogo.parcial2.intro": [
+    {
+      "speaker": "Hidra Cuadrática",
+      "text": "Corta una cabeza y salen dos soluciones."
+    },
+    {
+      "speaker": "heroe",
+      "text": "Muy bien. Veamos qué sabes hacer."
+    }
+  ],
+  "dialogo.medidas.intro": [
+    {
+      "speaker": "Cubo Gelatinoso",
+      "text": "¿Cuánto cabe dentro de mí?"
+    },
+    {
+      "speaker": "heroe",
+      "text": "Muy bien. Veamos qué sabes hacer."
+    }
+  ],
+  "dialogo.pitagoras.intro": [
+    {
+      "speaker": "Troll del Puente",
+      "text": "Para cruzar, dime cuánto mide la diagonal."
+    },
+    {
+      "speaker": "heroe",
+      "text": "Muy bien. Veamos qué sabes hacer."
+    }
+  ],
+  "dialogo.tales.intro": [
+    {
+      "speaker": "Gnomo de Sombras",
+      "text": "Mi sombra mide tanto, la torre mide cuánto?"
+    },
+    {
+      "speaker": "heroe",
+      "text": "Muy bien. Veamos qué sabes hacer."
+    }
+  ],
+  "dialogo.unidades.intro": [
+    {
+      "speaker": "Alquimista Sobrecargado",
+      "text": "Dame los mililitros en litros o la poción explota."
+    },
+    {
+      "speaker": "heroe",
+      "text": "Muy bien. Veamos qué sabes hacer."
+    }
+  ],
+  "dialogo.transformaciones.intro": [
+    {
+      "speaker": "Espejo Maldito",
+      "text": "Soy tu reflejo, pero al revés. ¿Dónde caigo?"
+    },
+    {
+      "speaker": "heroe",
+      "text": "Muy bien. Veamos qué sabes hacer."
+    }
+  ],
+  "dialogo.plano.intro": [
+    {
+      "speaker": "Caballero Coordenado",
+      "text": "Dime mi posición exacta: primero x, luego y."
+    },
+    {
+      "speaker": "heroe",
+      "text": "Muy bien. Veamos qué sabes hacer."
+    }
+  ],
+  "dialogo.parcial3.intro": [
+    {
+      "speaker": "Coloso de las Medidas",
+      "text": "Todo lo mido y nada se me escapa."
+    },
+    {
+      "speaker": "heroe",
+      "text": "Muy bien. Veamos qué sabes hacer."
+    }
+  ],
+  "dialogo.final.intro": [
+    {
+      "speaker": "El Divisor",
+      "text": "Todo lo divido. Todo lo reduzco a cero."
+    },
+    {
+      "speaker": "heroe",
+      "text": "Muy bien. Veamos qué sabes hacer."
+    }
+  ]
+}

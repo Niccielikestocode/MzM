@@ -1,0 +1,920 @@
+{
+  "slime_fraccionario": {
+    "file": "assets/sprites/slime_fraccionario.png",
+    "kind": "monster",
+    "facing": "left",
+    "frameWidth": 32,
+    "frameHeight": 32,
+    "cols": 5,
+    "rows": 4,
+    "anims": {
+      "idle": {
+        "row": 0,
+        "start": 0,
+        "frames": 4,
+        "fps": 6,
+        "loop": true
+      },
+      "attack": {
+        "row": 1,
+        "start": 5,
+        "frames": 4,
+        "fps": 10,
+        "loop": false
+      },
+      "hurt": {
+        "row": 2,
+        "start": 10,
+        "frames": 2,
+        "fps": 8,
+        "loop": false
+      },
+      "die": {
+        "row": 3,
+        "start": 15,
+        "frames": 5,
+        "fps": 8,
+        "loop": false
+      }
+    }
+  },
+  "goblin_mercader": {
+    "file": "assets/sprites/goblin_mercader.png",
+    "kind": "monster",
+    "facing": "left",
+    "frameWidth": 32,
+    "frameHeight": 32,
+    "cols": 5,
+    "rows": 4,
+    "anims": {
+      "idle": {
+        "row": 0,
+        "start": 0,
+        "frames": 4,
+        "fps": 6,
+        "loop": true
+      },
+      "attack": {
+        "row": 1,
+        "start": 5,
+        "frames": 4,
+        "fps": 10,
+        "loop": false
+      },
+      "hurt": {
+        "row": 2,
+        "start": 10,
+        "frames": 2,
+        "fps": 8,
+        "loop": false
+      },
+      "die": {
+        "row": 3,
+        "start": 15,
+        "frames": 5,
+        "fps": 8,
+        "loop": false
+      }
+    }
+  },
+  "golem_bloques": {
+    "file": "assets/sprites/golem_bloques.png",
+    "kind": "monster",
+    "facing": "left",
+    "frameWidth": 32,
+    "frameHeight": 32,
+    "cols": 5,
+    "rows": 4,
+    "anims": {
+      "idle": {
+        "row": 0,
+        "start": 0,
+        "frames": 4,
+        "fps": 6,
+        "loop": true
+      },
+      "attack": {
+        "row": 1,
+        "start": 5,
+        "frames": 4,
+        "fps": 10,
+        "loop": false
+      },
+      "hurt": {
+        "row": 2,
+        "start": 10,
+        "frames": 2,
+        "fps": 8,
+        "loop": false
+      },
+      "die": {
+        "row": 3,
+        "start": 15,
+        "frames": 5,
+        "fps": 8,
+        "loop": false
+      }
+    }
+  },
+  "rey_irracional": {
+    "file": "assets/sprites/rey_irracional.png",
+    "kind": "monster",
+    "facing": "left",
+    "frameWidth": 64,
+    "frameHeight": 64,
+    "cols": 5,
+    "rows": 4,
+    "anims": {
+      "idle": {
+        "row": 0,
+        "start": 0,
+        "frames": 4,
+        "fps": 6,
+        "loop": true
+      },
+      "attack": {
+        "row": 1,
+        "start": 5,
+        "frames": 4,
+        "fps": 10,
+        "loop": false
+      },
+      "hurt": {
+        "row": 2,
+        "start": 10,
+        "frames": 2,
+        "fps": 8,
+        "loop": false
+      },
+      "die": {
+        "row": 3,
+        "start": 15,
+        "frames": 5,
+        "fps": 8,
+        "loop": false
+      }
+    }
+  },
+  "murcielago_balanza": {
+    "file": "assets/sprites/murcielago_balanza.png",
+    "kind": "monster",
+    "facing": "left",
+    "frameWidth": 32,
+    "frameHeight": 32,
+    "cols": 5,
+    "rows": 4,
+    "anims": {
+      "idle": {
+        "row": 0,
+        "start": 0,
+        "frames": 4,
+        "fps": 6,
+        "loop": true
+      },
+      "attack": {
+        "row": 1,
+        "start": 5,
+        "frames": 4,
+        "fps": 10,
+        "loop": false
+      },
+      "hurt": {
+        "row": 2,
+        "start": 10,
+        "frames": 2,
+        "fps": 8,
+        "loop": false
+      },
+      "die": {
+        "row": 3,
+        "start": 15,
+        "frames": 5,
+        "fps": 8,
+        "loop": false
+      }
+    }
+  },
+  "espectro_graficador": {
+    "file": "assets/sprites/espectro_graficador.png",
+    "kind": "monster",
+    "facing": "left",
+    "frameWidth": 32,
+    "frameHeight": 32,
+    "cols": 5,
+    "rows": 4,
+    "anims": {
+      "idle": {
+        "row": 0,
+        "start": 0,
+        "frames": 4,
+        "fps": 6,
+        "loop": true
+      },
+      "attack": {
+        "row": 1,
+        "start": 5,
+        "frames": 4,
+        "fps": 10,
+        "loop": false
+      },
+      "hurt": {
+        "row": 2,
+        "start": 10,
+        "frames": 2,
+        "fps": 8,
+        "loop": false
+      },
+      "die": {
+        "row": 3,
+        "start": 15,
+        "frames": 5,
+        "fps": 8,
+        "loop": false
+      }
+    }
+  },
+  "serpiente_pendiente": {
+    "file": "assets/sprites/serpiente_pendiente.png",
+    "kind": "monster",
+    "facing": "left",
+    "frameWidth": 32,
+    "frameHeight": 32,
+    "cols": 5,
+    "rows": 4,
+    "anims": {
+      "idle": {
+        "row": 0,
+        "start": 0,
+        "frames": 4,
+        "fps": 6,
+        "loop": true
+      },
+      "attack": {
+        "row": 1,
+        "start": 5,
+        "frames": 4,
+        "fps": 10,
+        "loop": false
+      },
+      "hurt": {
+        "row": 2,
+        "start": 10,
+        "frames": 2,
+        "fps": 8,
+        "loop": false
+      },
+      "die": {
+        "row": 3,
+        "start": 15,
+        "frames": 5,
+        "fps": 8,
+        "loop": false
+      }
+    }
+  },
+  "gemelos_intersecados": {
+    "file": "assets/sprites/gemelos_intersecados.png",
+    "kind": "monster",
+    "facing": "left",
+    "frameWidth": 32,
+    "frameHeight": 32,
+    "cols": 5,
+    "rows": 4,
+    "anims": {
+      "idle": {
+        "row": 0,
+        "start": 0,
+        "frames": 4,
+        "fps": 6,
+        "loop": true
+      },
+      "attack": {
+        "row": 1,
+        "start": 5,
+        "frames": 4,
+        "fps": 10,
+        "loop": false
+      },
+      "hurt": {
+        "row": 2,
+        "start": 10,
+        "frames": 2,
+        "fps": 8,
+        "loop": false
+      },
+      "die": {
+        "row": 3,
+        "start": 15,
+        "frames": 5,
+        "fps": 8,
+        "loop": false
+      }
+    }
+  },
+  "arquero_parabolico": {
+    "file": "assets/sprites/arquero_parabolico.png",
+    "kind": "monster",
+    "facing": "left",
+    "frameWidth": 32,
+    "frameHeight": 32,
+    "cols": 5,
+    "rows": 4,
+    "anims": {
+      "idle": {
+        "row": 0,
+        "start": 0,
+        "frames": 4,
+        "fps": 6,
+        "loop": true
+      },
+      "attack": {
+        "row": 1,
+        "start": 5,
+        "frames": 4,
+        "fps": 10,
+        "loop": false
+      },
+      "hurt": {
+        "row": 2,
+        "start": 10,
+        "frames": 2,
+        "fps": 8,
+        "loop": false
+      },
+      "die": {
+        "row": 3,
+        "start": 15,
+        "frames": 5,
+        "fps": 8,
+        "loop": false
+      }
+    }
+  },
+  "dragon_raices": {
+    "file": "assets/sprites/dragon_raices.png",
+    "kind": "monster",
+    "facing": "left",
+    "frameWidth": 32,
+    "frameHeight": 32,
+    "cols": 5,
+    "rows": 4,
+    "anims": {
+      "idle": {
+        "row": 0,
+        "start": 0,
+        "frames": 4,
+        "fps": 6,
+        "loop": true
+      },
+      "attack": {
+        "row": 1,
+        "start": 5,
+        "frames": 4,
+        "fps": 10,
+        "loop": false
+      },
+      "hurt": {
+        "row": 2,
+        "start": 10,
+        "frames": 2,
+        "fps": 8,
+        "loop": false
+      },
+      "die": {
+        "row": 3,
+        "start": 15,
+        "frames": 5,
+        "fps": 8,
+        "loop": false
+      }
+    }
+  },
+  "sirena_ondas": {
+    "file": "assets/sprites/sirena_ondas.png",
+    "kind": "monster",
+    "facing": "left",
+    "frameWidth": 32,
+    "frameHeight": 32,
+    "cols": 5,
+    "rows": 4,
+    "anims": {
+      "idle": {
+        "row": 0,
+        "start": 0,
+        "frames": 4,
+        "fps": 6,
+        "loop": true
+      },
+      "attack": {
+        "row": 1,
+        "start": 5,
+        "frames": 4,
+        "fps": 10,
+        "loop": false
+      },
+      "hurt": {
+        "row": 2,
+        "start": 10,
+        "frames": 2,
+        "fps": 8,
+        "loop": false
+      },
+      "die": {
+        "row": 3,
+        "start": 15,
+        "frames": 5,
+        "fps": 8,
+        "loop": false
+      }
+    }
+  },
+  "hidra_cuadratica": {
+    "file": "assets/sprites/hidra_cuadratica.png",
+    "kind": "monster",
+    "facing": "left",
+    "frameWidth": 64,
+    "frameHeight": 64,
+    "cols": 5,
+    "rows": 4,
+    "anims": {
+      "idle": {
+        "row": 0,
+        "start": 0,
+        "frames": 4,
+        "fps": 6,
+        "loop": true
+      },
+      "attack": {
+        "row": 1,
+        "start": 5,
+        "frames": 4,
+        "fps": 10,
+        "loop": false
+      },
+      "hurt": {
+        "row": 2,
+        "start": 10,
+        "frames": 2,
+        "fps": 8,
+        "loop": false
+      },
+      "die": {
+        "row": 3,
+        "start": 15,
+        "frames": 5,
+        "fps": 8,
+        "loop": false
+      }
+    }
+  },
+  "cubo_gelatinoso": {
+    "file": "assets/sprites/cubo_gelatinoso.png",
+    "kind": "monster",
+    "facing": "left",
+    "frameWidth": 32,
+    "frameHeight": 32,
+    "cols": 5,
+    "rows": 4,
+    "anims": {
+      "idle": {
+        "row": 0,
+        "start": 0,
+        "frames": 4,
+        "fps": 6,
+        "loop": true
+      },
+      "attack": {
+        "row": 1,
+        "start": 5,
+        "frames": 4,
+        "fps": 10,
+        "loop": false
+      },
+      "hurt": {
+        "row": 2,
+        "start": 10,
+        "frames": 2,
+        "fps": 8,
+        "loop": false
+      },
+      "die": {
+        "row": 3,
+        "start": 15,
+        "frames": 5,
+        "fps": 8,
+        "loop": false
+      }
+    }
+  },
+  "troll_puente": {
+    "file": "assets/sprites/troll_puente.png",
+    "kind": "monster",
+    "facing": "left",
+    "frameWidth": 32,
+    "frameHeight": 32,
+    "cols": 5,
+    "rows": 4,
+    "anims": {
+      "idle": {
+        "row": 0,
+        "start": 0,
+        "frames": 4,
+        "fps": 6,
+        "loop": true
+      },
+      "attack": {
+        "row": 1,
+        "start": 5,
+        "frames": 4,
+        "fps": 10,
+        "loop": false
+      },
+      "hurt": {
+        "row": 2,
+        "start": 10,
+        "frames": 2,
+        "fps": 8,
+        "loop": false
+      },
+      "die": {
+        "row": 3,
+        "start": 15,
+        "frames": 5,
+        "fps": 8,
+        "loop": false
+      }
+    }
+  },
+  "gnomo_sombras": {
+    "file": "assets/sprites/gnomo_sombras.png",
+    "kind": "monster",
+    "facing": "left",
+    "frameWidth": 32,
+    "frameHeight": 32,
+    "cols": 5,
+    "rows": 4,
+    "anims": {
+      "idle": {
+        "row": 0,
+        "start": 0,
+        "frames": 4,
+        "fps": 6,
+        "loop": true
+      },
+      "attack": {
+        "row": 1,
+        "start": 5,
+        "frames": 4,
+        "fps": 10,
+        "loop": false
+      },
+      "hurt": {
+        "row": 2,
+        "start": 10,
+        "frames": 2,
+        "fps": 8,
+        "loop": false
+      },
+      "die": {
+        "row": 3,
+        "start": 15,
+        "frames": 5,
+        "fps": 8,
+        "loop": false
+      }
+    }
+  },
+  "alquimista_sobrecargado": {
+    "file": "assets/sprites/alquimista_sobrecargado.png",
+    "kind": "monster",
+    "facing": "left",
+    "frameWidth": 32,
+    "frameHeight": 32,
+    "cols": 5,
+    "rows": 4,
+    "anims": {
+      "idle": {
+        "row": 0,
+        "start": 0,
+        "frames": 4,
+        "fps": 6,
+        "loop": true
+      },
+      "attack": {
+        "row": 1,
+        "start": 5,
+        "frames": 4,
+        "fps": 10,
+        "loop": false
+      },
+      "hurt": {
+        "row": 2,
+        "start": 10,
+        "frames": 2,
+        "fps": 8,
+        "loop": false
+      },
+      "die": {
+        "row": 3,
+        "start": 15,
+        "frames": 5,
+        "fps": 8,
+        "loop": false
+      }
+    }
+  },
+  "espejo_maldito": {
+    "file": "assets/sprites/espejo_maldito.png",
+    "kind": "monster",
+    "facing": "left",
+    "frameWidth": 32,
+    "frameHeight": 32,
+    "cols": 5,
+    "rows": 4,
+    "anims": {
+      "idle": {
+        "row": 0,
+        "start": 0,
+        "frames": 4,
+        "fps": 6,
+        "loop": true
+      },
+      "attack": {
+        "row": 1,
+        "start": 5,
+        "frames": 4,
+        "fps": 10,
+        "loop": false
+      },
+      "hurt": {
+        "row": 2,
+        "start": 10,
+        "frames": 2,
+        "fps": 8,
+        "loop": false
+      },
+      "die": {
+        "row": 3,
+        "start": 15,
+        "frames": 5,
+        "fps": 8,
+        "loop": false
+      }
+    }
+  },
+  "caballero_coordenado": {
+    "file": "assets/sprites/caballero_coordenado.png",
+    "kind": "monster",
+    "facing": "left",
+    "frameWidth": 32,
+    "frameHeight": 32,
+    "cols": 5,
+    "rows": 4,
+    "anims": {
+      "idle": {
+        "row": 0,
+        "start": 0,
+        "frames": 4,
+        "fps": 6,
+        "loop": true
+      },
+      "attack": {
+        "row": 1,
+        "start": 5,
+        "frames": 4,
+        "fps": 10,
+        "loop": false
+      },
+      "hurt": {
+        "row": 2,
+        "start": 10,
+        "frames": 2,
+        "fps": 8,
+        "loop": false
+      },
+      "die": {
+        "row": 3,
+        "start": 15,
+        "frames": 5,
+        "fps": 8,
+        "loop": false
+      }
+    }
+  },
+  "coloso_medidas": {
+    "file": "assets/sprites/coloso_medidas.png",
+    "kind": "monster",
+    "facing": "left",
+    "frameWidth": 64,
+    "frameHeight": 64,
+    "cols": 5,
+    "rows": 4,
+    "anims": {
+      "idle": {
+        "row": 0,
+        "start": 0,
+        "frames": 4,
+        "fps": 6,
+        "loop": true
+      },
+      "attack": {
+        "row": 1,
+        "start": 5,
+        "frames": 4,
+        "fps": 10,
+        "loop": false
+      },
+      "hurt": {
+        "row": 2,
+        "start": 10,
+        "frames": 2,
+        "fps": 8,
+        "loop": false
+      },
+      "die": {
+        "row": 3,
+        "start": 15,
+        "frames": 5,
+        "fps": 8,
+        "loop": false
+      }
+    }
+  },
+  "el_divisor": {
+    "file": "assets/sprites/el_divisor.png",
+    "kind": "monster",
+    "facing": "left",
+    "frameWidth": 64,
+    "frameHeight": 64,
+    "cols": 5,
+    "rows": 4,
+    "anims": {
+      "idle": {
+        "row": 0,
+        "start": 0,
+        "frames": 4,
+        "fps": 6,
+        "loop": true
+      },
+      "attack": {
+        "row": 1,
+        "start": 5,
+        "frames": 4,
+        "fps": 10,
+        "loop": false
+      },
+      "hurt": {
+        "row": 2,
+        "start": 10,
+        "frames": 2,
+        "fps": 8,
+        "loop": false
+      },
+      "die": {
+        "row": 3,
+        "start": 15,
+        "frames": 5,
+        "fps": 8,
+        "loop": false
+      }
+    }
+  },
+  "lia": {
+    "file": "assets/sprites/lia.png",
+    "kind": "hero",
+    "facing": "right",
+    "frameWidth": 32,
+    "frameHeight": 32,
+    "cols": 5,
+    "rows": 5,
+    "anims": {
+      "idle": {
+        "row": 0,
+        "start": 0,
+        "frames": 4,
+        "fps": 6,
+        "loop": true
+      },
+      "attack": {
+        "row": 1,
+        "start": 5,
+        "frames": 4,
+        "fps": 10,
+        "loop": false
+      },
+      "hurt": {
+        "row": 2,
+        "start": 10,
+        "frames": 2,
+        "fps": 8,
+        "loop": false
+      },
+      "die": {
+        "row": 3,
+        "start": 15,
+        "frames": 5,
+        "fps": 8,
+        "loop": false
+      },
+      "win": {
+        "row": 4,
+        "start": 20,
+        "frames": 4,
+        "fps": 6,
+        "loop": true
+      }
+    }
+  },
+  "teo": {
+    "file": "assets/sprites/teo.png",
+    "kind": "hero",
+    "facing": "right",
+    "frameWidth": 32,
+    "frameHeight": 32,
+    "cols": 5,
+    "rows": 5,
+    "anims": {
+      "idle": {
+        "row": 0,
+        "start": 0,
+        "frames": 4,
+        "fps": 6,
+        "loop": true
+      },
+      "attack": {
+        "row": 1,
+        "start": 5,
+        "frames": 4,
+        "fps": 10,
+        "loop": false
+      },
+      "hurt": {
+        "row": 2,
+        "start": 10,
+        "frames": 2,
+        "fps": 8,
+        "loop": false
+      },
+      "die": {
+        "row": 3,
+        "start": 15,
+        "frames": 5,
+        "fps": 8,
+        "loop": false
+      },
+      "win": {
+        "row": 4,
+        "start": 20,
+        "frames": 4,
+        "fps": 6,
+        "loop": true
+      }
+    }
+  },
+  "mara": {
+    "file": "assets/sprites/mara.png",
+    "kind": "hero",
+    "facing": "right",
+    "frameWidth": 32,
+    "frameHeight": 32,
+    "cols": 5,
+    "rows": 5,
+    "anims": {
+      "idle": {
+        "row": 0,
+        "start": 0,
+        "frames": 4,
+        "fps": 6,
+        "loop": true
+      },
+      "attack": {
+        "row": 1,
+        "start": 5,
+        "frames": 4,
+        "fps": 10,
+        "loop": false
+      },
+      "hurt": {
+        "row": 2,
+        "start": 10,
+        "frames": 2,
+        "fps": 8,
+        "loop": false
+      },
+      "die": {
+        "row": 3,
+        "start": 15,
+        "frames": 5,
+        "fps": 8,
+        "loop": false
+      },
+      "win": {
+        "row": 4,
+        "start": 20,
+        "frames": 4,
+        "fps": 6,
+        "loop": true
+      }
+    }
+  }
+}

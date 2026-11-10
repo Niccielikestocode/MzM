@@ -1,0 +1,122 @@
+[
+  {
+    "id": "cavernas",
+    "order": 1,
+    "name": "Cavernas numéricas",
+    "unit": "Pensamiento numérico",
+    "mood": "Cueva azul grisácea con antorchas ámbar y cristales que brillan",
+    "music": "Percusión suave y eco, 80 bpm",
+    "palette": "cavernas",
+    "background": {
+      "layers": [
+        "cielo-roca",
+        "estalactitas",
+        "rocas-lejanas",
+        "suelo-ladrillo"
+      ],
+      "tile": 16,
+      "props": [
+        "antorcha",
+        "cristal",
+        "charco"
+      ]
+    },
+    "intro": "Los números reales se desmoronaron y rodaron hasta lo profundo. Hay que recogerlos uno por uno.",
+    "zones": [
+      "reales",
+      "porcentajes",
+      "factorizacion"
+    ],
+    "boss": "parcial1"
+  },
+  {
+    "id": "bosque",
+    "order": 2,
+    "name": "Bosque de las funciones",
+    "unit": "Pensamiento variacional",
+    "mood": "Bosque verde oscuro con flores rosadas y luciérnagas; las ramas dibujan curvas",
+    "music": "Flauta y arpa, 96 bpm",
+    "palette": "bosque",
+    "background": {
+      "layers": [
+        "cielo-noche",
+        "arboles-lejanos",
+        "arboles-cercanos",
+        "pasto"
+      ],
+      "tile": 16,
+      "props": [
+        "flor",
+        "luciernaga",
+        "tronco-curvo"
+      ]
+    },
+    "intro": "Aquí las curvas cobraron vida. Cada camino es una función y cada cruce, una ecuación.",
+    "zones": [
+      "ecuaciones",
+      "funciones",
+      "lineal",
+      "sistemas",
+      "cuadratica",
+      "ecuacionesCuadraticas",
+      "ondas"
+    ],
+    "boss": "parcial2"
+  },
+  {
+    "id": "ciudadela",
+    "order": 3,
+    "name": "Ciudadela métrica",
+    "unit": "Pensamiento métrico espacial",
+    "mood": "Ciudad de piedra violeta de noche, ventanas doradas y hologramas cian",
+    "music": "Sintetizador suave y bajo, 110 bpm",
+    "palette": "ciudadela",
+    "background": {
+      "layers": [
+        "cielo-estrellado",
+        "torres-lejanas",
+        "torres-cercanas",
+        "piso-cuadricula"
+      ],
+      "tile": 16,
+      "props": [
+        "holograma",
+        "ventana",
+        "puente"
+      ]
+    },
+    "intro": "La ciudad se midió mal y nada encaja. Hay que volver a medir, mover y convertir.",
+    "zones": [
+      "medidas",
+      "pitagoras",
+      "tales",
+      "unidades",
+      "transformaciones",
+      "plano"
+    ],
+    "boss": "parcial3"
+  },
+  {
+    "id": "vacio",
+    "order": 4,
+    "name": "Vacío del Divisor",
+    "unit": "Examen final",
+    "mood": "Espacio violeta con un agujero negro; las estrellas se parten en dos",
+    "music": "Bajo profundo y coros, 120 bpm",
+    "palette": "vacio",
+    "background": {
+      "layers": [
+        "estrellas",
+        "remolino",
+        "suelo-grieta"
+      ],
+      "tile": 16,
+      "props": [
+        "fragmento-ecuacion"
+      ]
+    },
+    "intro": "Tres fragmentos de la ecuación abren la puerta. Del otro lado espera quien lo divide todo entre cero.",
+    "zones": [],
+    "boss": "final"
+  }
+]

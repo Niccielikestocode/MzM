@@ -1,0 +1,33 @@
+import type { CardDef, HeroDef, Level, MonsterDef } from './types';
+import monstersJson from '../../data/monsters.json';
+import heroesJson from '../../data/heroes.json';
+import cardsJson from '../../data/cards.json';
+import levelsJson from '../../data/levels.json';
+import topicsJson from '../../data/topics.json';
+import worldsJson from '../../data/worlds.json';
+import achievementsJson from '../../data/achievements.json';
+import dialoguesJson from '../../data/dialogues.json';
+import paletteJson from '../../data/palette.json';
+
+export const monsters = monstersJson as unknown as MonsterDef[];
+export const heroes = heroesJson as unknown as HeroDef[];
+export const cards = cardsJson as unknown as CardDef[];
+export const levels = levelsJson as unknown as Level[];
+export const topics = topicsJson as unknown as { id: string; name: string; world: string; emblem: string; templates: { id: string; minDifficulty: number; input: string }[] }[];
+export const worlds = worldsJson as unknown as { id: string; name: string; order: number; unit: string; mood: string; palette: string }[];
+export const achievements = achievementsJson as unknown as { id: string; name: string; icon: string; rule: string }[];
+export const dialogues = dialoguesJson as unknown as Record<string, { speaker: string; text: string }[]>;
+export const palettes = (paletteJson as any).palettes ?? paletteJson;
+
+export const monsterById = Object.fromEntries(monsters.map(m => [m.id, m])) as Record<string, MonsterDef>;
+export const heroById = Object.fromEntries(heroes.map(h => [h.id, h])) as Record<string, HeroDef>;
+export const cardById = Object.fromEntries(cards.map(c => [c.id, c])) as Record<string, CardDef>;
+export const levelById = Object.fromEntries(levels.map(l => [l.id, l])) as Record<string, Level>;
+export const topicById = Object.fromEntries(topics.map(t => [t.id, t]));
+export const worldById = Object.fromEntries(worlds.map(w => [w.id, w]));
+export const WORLD_COLOR: Record<string, string> = { cavernas: '#f2a541', bosque: '#e86ab5', ciudadela: '#4fd1d9', vacio: '#ff4f79' };
+import roomTypesJson from '../../data/room-types.json';
+export const roomTypes = roomTypesJson as unknown as { id: string; name: string; icon: string }[];
+export const roomIcon = Object.fromEntries(roomTypes.map(r => [r.id, r.icon])) as Record<string, string>;
+import spritesJson from '../../data/sprites.json';
+export const spriteDefs = spritesJson as unknown as Record<string, any>;

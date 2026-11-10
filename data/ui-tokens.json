@@ -1,0 +1,115 @@
+{
+  "fonts": {
+    "display": "Press Start 2P",
+    "label": "Pixelify Sans",
+    "body": "Atkinson Hyperlegible",
+    "math": "KaTeX_Main"
+  },
+  "scale": {
+    "logicalWidth": 320,
+    "logicalHeight": 180,
+    "integerScaling": true,
+    "imageRendering": "pixelated"
+  },
+  "spacing": [
+    4,
+    8,
+    12,
+    16,
+    24,
+    32
+  ],
+  "radius": 0,
+  "border": {
+    "pixel": 2,
+    "color": "ink"
+  },
+  "touch": {
+    "minTarget": 48,
+    "pcMinTarget": 32
+  },
+  "breakpoints": {
+    "mobile": 0,
+    "tablet": 720,
+    "pc": 1024
+  },
+  "animation": {
+    "cardPlayMs": 250,
+    "damageNumberMs": 600,
+    "shakeMs": 180,
+    "hitStopMs": 60,
+    "textBoxCharMs": 22
+  },
+  "layout": {
+    "pc": {
+      "hud": {
+        "x": 0,
+        "y": 0,
+        "w": 0.68,
+        "h": 0.08
+      },
+      "canvas": {
+        "x": 0,
+        "y": 0.08,
+        "w": 0.68,
+        "h": 0.68
+      },
+      "hand": {
+        "x": 0,
+        "y": 0.76,
+        "w": 0.68,
+        "h": 0.24
+      },
+      "questionPanel": {
+        "x": 0.68,
+        "y": 0,
+        "w": 0.32,
+        "h": 0.6
+      },
+      "answerPanel": {
+        "x": 0.68,
+        "y": 0.6,
+        "w": 0.32,
+        "h": 0.4
+      }
+    },
+    "mobile": {
+      "hud": {
+        "x": 0,
+        "y": 0,
+        "w": 1,
+        "h": 0.06
+      },
+      "canvas": {
+        "x": 0,
+        "y": 0.06,
+        "w": 1,
+        "h": 0.26
+      },
+      "questionPanel": {
+        "x": 0,
+        "y": 0.32,
+        "w": 1,
+        "h": 0.2
+      },
+      "answerPanel": {
+        "x": 0,
+        "y": 0.52,
+        "w": 1,
+        "h": 0.28
+      },
+      "hand": {
+        "x": 0,
+        "y": 0.8,
+        "w": 1,
+        "h": 0.2
+      }
+    }
+  },
+  "feedback": {
+    "correct": "ok",
+    "wrong": "bad",
+    "hint": "hint",
+    "colorBlindExtra": "icono + forma además del color"
+  }
+}

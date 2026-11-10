@@ -1,0 +1,458 @@
+[
+  {
+    "id": "reales",
+    "name": "Números reales",
+    "world": "cavernas",
+    "emblem": "frac",
+    "templates": [
+      {
+        "id": "reales.recta.ubicar",
+        "minDifficulty": 1,
+        "input": "choice"
+      },
+      {
+        "id": "reales.fracciones.operar",
+        "minDifficulty": 1,
+        "input": "number"
+      },
+      {
+        "id": "reales.raices.simplificar",
+        "minDifficulty": 2,
+        "input": "expression"
+      },
+      {
+        "id": "reales.orden.comparar",
+        "minDifficulty": 2,
+        "input": "choice"
+      },
+      {
+        "id": "reales.potencias.reglas",
+        "minDifficulty": 3,
+        "input": "number"
+      }
+    ]
+  },
+  {
+    "id": "porcentajes",
+    "name": "Porcentajes y variación",
+    "world": "cavernas",
+    "emblem": "pct",
+    "templates": [
+      {
+        "id": "pct.de-cantidad",
+        "minDifficulty": 1,
+        "input": "number"
+      },
+      {
+        "id": "pct.aumento-descuento",
+        "minDifficulty": 2,
+        "input": "number"
+      },
+      {
+        "id": "pct.variacion",
+        "minDifficulty": 3,
+        "input": "number"
+      },
+      {
+        "id": "pct.hallar-base",
+        "minDifficulty": 4,
+        "input": "number"
+      }
+    ]
+  },
+  {
+    "id": "factorizacion",
+    "name": "Factorización",
+    "world": "cavernas",
+    "emblem": "fact",
+    "templates": [
+      {
+        "id": "fact.factor-comun",
+        "minDifficulty": 1,
+        "input": "expression"
+      },
+      {
+        "id": "fact.diferencia-cuadrados",
+        "minDifficulty": 2,
+        "input": "expression"
+      },
+      {
+        "id": "fact.trinomio",
+        "minDifficulty": 3,
+        "input": "expression"
+      },
+      {
+        "id": "fact.agrupacion",
+        "minDifficulty": 4,
+        "input": "expression"
+      }
+    ]
+  },
+  {
+    "id": "ecuaciones",
+    "name": "Ecuaciones",
+    "world": "bosque",
+    "emblem": "eq",
+    "templates": [
+      {
+        "id": "ec.lineal.una-incognita",
+        "minDifficulty": 1,
+        "input": "number"
+      },
+      {
+        "id": "ec.lineal.fracciones",
+        "minDifficulty": 2,
+        "input": "number"
+      },
+      {
+        "id": "ec.despejar-formula",
+        "minDifficulty": 3,
+        "input": "expression"
+      },
+      {
+        "id": "ec.problema-enunciado",
+        "minDifficulty": 4,
+        "input": "number"
+      }
+    ]
+  },
+  {
+    "id": "funciones",
+    "name": "Funciones y gráficas",
+    "world": "bosque",
+    "emblem": "axes",
+    "templates": [
+      {
+        "id": "fun.evaluar",
+        "minDifficulty": 1,
+        "input": "number"
+      },
+      {
+        "id": "fun.leer-grafica",
+        "minDifficulty": 2,
+        "input": "choice"
+      },
+      {
+        "id": "fun.dominio-rango",
+        "minDifficulty": 3,
+        "input": "choice"
+      },
+      {
+        "id": "fun.relacion-tabla-grafica",
+        "minDifficulty": 4,
+        "input": "choice"
+      }
+    ]
+  },
+  {
+    "id": "lineal",
+    "name": "Función lineal",
+    "world": "bosque",
+    "emblem": "slope",
+    "templates": [
+      {
+        "id": "lin.pendiente-dos-puntos",
+        "minDifficulty": 1,
+        "input": "number",
+        "stage": "slope"
+      },
+      {
+        "id": "lin.interceptos",
+        "minDifficulty": 2,
+        "input": "point",
+        "stage": "slope"
+      },
+      {
+        "id": "lin.ecuacion-recta",
+        "minDifficulty": 3,
+        "input": "expression"
+      },
+      {
+        "id": "lin.grafica-desde-ecuacion",
+        "minDifficulty": 4,
+        "input": "graph"
+      }
+    ]
+  },
+  {
+    "id": "sistemas",
+    "name": "Sistemas de ecuaciones",
+    "world": "bosque",
+    "emblem": "cross",
+    "templates": [
+      {
+        "id": "sis.interseccion-grafica",
+        "minDifficulty": 1,
+        "input": "point",
+        "stage": "aim-point-read"
+      },
+      {
+        "id": "sis.sustitucion",
+        "minDifficulty": 2,
+        "input": "point"
+      },
+      {
+        "id": "sis.eliminacion",
+        "minDifficulty": 3,
+        "input": "point"
+      },
+      {
+        "id": "sis.problema-enunciado",
+        "minDifficulty": 4,
+        "input": "point"
+      }
+    ]
+  },
+  {
+    "id": "cuadratica",
+    "name": "Función cuadrática",
+    "world": "bosque",
+    "emblem": "parab",
+    "templates": [
+      {
+        "id": "cua.vertice",
+        "minDifficulty": 1,
+        "input": "point",
+        "stage": "projectile"
+      },
+      {
+        "id": "cua.apertura-interceptos",
+        "minDifficulty": 2,
+        "input": "choice"
+      },
+      {
+        "id": "cua.proyectil-altura-maxima",
+        "minDifficulty": 3,
+        "input": "number",
+        "stage": "projectile"
+      },
+      {
+        "id": "cua.grafica-desde-ecuacion",
+        "minDifficulty": 4,
+        "input": "graph"
+      }
+    ]
+  },
+  {
+    "id": "ecuacionesCuadraticas",
+    "name": "Ecuaciones cuadráticas",
+    "world": "bosque",
+    "emblem": "root",
+    "templates": [
+      {
+        "id": "ecc.factorizar",
+        "minDifficulty": 1,
+        "input": "point"
+      },
+      {
+        "id": "ecc.formula-general",
+        "minDifficulty": 2,
+        "input": "point"
+      },
+      {
+        "id": "ecc.discriminante",
+        "minDifficulty": 3,
+        "input": "choice"
+      },
+      {
+        "id": "ecc.completar-cuadrado",
+        "minDifficulty": 4,
+        "input": "expression"
+      }
+    ]
+  },
+  {
+    "id": "ondas",
+    "name": "Ondas (opcional)",
+    "world": "bosque",
+    "emblem": "wave",
+    "optional": true,
+    "templates": [
+      {
+        "id": "ond.amplitud-periodo",
+        "minDifficulty": 1,
+        "input": "number"
+      },
+      {
+        "id": "ond.leer-grafica-seno",
+        "minDifficulty": 2,
+        "input": "choice"
+      },
+      {
+        "id": "ond.desplazamiento",
+        "minDifficulty": 3,
+        "input": "number"
+      }
+    ]
+  },
+  {
+    "id": "medidas",
+    "name": "Medidas, áreas y volúmenes",
+    "world": "ciudadela",
+    "emblem": "vol",
+    "templates": [
+      {
+        "id": "med.perimetro",
+        "minDifficulty": 1,
+        "input": "number"
+      },
+      {
+        "id": "med.area-figuras",
+        "minDifficulty": 2,
+        "input": "number"
+      },
+      {
+        "id": "med.volumen-solidos",
+        "minDifficulty": 3,
+        "input": "number"
+      },
+      {
+        "id": "med.area-superficie",
+        "minDifficulty": 4,
+        "input": "number"
+      }
+    ]
+  },
+  {
+    "id": "pitagoras",
+    "name": "Pitágoras",
+    "world": "ciudadela",
+    "emblem": "pyth",
+    "templates": [
+      {
+        "id": "pit.hipotenusa",
+        "minDifficulty": 1,
+        "input": "number",
+        "stage": "ladder"
+      },
+      {
+        "id": "pit.cateto",
+        "minDifficulty": 2,
+        "input": "number",
+        "stage": "ladder"
+      },
+      {
+        "id": "pit.problema-escalera",
+        "minDifficulty": 3,
+        "input": "number",
+        "stage": "ladder"
+      },
+      {
+        "id": "pit.terna",
+        "minDifficulty": 4,
+        "input": "choice"
+      }
+    ]
+  },
+  {
+    "id": "tales",
+    "name": "Tales y semejanza",
+    "world": "ciudadela",
+    "emblem": "similar",
+    "templates": [
+      {
+        "id": "tal.proporcion-segmentos",
+        "minDifficulty": 1,
+        "input": "number"
+      },
+      {
+        "id": "tal.altura-por-sombra",
+        "minDifficulty": 2,
+        "input": "number"
+      },
+      {
+        "id": "tal.semejanza-triangulos",
+        "minDifficulty": 3,
+        "input": "number"
+      }
+    ]
+  },
+  {
+    "id": "unidades",
+    "name": "Sistemas métricos y conversión",
+    "world": "ciudadela",
+    "emblem": "units",
+    "templates": [
+      {
+        "id": "uni.conversion-longitud",
+        "minDifficulty": 1,
+        "input": "number"
+      },
+      {
+        "id": "uni.conversion-volumen-masa",
+        "minDifficulty": 2,
+        "input": "number"
+      },
+      {
+        "id": "uni.escalas",
+        "minDifficulty": 3,
+        "input": "number"
+      },
+      {
+        "id": "uni.cadena-conversion",
+        "minDifficulty": 4,
+        "input": "number"
+      }
+    ]
+  },
+  {
+    "id": "transformaciones",
+    "name": "Traslación, rotación y reflexión",
+    "world": "ciudadela",
+    "emblem": "reflect",
+    "templates": [
+      {
+        "id": "tra.traslacion-coord",
+        "minDifficulty": 1,
+        "input": "point",
+        "stage": "translate"
+      },
+      {
+        "id": "tra.reflexion-eje",
+        "minDifficulty": 2,
+        "input": "point",
+        "stage": "reflect"
+      },
+      {
+        "id": "tra.rotacion-90",
+        "minDifficulty": 3,
+        "input": "point"
+      },
+      {
+        "id": "tra.composicion",
+        "minDifficulty": 4,
+        "input": "point"
+      }
+    ]
+  },
+  {
+    "id": "plano",
+    "name": "Figuras en el plano cartesiano",
+    "world": "ciudadela",
+    "emblem": "grid",
+    "templates": [
+      {
+        "id": "pla.ubicar-puntos",
+        "minDifficulty": 1,
+        "input": "point",
+        "stage": "aim-point-click"
+      },
+      {
+        "id": "pla.punto-medio",
+        "minDifficulty": 2,
+        "input": "point",
+        "stage": "aim-point-read"
+      },
+      {
+        "id": "pla.distancia-puntos",
+        "minDifficulty": 3,
+        "input": "number"
+      },
+      {
+        "id": "pla.area-poligono",
+        "minDifficulty": 4,
+        "input": "number"
+      }
+    ]
+  }
+]

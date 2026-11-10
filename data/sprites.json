@@ -1,0 +1,359 @@
+{
+ "slime_fraccionario": {
+  "kind": "monster",
+  "archetype": "slime",
+  "size": 32,
+  "colors": {
+   "body": "#6fd6b0",
+   "shade": "#3f9c8a",
+   "light": "#c9fff0",
+   "accent": "#f2a541",
+   "emblem": "frac"
+  }
+ },
+ "goblin_mercader": {
+  "kind": "monster",
+  "archetype": "humanoid",
+  "size": 32,
+  "colors": {
+   "body": "#8fbf4f",
+   "shade": "#5a8a2f",
+   "light": "#c4e87a",
+   "accent": "#f2a541",
+   "cloth": "#b8742f",
+   "clothShade": "#7a4a1f",
+   "emblem": "pct",
+   "glyph": "#ffd77a"
+  },
+  "opts": {
+   "hat": "cap",
+   "prop": "sack"
+  }
+ },
+ "golem_bloques": {
+  "kind": "monster",
+  "archetype": "golem",
+  "size": 32,
+  "colors": {
+   "body": "#8a8fa6",
+   "shade": "#555b75",
+   "light": "#c8cde0",
+   "accent": "#f2a541",
+   "emblem": "fact"
+  }
+ },
+ "rey_irracional": {
+  "kind": "monster",
+  "archetype": "ghost",
+  "size": 64,
+  "colors": {
+   "body": "#5f7fb8",
+   "shade": "#34507f",
+   "light": "#b9d0ff",
+   "accent": "#ffd77a",
+   "emblem": "pi"
+  },
+  "opts": {
+   "crown": true
+  }
+ },
+ "murcielago_balanza": {
+  "kind": "monster",
+  "archetype": "bat",
+  "size": 32,
+  "colors": {
+   "body": "#9a5fd1",
+   "shade": "#5e3a8a",
+   "light": "#d9b8ff",
+   "accent": "#e86ab5",
+   "emblem": "eq"
+  }
+ },
+ "espectro_graficador": {
+  "kind": "monster",
+  "archetype": "ghost",
+  "size": 32,
+  "colors": {
+   "body": "#b8e0c8",
+   "shade": "#6fae90",
+   "light": "#f0fff6",
+   "accent": "#e86ab5",
+   "emblem": "axes"
+  }
+ },
+ "serpiente_pendiente": {
+  "kind": "monster",
+  "archetype": "serpent",
+  "size": 32,
+  "colors": {
+   "body": "#6fae55",
+   "shade": "#2f6b3f",
+   "light": "#c4e87a",
+   "accent": "#e86ab5",
+   "emblem": "slope"
+  }
+ },
+ "gemelos_intersecados": {
+  "kind": "monster",
+  "archetype": "twins",
+  "size": 32,
+  "colors": {
+   "body": "#e8a35f",
+   "shade": "#a8642f",
+   "light": "#ffd9a8",
+   "accent": "#e86ab5",
+   "cloth": "#c0502f",
+   "clothShade": "#7a2f1f",
+   "emblem": "cross",
+   "glyph": "#ffd9a8"
+  }
+ },
+ "arquero_parabolico": {
+  "kind": "monster",
+  "archetype": "humanoid",
+  "size": 32,
+  "colors": {
+   "body": "#f0c8a0",
+   "shade": "#c08f6a",
+   "light": "#fde6cf",
+   "accent": "#e86ab5",
+   "cloth": "#2f8f5a",
+   "clothShade": "#1d5a3a",
+   "emblem": "parab",
+   "glyph": "#c4e87a"
+  },
+  "opts": {
+   "hat": "hood",
+   "prop": "bow"
+  }
+ },
+ "dragon_raices": {
+  "kind": "monster",
+  "archetype": "dragon",
+  "size": 32,
+  "colors": {
+   "body": "#3fa86f",
+   "shade": "#1f6b45",
+   "light": "#9af0b8",
+   "accent": "#e86ab5",
+   "emblem": "root"
+  }
+ },
+ "sirena_ondas": {
+  "kind": "monster",
+  "archetype": "siren",
+  "size": 32,
+  "colors": {
+   "body": "#f0c8a0",
+   "shade": "#c08f6a",
+   "light": "#fde6cf",
+   "accent": "#e86ab5",
+   "cloth": "#4fa8d9",
+   "clothShade": "#2f6b9e",
+   "emblem": "wave",
+   "glyph": "#d9fcff"
+  }
+ },
+ "hidra_cuadratica": {
+  "kind": "monster",
+  "archetype": "dragon",
+  "size": 64,
+  "colors": {
+   "body": "#7a3fa8",
+   "shade": "#4a2370",
+   "light": "#d9a8ff",
+   "accent": "#e86ab5",
+   "emblem": "parab"
+  },
+  "opts": {
+   "heads": 2
+  }
+ },
+ "cubo_gelatinoso": {
+  "kind": "monster",
+  "archetype": "cube",
+  "size": 32,
+  "colors": {
+   "body": "#4fd1d9",
+   "shade": "#2f8f9e",
+   "light": "#c8fbff",
+   "accent": "#e0b84c",
+   "emblem": "vol"
+  }
+ },
+ "troll_puente": {
+  "kind": "monster",
+  "archetype": "humanoid",
+  "size": 32,
+  "colors": {
+   "body": "#8a9a7a",
+   "shade": "#5a6a4f",
+   "light": "#c4d1b0",
+   "accent": "#e0b84c",
+   "cloth": "#6b5a3f",
+   "clothShade": "#4a3b27",
+   "emblem": "pyth",
+   "glyph": "#ffd77a"
+  },
+  "opts": {
+   "k": 1.12,
+   "prop": "club"
+  }
+ },
+ "gnomo_sombras": {
+  "kind": "monster",
+  "archetype": "humanoid",
+  "size": 32,
+  "colors": {
+   "body": "#e0b8a0",
+   "shade": "#b08568",
+   "light": "#f5d9c8",
+   "accent": "#4fd1d9",
+   "cloth": "#4b4470",
+   "clothShade": "#2b2740",
+   "emblem": "similar",
+   "glyph": "#4fd1d9"
+  },
+  "opts": {
+   "k": 0.82,
+   "hat": "pointy"
+  }
+ },
+ "alquimista_sobrecargado": {
+  "kind": "monster",
+  "archetype": "humanoid",
+  "size": 32,
+  "colors": {
+   "body": "#f0c8a0",
+   "shade": "#c08f6a",
+   "light": "#fde6cf",
+   "accent": "#4fd1d9",
+   "cloth": "#2f8f9e",
+   "clothShade": "#1d5a66",
+   "emblem": "units",
+   "glyph": "#d9fcff",
+   "flask": "#9af06f"
+  },
+  "opts": {
+   "hat": "goggles",
+   "prop": "flask"
+  }
+ },
+ "espejo_maldito": {
+  "kind": "monster",
+  "archetype": "mirror",
+  "size": 32,
+  "colors": {
+   "body": "#d6cfa8",
+   "shade": "#a89860",
+   "light": "#f4f1e6",
+   "accent": "#4fd1d9",
+   "emblem": "reflect"
+  }
+ },
+ "caballero_coordenado": {
+  "kind": "monster",
+  "archetype": "humanoid",
+  "size": 32,
+  "colors": {
+   "body": "#8a82b8",
+   "shade": "#5b4e7a",
+   "light": "#d6cfe8",
+   "accent": "#e0b84c",
+   "cloth": "#4b4470",
+   "clothShade": "#2b2740",
+   "emblem": "grid",
+   "glyph": "#e0b84c"
+  },
+  "opts": {
+   "hat": "helm",
+   "prop": "sword"
+  }
+ },
+ "coloso_medidas": {
+  "kind": "monster",
+  "archetype": "golem",
+  "size": 64,
+  "colors": {
+   "body": "#b8a878",
+   "shade": "#7a6a48",
+   "light": "#e8dfb8",
+   "accent": "#4fd1d9",
+   "emblem": "ruler"
+  }
+ },
+ "el_divisor": {
+  "kind": "monster",
+  "archetype": "void",
+  "size": 64,
+  "colors": {
+   "body": "#2a1245",
+   "shade": "#5a2a8a",
+   "light": "#b04fd1",
+   "accent": "#ff4f79",
+   "emblem": "div"
+  }
+ },
+ "lia": {
+  "kind": "hero",
+  "archetype": "humanoid",
+  "size": 32,
+  "facing": "right",
+  "colors": {
+   "body": "#f0c8a0",
+   "shade": "#c08f6a",
+   "light": "#fde6cf",
+   "accent": "#e86ab5",
+   "cloth": "#6a4fc8",
+   "clothShade": "#41318a",
+   "emblem": "eq",
+   "glyph": "#e8e2d0",
+   "orb": "#7af0ff"
+  },
+  "opts": {
+   "hat": "pointy",
+   "prop": "staff"
+  }
+ },
+ "teo": {
+  "kind": "hero",
+  "archetype": "humanoid",
+  "size": 32,
+  "facing": "right",
+  "colors": {
+   "body": "#d9a47a",
+   "shade": "#a8754f",
+   "light": "#f0c8a0",
+   "accent": "#e0b84c",
+   "cloth": "#3f6fc0",
+   "clothShade": "#264a8a",
+   "emblem": "pyth",
+   "glyph": "#e8e2d0",
+   "shield": "#4f7dd9"
+  },
+  "opts": {
+   "hat": "helm",
+   "prop": "shield"
+  }
+ },
+ "mara": {
+  "kind": "hero",
+  "archetype": "humanoid",
+  "size": 32,
+  "facing": "right",
+  "colors": {
+   "body": "#e0b88f",
+   "shade": "#b08560",
+   "light": "#f5d9c0",
+   "accent": "#c4e87a",
+   "cloth": "#2f8f5a",
+   "clothShade": "#1d5a3a",
+   "emblem": "slope",
+   "glyph": "#e8e2d0"
+  },
+  "opts": {
+   "hat": "hood",
+   "prop": "bow"
+  }
+ }
+}

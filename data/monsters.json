@@ -1,0 +1,433 @@
+[
+  {
+    "id": "slime_fraccionario",
+    "name": "Slime Fraccionario",
+    "world": "cavernas",
+    "topic": "reales",
+    "hp": 12,
+    "questions": 3,
+    "difficulty": [
+      1,
+      2
+    ],
+    "attack": {
+      "name": "Salpicón partido",
+      "damage": 3,
+      "telegraph": "Se parte en dos y salta"
+    },
+    "line": "Soy un medio... ¡o un tercio! No me decido.",
+    "sprite": "normal",
+    "spriteSheet": "assets/sprites/slime_fraccionario.png"
+  },
+  {
+    "id": "goblin_mercader",
+    "name": "Goblin Mercader",
+    "world": "cavernas",
+    "topic": "porcentajes",
+    "hp": 16,
+    "questions": 3,
+    "difficulty": [
+      1,
+      3
+    ],
+    "attack": {
+      "name": "Rebaja traicionera",
+      "damage": 4,
+      "telegraph": "Agita un letrero de descuento"
+    },
+    "line": "¡Todo con 30% de descuento! Pero ¿cuánto pagas?",
+    "sprite": "normal",
+    "spriteSheet": "assets/sprites/goblin_mercader.png"
+  },
+  {
+    "id": "golem_bloques",
+    "name": "Golem de Bloques",
+    "world": "cavernas",
+    "topic": "factorizacion",
+    "hp": 22,
+    "questions": 4,
+    "difficulty": [
+      2,
+      4
+    ],
+    "attack": {
+      "name": "Puñetazo en bloque",
+      "damage": 5,
+      "telegraph": "Junta los bloques en un solo puño"
+    },
+    "line": "Para romperme tienes que separar mis factores.",
+    "sprite": "normal",
+    "spriteSheet": "assets/sprites/golem_bloques.png"
+  },
+  {
+    "id": "rey_irracional",
+    "name": "Rey Irracional",
+    "world": "cavernas",
+    "topic": "parcial1",
+    "boss": true,
+    "hp": 60,
+    "questions": 9,
+    "phases": [
+      "reales",
+      "porcentajes",
+      "factorizacion"
+    ],
+    "difficulty": [
+      2,
+      4
+    ],
+    "attack": {
+      "name": "Decimales sin fin",
+      "damage": 6,
+      "telegraph": "Su corona suelta cifras que no terminan"
+    },
+    "line": "Mi reino no tiene fin ni patrón. ¡Cuenta, si puedes!",
+    "sprite": "boss",
+    "spriteSheet": "assets/sprites/rey_irracional.png"
+  },
+  {
+    "id": "murcielago_balanza",
+    "name": "Murciélago de la Balanza",
+    "world": "bosque",
+    "topic": "ecuaciones",
+    "hp": 14,
+    "questions": 3,
+    "difficulty": [
+      1,
+      3
+    ],
+    "attack": {
+      "name": "Picada desequilibrada",
+      "damage": 3,
+      "telegraph": "Se inclina hacia un lado"
+    },
+    "line": "Lo que hagas de un lado, hazlo del otro.",
+    "sprite": "normal",
+    "spriteSheet": "assets/sprites/murcielago_balanza.png"
+  },
+  {
+    "id": "espectro_graficador",
+    "name": "Espectro Graficador",
+    "world": "bosque",
+    "topic": "funciones",
+    "hp": 16,
+    "questions": 3,
+    "difficulty": [
+      1,
+      3
+    ],
+    "attack": {
+      "name": "Eje helado",
+      "damage": 4,
+      "telegraph": "Traza dos ejes que se cierran"
+    },
+    "line": "Dame una x y te muestro una y.",
+    "sprite": "normal",
+    "spriteSheet": "assets/sprites/espectro_graficador.png"
+  },
+  {
+    "id": "serpiente_pendiente",
+    "name": "Serpiente de Pendiente",
+    "world": "bosque",
+    "topic": "lineal",
+    "hp": 18,
+    "questions": 4,
+    "difficulty": [
+      1,
+      4
+    ],
+    "attack": {
+      "name": "Mordida inclinada",
+      "damage": 4,
+      "telegraph": "Sube la cabeza en línea recta"
+    },
+    "line": "Subo dos, avanzo uno. ¿Qué tan empinada soy?",
+    "sprite": "normal",
+    "spriteSheet": "assets/sprites/serpiente_pendiente.png"
+  },
+  {
+    "id": "gemelos_intersecados",
+    "name": "Gemelos Intersecados",
+    "world": "bosque",
+    "topic": "sistemas",
+    "hp": 20,
+    "questions": 4,
+    "difficulty": [
+      1,
+      4
+    ],
+    "attack": {
+      "name": "Cruce de espadas",
+      "damage": 5,
+      "telegraph": "Cruzan sus espadas en un punto"
+    },
+    "line": "Somos dos rectas, pero solo nos encontramos una vez.",
+    "sprite": "normal",
+    "spriteSheet": "assets/sprites/gemelos_intersecados.png"
+  },
+  {
+    "id": "arquero_parabolico",
+    "name": "Arquero Parabólico",
+    "world": "bosque",
+    "topic": "cuadratica",
+    "hp": 22,
+    "questions": 4,
+    "difficulty": [
+      2,
+      4
+    ],
+    "attack": {
+      "name": "Flecha en arco",
+      "damage": 5,
+      "telegraph": "Apunta al cielo y suelta la flecha"
+    },
+    "line": "Calcula mi vértice o la flecha te encuentra.",
+    "sprite": "normal",
+    "spriteSheet": "assets/sprites/arquero_parabolico.png"
+  },
+  {
+    "id": "dragon_raices",
+    "name": "Dragón de Raíces",
+    "world": "bosque",
+    "topic": "ecuacionesCuadraticas",
+    "hp": 28,
+    "questions": 5,
+    "difficulty": [
+      2,
+      4
+    ],
+    "attack": {
+      "name": "Aliento de raíces",
+      "damage": 6,
+      "telegraph": "Respira hondo, dos llamas listas"
+    },
+    "line": "Tengo dos raíces. ¿Las encuentras o te quemo?",
+    "sprite": "normal",
+    "spriteSheet": "assets/sprites/dragon_raices.png"
+  },
+  {
+    "id": "sirena_ondas",
+    "name": "Sirena de Ondas",
+    "world": "bosque",
+    "topic": "ondas",
+    "hp": 20,
+    "questions": 3,
+    "difficulty": [
+      1,
+      3
+    ],
+    "attack": {
+      "name": "Canto ondulante",
+      "damage": 4,
+      "telegraph": "Su canto sube y baja"
+    },
+    "line": "Mi canto sube y baja. ¿Cuánto mide mi amplitud?",
+    "sprite": "normal",
+    "spriteSheet": "assets/sprites/sirena_ondas.png"
+  },
+  {
+    "id": "hidra_cuadratica",
+    "name": "Hidra Cuadrática",
+    "world": "bosque",
+    "topic": "parcial2",
+    "boss": true,
+    "hp": 85,
+    "questions": 12,
+    "phases": [
+      "ecuaciones",
+      "lineal",
+      "sistemas",
+      "cuadratica"
+    ],
+    "difficulty": [
+      2,
+      4
+    ],
+    "attack": {
+      "name": "Doble mordisco",
+      "damage": 7,
+      "telegraph": "Sus dos cabezas apuntan a ti"
+    },
+    "line": "Corta una cabeza y salen dos soluciones.",
+    "sprite": "boss",
+    "spriteSheet": "assets/sprites/hidra_cuadratica.png"
+  },
+  {
+    "id": "cubo_gelatinoso",
+    "name": "Cubo Gelatinoso",
+    "world": "ciudadela",
+    "topic": "medidas",
+    "hp": 20,
+    "questions": 3,
+    "difficulty": [
+      1,
+      3
+    ],
+    "attack": {
+      "name": "Aplastamiento cúbico",
+      "damage": 4,
+      "telegraph": "Se estira hasta tocar el techo"
+    },
+    "line": "¿Cuánto cabe dentro de mí?",
+    "sprite": "normal",
+    "spriteSheet": "assets/sprites/cubo_gelatinoso.png"
+  },
+  {
+    "id": "troll_puente",
+    "name": "Troll del Puente",
+    "world": "ciudadela",
+    "topic": "pitagoras",
+    "hp": 26,
+    "questions": 4,
+    "difficulty": [
+      1,
+      4
+    ],
+    "attack": {
+      "name": "Garrote en diagonal",
+      "damage": 5,
+      "telegraph": "Levanta el garrote en diagonal"
+    },
+    "line": "Para cruzar, dime cuánto mide la diagonal.",
+    "sprite": "normal",
+    "spriteSheet": "assets/sprites/troll_puente.png"
+  },
+  {
+    "id": "gnomo_sombras",
+    "name": "Gnomo de Sombras",
+    "world": "ciudadela",
+    "topic": "tales",
+    "hp": 16,
+    "questions": 3,
+    "difficulty": [
+      1,
+      3
+    ],
+    "attack": {
+      "name": "Sombra estirada",
+      "damage": 3,
+      "telegraph": "Su sombra crece hacia ti"
+    },
+    "line": "Mi sombra mide tanto, la torre mide cuánto?",
+    "sprite": "normal",
+    "spriteSheet": "assets/sprites/gnomo_sombras.png"
+  },
+  {
+    "id": "alquimista_sobrecargado",
+    "name": "Alquimista Sobrecargado",
+    "world": "ciudadela",
+    "topic": "unidades",
+    "hp": 20,
+    "questions": 4,
+    "difficulty": [
+      1,
+      4
+    ],
+    "attack": {
+      "name": "Poción desbordada",
+      "damage": 4,
+      "telegraph": "Mezcla frascos de distintos tamaños"
+    },
+    "line": "Dame los mililitros en litros o la poción explota.",
+    "sprite": "normal",
+    "spriteSheet": "assets/sprites/alquimista_sobrecargado.png"
+  },
+  {
+    "id": "espejo_maldito",
+    "name": "Espejo Maldito",
+    "world": "ciudadela",
+    "topic": "transformaciones",
+    "hp": 22,
+    "questions": 4,
+    "difficulty": [
+      1,
+      4
+    ],
+    "attack": {
+      "name": "Reflejo robado",
+      "damage": 5,
+      "telegraph": "Copia tu último movimiento al revés"
+    },
+    "line": "Soy tu reflejo, pero al revés. ¿Dónde caigo?",
+    "sprite": "normal",
+    "spriteSheet": "assets/sprites/espejo_maldito.png"
+  },
+  {
+    "id": "caballero_coordenado",
+    "name": "Caballero Coordenado",
+    "world": "ciudadela",
+    "topic": "plano",
+    "hp": 28,
+    "questions": 5,
+    "difficulty": [
+      1,
+      4
+    ],
+    "attack": {
+      "name": "Estocada en (x, y)",
+      "damage": 6,
+      "telegraph": "Marca un punto y apunta a él"
+    },
+    "line": "Dime mi posición exacta: primero x, luego y.",
+    "sprite": "normal",
+    "spriteSheet": "assets/sprites/caballero_coordenado.png"
+  },
+  {
+    "id": "coloso_medidas",
+    "name": "Coloso de las Medidas",
+    "world": "ciudadela",
+    "topic": "parcial3",
+    "boss": true,
+    "hp": 100,
+    "questions": 15,
+    "phases": [
+      "medidas",
+      "pitagoras",
+      "tales",
+      "unidades",
+      "transformaciones",
+      "plano"
+    ],
+    "difficulty": [
+      2,
+      4
+    ],
+    "attack": {
+      "name": "Pisotón a escala",
+      "damage": 8,
+      "telegraph": "Crece una escala con cada paso"
+    },
+    "line": "Todo lo mido y nada se me escapa.",
+    "sprite": "boss",
+    "spriteSheet": "assets/sprites/coloso_medidas.png"
+  },
+  {
+    "id": "el_divisor",
+    "name": "El Divisor",
+    "world": "vacio",
+    "topic": "final",
+    "boss": true,
+    "final": true,
+    "hp": 160,
+    "questions": 20,
+    "phases": [
+      "porcentajes",
+      "ecuaciones",
+      "cuadratica",
+      "pitagoras",
+      "plano"
+    ],
+    "difficulty": [
+      3,
+      4
+    ],
+    "attack": {
+      "name": "División entre cero",
+      "damage": 9,
+      "telegraph": "El agujero negro se traga la mitad del escenario"
+    },
+    "line": "Todo lo divido. Todo lo reduzco a cero.",
+    "sprite": "boss",
+    "spriteSheet": "assets/sprites/el_divisor.png"
+  }
+]
