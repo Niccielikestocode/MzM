@@ -12,7 +12,10 @@ export const TIER_NAME = ['', '¡BIEN!', '¡GENIAL!', '¡INCREÍBLE!', '¡LEGEND
 /** Daño de un golpe básico de la cadena. */
 export function hitDamage(step: number, combo: number, extra = 0): number { return Math.max(1, Math.round((BASIC_DMG[step % 3] + extra) * comboMult(combo))); }
 /** Daño del orbe correcto: una fracción de la vida máxima del monstruo. */
-export const orbDamage = (maxHp: number, combo: number): number => Math.max(6, Math.round(Math.ceil(maxHp * 0.28) * (1 + Math.min(0.5, combo * 0.02))));
+export const orbDamage = (maxHp: number, combo: number, n = 4): number => Math.max(3, Math.round(Math.ceil(maxHp / (Math.max(3, n) + 1)) * (1 + Math.min(0.15, combo * 0.01))));
+/** Los golpes y cartas sólo pueden quitar esta fracción de la vida: el resto exige acertar problemas. */
+export const CHIP_CAP = 0.35;
+export const chipLeft = (s: { maxHp: number; chip: number }): number => Math.max(0, Math.floor(s.maxHp * CHIP_CAP) - s.chip);
 
 export type Slot = { id: string; cd: number; max: number };
 /** Cartas que exigen resolver un problema para activarse con todo su efecto. */
@@ -33,12 +36,12 @@ export function loadoutOf(save: SaveData): string[] {
 export interface FightState {
   monster: MonsterDef; maxHp: number; hp: number; heroMax: number; heroHp: number;
   combo: number; comboT: number; best: number; shield: number; reflectT: number; weakT: number; stunT: number; burnT: number; burnN: number; empowered: number;
-  hits: number; correct: number; asked: number; hintsUsed: number; diff: number; hitRun: number; missRun: number; prep: { remove: number; delta: number; graph: boolean };
+  chip: number; hits: number; correct: number; asked: number; hintsUsed: number; diff: number; hitRun: number; missRun: number; prep: { remove: number; delta: number; graph: boolean };
 }
 export function newFight(monster: MonsterDef, qCount: number, hpMult: number, heroHp: number, heroMax: number): FightState {
   const base = monster.hp * (qCount / monster.questions) * hpMult;
   const maxHp = Math.max(8, Math.round(base * 1.25));
-  return { monster, maxHp, hp: maxHp, heroMax, heroHp, combo: 0, comboT: 0, best: 0, shield: 0, reflectT: 0, weakT: 0, stunT: 0, burnT: 0, burnN: 0, empowered: 0, hits: 0, correct: 0, asked: 0, hintsUsed: 0, diff: 0, hitRun: 0, missRun: 0, prep: { remove: 0, delta: 0, graph: false } };
+  return { monster, maxHp, hp: maxHp, heroMax, heroHp, combo: 0, comboT: 0, best: 0, shield: 0, reflectT: 0, weakT: 0, stunT: 0, burnT: 0, burnN: 0, empowered: 0, chip: 0, hits: 0, correct: 0, asked: 0, hintsUsed: 0, diff: 0, hitRun: 0, missRun: 0, prep: { remove: 0, delta: 0, graph: false } };
 }
 export type AEv =
   | { t: 'damage'; n: number } | { t: 'shield'; n: number } | { t: 'heal'; n: number } | { t: 'drain'; n: number } | { t: 'self'; n: number }

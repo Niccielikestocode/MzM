@@ -39,7 +39,7 @@ export function startArena(o: ArenaOpts): void {
   const heroHpBar = h('i'), heroTxt = h('span'), shieldTxt = h('span', { class: 'c-block' }), monHpBar = h('i'), monTxt = h('span'), monStat = h('span', { class: 'c-phase' });
   const comboNum = h('b', { class: 'a-cn' }, '0'), comboTier = h('span', { class: 'a-ct' }), comboBar = h('i'), comboBox = h('div', { class: 'a-combo', hidden: true }, h('span', { class: 'a-cx' }, '×'), comboNum, h('small', {}, 'COMBO'), comboTier, h('div', { class: 'bar mini' }, comboBar));
   const labels = h('div', { class: 'a-labels' }), overlayEl = h('div', { class: 'c-overlay', hidden: true }), popEl = h('div', { class: 'a-pop', hidden: true });
-  const qTag = h('div', { class: 'q-tag' }, 'Prepárate…'), qText = h('p', { class: 'q-text hint' }, 'Golpea el orbe con la respuesta correcta. ¡Esquiva al monstruo!'), qMedia = h('div', { class: 'q-media' }), legend = h('div', { class: 'a-legend' });
+  const qTag = h('div', { class: 'q-tag' }, 'Prepárate…'), qText = h('p', { class: 'q-text hint' }, 'Golpea el orbe con la respuesta correcta para herir de verdad al monstruo. ¡Esquiva sus ataques!'), qMedia = h('div', { class: 'q-media' }), legend = h('div', { class: 'a-legend' });
   const timerBar = h('i'), timer = h('div', { class: 'bar a-timer' }, timerBar), qFb = h('div', { class: 'q-fb', 'aria-live': 'polite' });
   const hintBtn = h('button', { class: 'pbtn small', onclick: () => useHint() }, 'Pista (H)'), pauseBtn = h('button', { class: 'pbtn small ghost', onclick: () => pause(true) }, 'Pausa (P)');
   const skillEls = slots.map((sl, i) => {
@@ -75,6 +75,7 @@ export function startArena(o: ArenaOpts): void {
   let prob: { q: Question; t: number; total: number } | null = null, nextProb = 2.5, pop: { q: Question; card: A.Slot; t: number; total: number } | null = null;
   let phase: 'intro' | 'fight' | 'end' = 'intro', paused = false, hints = 1, lastTemplate = o.lastTemplate ?? '', hintsUsed = 0, shotT = 0, clockT = 0;
   const keys = new Set<string>(), pressed: Record<string, boolean> = {}, queued = { jump: false, dash: false, atk: false };
+  (window as any).__jmArena = { H, M, s, orbs, get phase() { return phase; }, get prob() { return prob; } };
   view.arena = true; view.hero.homeX = H.x; gfxFlags.reduce = save.settings.reduceMotion;
   setIntensity(m.boss ? 2 : 1);
 
@@ -153,7 +154,9 @@ export function startArena(o: ArenaOpts): void {
   }
   function hitMonster(n: number, kind: 'hit' | 'orb' | 'card' | 'reflect' | 'burn', crit = false): void {
     if (phase !== 'fight' || n <= 0) return;
-    s.hp = Math.max(0, s.hp - n); const [mx, my] = view.monCenter();
+    const [mx, my] = view.monCenter();
+    if (kind !== 'orb') { const ok = Math.min(n, A.chipLeft(s)); if (ok < n && s.chip >= Math.floor(s.maxHp * A.CHIP_CAP)) { if (!view.cv.dataset.warn || Date.now() - +view.cv.dataset.warn > 2500) { view.cv.dataset.warn = String(Date.now()); view.float('¡Protegido! Resuelve el problema', mx, my - 34, '#9fe8ff'); } view.fx.length < 40 && view.burst(mx, my, '#9fe8ff', 6); sfx('block'); view.monHurt(); return; } n = ok; s.chip += n; }
+    s.hp = Math.max(0, s.hp - n);
     view.monHurt(); if (kind !== 'burn') view.hitFx(Math.min(8, n / 2), crit); view.bigNum(`-${n}`, mx, my - 4, kind === 'burn' ? '#ff9a3c' : crit ? '#ffd24d' : '#ffffff', crit);
     uiBars(); if (s.hp <= 0) finish(true);
   }
@@ -243,7 +246,7 @@ export function startArena(o: ArenaOpts): void {
     if (!prob || ob.gone) return;
     view.burst(ob.x, ob.y, ob.col, 20);
     if (ob.ok) {
-      const d = A.orbDamage(s.maxHp, s.combo); sfx('orbok'); gain(3); view.cv.dataset.last = 'ok';
+      const d = A.orbDamage(s.maxHp, s.combo, room.questions ?? m.questions); sfx('orbok'); gain(3); view.cv.dataset.last = 'ok';
       view.fx.push({ t: 0, life: 380, draw(ctx: CanvasRenderingContext2D, p: number) { ctx.globalAlpha = 1 - p; ctx.strokeStyle = ob.col; ctx.lineWidth = 3; ctx.beginPath(); ctx.arc(ob.x, ob.y, 8 + 50 * p, 0, 6.3); ctx.stroke(); ctx.globalAlpha = 1; } });
       view.hero.play('attack'); hitMonster(d, 'orb', true); view.zoomPulse(0.06); view.banner('¡CORRECTO!', '#8bf0a8', 40);
       endProblem(true, ob.label, '✓ ¡Correcto!');

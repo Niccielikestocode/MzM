@@ -1,7 +1,7 @@
 import { describe, it, expect } from 'vitest';
 import { newSave } from '../src/game/save';
 import { cardById, heroById, monsterById } from '../src/core/data';
-import { addCombo, applyCard, breakCombo, cardDamage, comboMult, comboTier, hitDamage, loadoutOf, needsProblem, newFight, orbDamage, patternsFor, cooldownMs, Slot } from '../src/game/arena';
+import { chipLeft, addCombo, applyCard, breakCombo, cardDamage, comboMult, comboTier, hitDamage, loadoutOf, needsProblem, newFight, orbDamage, patternsFor, cooldownMs, Slot } from '../src/game/arena';
 
 const mk = () => newFight(monsterById.slime_fraccionario, 3, 1, 28, 28);
 describe('combate en tiempo real', () => {
@@ -10,7 +10,7 @@ describe('combate en tiempo real', () => {
     expect(hitDamage(2, 0)).toBe(5); expect(hitDamage(0, 20)).toBeGreaterThan(hitDamage(0, 0));
     const s = mk(); let tier: number | null = null; for (let i = 0; i < 5; i++) tier = addCombo(s) ?? tier; expect(tier).toBe(1); expect(comboTier(s.combo)).toBe(1); breakCombo(s); expect(s.combo).toBe(0); expect(s.best).toBe(5);
   });
-  it('el orbe correcto hace una fracción grande de la vida', () => { const s = mk(); expect(orbDamage(s.maxHp, 0)).toBeGreaterThanOrEqual(6); expect(orbDamage(40, 0)).toBe(12); });
+  it('el orbe correcto hace una fracción grande de la vida', () => { const s = mk(); expect(orbDamage(s.maxHp, 0)).toBeGreaterThanOrEqual(3); expect(orbDamage(40, 0, 4)).toBe(8); expect(chipLeft({ maxHp: 40, chip: 10 })).toBe(4); });
   it('cartas: daño, escudo, aturdir, quemar y recarga', () => {
     const s = mk(), slots: Slot[] = [{ id: 'a', cd: 5000, max: 9000 }, { id: 'escala_de_tales', cd: 4000, max: 9000 }];
     const e1 = applyCard(s, cardById.rotacion_estelar, true, slots); expect(s.stunT).toBe(2500); expect(s.shield).toBeGreaterThan(0); expect(e1.some(e => e.t === 'stun')).toBe(true);
