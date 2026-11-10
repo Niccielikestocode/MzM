@@ -248,8 +248,8 @@ export function startArena(o: ArenaOpts): void {
     if (ob.ok) {
       const d = A.orbDamage(s.maxHp, s.combo, room.questions ?? m.questions); sfx('orbok'); { const hl = Math.min(2, s.heroMax - s.heroHp); if (hl > 0) { s.heroHp += hl; view.bigNum(`+${hl}`, view.heroCenter()[0], view.heroCenter()[1] - 6, '#6fcf8f'); } } gain(3); view.cv.dataset.last = 'ok';
       view.fx.push({ t: 0, life: 380, draw(ctx: CanvasRenderingContext2D, p: number) { ctx.globalAlpha = 1 - p; ctx.strokeStyle = ob.col; ctx.lineWidth = 3; ctx.beginPath(); ctx.arc(ob.x, ob.y, 8 + 50 * p, 0, 6.3); ctx.stroke(); ctx.globalAlpha = 1; } });
-      view.hero.play('attack'); hitMonster(d, 'orb', true); view.zoomPulse(0.06); view.banner('¡CORRECTO!', '#8bf0a8', 40);
-      endProblem(true, ob.label, '✓ ¡Correcto!');
+      view.hero.play('attack'); view.zoomPulse(0.06); view.banner('¡CORRECTO!', '#8bf0a8', 40);
+      endProblem(true, ob.label, '✓ ¡Correcto!'); hitMonster(d, 'orb', true);
     } else {
       sfx('orbbad'); loseCombat(); view.banner('¡INCORRECTO!', '#ff6f7a', 40); qPanelShake();
       endProblem(false, ob.label, '✗ No era esa.'); hurtHero(Math.max(2, Math.round(m.attack.damage * 0.7)));
