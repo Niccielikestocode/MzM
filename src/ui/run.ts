@@ -64,7 +64,7 @@ export function startRun(ctx: RunCtx, level: Level, mode: Mode): void {
     const m = monsterById[room.monster!]; save.stats.combatsWon++;
     if (m.boss) { if (!save.progress.bossesDefeated.includes(m.id)) save.progress.bossesDefeated.push(m.id); if (hints === 0 && level.boss) save.stats.bossNoHint = true; }
     const drops = dropCards(save, m.id); run.newCards.push(...drops);
-    const heal = Math.min(hero.hp - heroHp, Math.ceil(hero.hp * 0.25)); run.hp = heroHp + heal; ctx.persist();
+    const heal = Math.min(hero.hp - heroHp, Math.ceil(hero.hp * 0.4)); run.hp = heroHp + heal; ctx.persist();
     roomScreen(room, `¡Venciste a ${m.name}!`, [heal ? `Recuperas ${heal} de vida (${run.hp}/${hero.hp}).` : '', ...drops.map(c => h('div', { class: 'reward-card' }, fullCard(c)))], [[run.idx + 1 >= level.rooms.length ? 'Terminar' : 'Siguiente sala', next]], { win: true }); sfx('win');
   }
   function defeat(room: Room): void {

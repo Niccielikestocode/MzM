@@ -99,7 +99,7 @@ export function patternsFor(m: MonsterDef): Pattern[] {
 /** Tiempo para responder según dificultad (ms). */
 export const answerTime = (d: number): number => 14000 + d * 2500;
 /** Pausa entre un problema y el siguiente (ms). */
-export const questionGap = (qLeft: number): number => (qLeft > 0 ? 4500 : 7000);
+export const questionGap = (qLeft: number): number => (qLeft > 0 ? 3200 : 5000);
 export function topicNow(s: FightState, fallback: string, room: { phases?: string[]; topic?: string }): string {
   const ph = room.phases ?? s.monster.phases; if (!ph?.length) return room.topic ?? fallback;
   const frac = 1 - s.hp / s.maxHp; return ph[Math.min(ph.length - 1, Math.floor(frac * ph.length))];

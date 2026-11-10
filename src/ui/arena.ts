@@ -70,12 +70,12 @@ export function startArena(o: ArenaOpts): void {
 
   /* ---------- estado ---------- */
   const H = { x: 40, yo: 0, vy: 0, face: 1, dashT: 0, dashCd: 0, inv: 0, atkCd: 0, chainT: 0, step: 0, swing: -1, hitStun: 0, air: false };
-  const M = { x: monBase, st: 'idle' as 'idle' | 'tele' | 'act' | 'back', t: 0, pat: '', tx: 0, hit: false, next: 3, clock: 0, burnAcc: 0, nearT: 0, shots: [] as number[] };
+  const M = { x: monBase, st: 'idle' as 'idle' | 'tele' | 'act' | 'back', t: 0, pat: '', tx: 0, hit: false, next: 3.5, clock: 0, burnAcc: 0, nearT: 0, shots: [] as number[] };
   const orbs: Orb[] = [], projs: Proj[] = [], waves: { x: number; vx: number }[] = [], marks: { x: number; t: number }[] = [];
-  let prob: { q: Question; t: number; total: number } | null = null, nextProb = 2.5, pop: { q: Question; card: A.Slot; t: number; total: number } | null = null;
+  let prob: { q: Question; t: number; total: number } | null = null, nextProb = 2, pop: { q: Question; card: A.Slot; t: number; total: number } | null = null;
   let phase: 'intro' | 'fight' | 'end' = 'intro', paused = false, hints = 1, lastTemplate = o.lastTemplate ?? '', hintsUsed = 0, shotT = 0, clockT = 0;
   const keys = new Set<string>(), pressed: Record<string, boolean> = {}, queued = { jump: false, dash: false, atk: false };
-  (window as any).__jmArena = { H, M, s, orbs, get phase() { return phase; }, get prob() { return prob; } };
+  (window as any).__jmArena = { H, M, s, orbs, projs, waves, marks, get phase() { return phase; }, get prob() { return prob; } };
   view.arena = true; view.hero.homeX = H.x; gfxFlags.reduce = save.settings.reduceMotion;
   setIntensity(m.boss ? 2 : 1);
 
@@ -246,7 +246,7 @@ export function startArena(o: ArenaOpts): void {
     if (!prob || ob.gone) return;
     view.burst(ob.x, ob.y, ob.col, 20);
     if (ob.ok) {
-      const d = A.orbDamage(s.maxHp, s.combo, room.questions ?? m.questions); sfx('orbok'); gain(3); view.cv.dataset.last = 'ok';
+      const d = A.orbDamage(s.maxHp, s.combo, room.questions ?? m.questions); sfx('orbok'); { const hl = Math.min(2, s.heroMax - s.heroHp); if (hl > 0) { s.heroHp += hl; view.bigNum(`+${hl}`, view.heroCenter()[0], view.heroCenter()[1] - 6, '#6fcf8f'); } } gain(3); view.cv.dataset.last = 'ok';
       view.fx.push({ t: 0, life: 380, draw(ctx: CanvasRenderingContext2D, p: number) { ctx.globalAlpha = 1 - p; ctx.strokeStyle = ob.col; ctx.lineWidth = 3; ctx.beginPath(); ctx.arc(ob.x, ob.y, 8 + 50 * p, 0, 6.3); ctx.stroke(); ctx.globalAlpha = 1; } });
       view.hero.play('attack'); hitMonster(d, 'orb', true); view.zoomPulse(0.06); view.banner('¡CORRECTO!', '#8bf0a8', 40);
       endProblem(true, ob.label, '✓ ¡Correcto!');
@@ -341,7 +341,7 @@ export function startArena(o: ArenaOpts): void {
       M.t -= dt; shotT += dt;
       if (M.pat === 'shot') while (M.shots.length && shotT >= M.shots[0]) { M.shots.shift(); const air = m.boss && M.shots.length === 0; projs.push({ x: monCX() + (view.mon.flip ? 1 : -1) * sz * 0.4, y: air ? GY - 46 : GY - 12, vx: (view.mon.flip ? 1 : -1) * 150, r: 6, col: m.boss ? '#c8a3ff' : '#ff8a3c' }); sfx('proj'); }
       if (M.x !== monBase) M.x += Math.sign(monBase - M.x) * Math.min(Math.abs(monBase - M.x), 140 * dt);
-      if (M.t <= 0) { M.st = 'idle'; M.next = (m.boss ? 1.7 : 2.4) * (0.8 + 0.4 * (s.hp / s.maxHp)); }
+      if (M.t <= 0) { M.st = 'idle'; M.next = (m.boss ? 2.4 : 3.8) * (0.8 + 0.4 * (s.hp / s.maxHp)) * (s.heroHp / s.heroMax < 0.35 ? 1.5 : 1); }
     }
     view.mon.x = Math.round(M.x); view.mon.dirty = true;
     for (let i = marks.length - 1; i >= 0; i--) { const mk = marks[i]; mk.t -= dt; if (mk.t <= 0) { marks.splice(i, 1); sfx('meteor'); view.burst(mk.x, GY - 4, '#ff9a3c', 16); view.shake = 200; if (Math.abs(H.x + 16 - mk.x) < 15 && H.yo < 22) hurtHero(dmgM()); } }
