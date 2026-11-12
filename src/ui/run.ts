@@ -11,6 +11,8 @@ import { achievements } from '../core/data';
 import { fullCard } from './cards';
 import { sfx, playMusic, playAmbient, setIntensity } from './audio';
 import { startArena } from './arena';
+import { confetti, sunburst } from '../gfx/finale';
+import { playLevelClear } from './levelclear';
 
 export type Mode = 'campaign' | 'learning' | 'free' | 'errors';
 export interface RunCtx { story?(level: Level, then: () => void): boolean; save: SaveData; persist(): void; mount(el: HTMLElement, cleanup?: () => void): void; exit(): void; replay(level: Level, mode: Mode): void }
@@ -28,6 +30,7 @@ export function startRun(ctx: RunCtx, level: Level, mode: Mode): void {
     view.setup(level.world, heroSprite(hero), monsterSprite(m)); view.monVisible = false; if (opts.win) view.hero.play('win'); if (opts.dead) view.hero.play('hurt');
     const overlay = h('div', { class: 'c-overlay' }, h('div', { class: 'dlg wide' }, h('h3', {}, title), ...body, h('div', { class: 'dlg-btns' }, buttons.map(([t, fn, ghost]) => h('button', { class: 'pbtn' + (ghost ? ' ghost' : ''), onclick: () => { sfx('click'); fn(); } }, t)))));
     const dots = h('div', { class: 'c-dots', 'aria-label': 'Salas' }, level.rooms.map((r, i) => h('span', { class: `dot${i === run.idx ? ' now' : ''}${i < run.idx ? ' done' : ''}`, title: r.type }, glyph(roomIcon[r.type === 'boss' ? 'boss' : r.type] ?? 'star', 2, i === run.idx ? '#f2c14e' : '#9a90b8'))));
+    if (opts.win) { sunburst(view, 160, 110, 7000); confetti(view, 60, 2800); overlay.classList.add('win'); }
     ctx.mount(h('div', { class: 'combat solo' }, h('div', { class: 'c-left' }, dots, h('div', { class: 'c-stage' }, view.cv, overlay))));
     ticker.add(dt => view.step(dt)); playMusic(level.world, 0); playAmbient(level.world);
     ($('button', overlay) as HTMLElement).focus(); return view;
@@ -86,7 +89,7 @@ export function startRun(ctx: RunCtx, level: Level, mode: Mode): void {
     const rows = [...new Set([...run.topics])].filter(t => topicById[t]).map(t => h('div', { class: 'sum-row' }, h('span', {}, topicById[t].name), h('div', { class: 'bar mini' }, h('i', { style: { width: pct(masteryOf(save, t)) } })), h('b', {}, `${pct(run.before[t] ?? 0.25)} → ${pct(masteryOf(save, t))}`)));
     const title = mode === 'campaign' ? (cleared ? '¡Zona superada!' : 'Aún no dominas el tema') : '¡Aventura terminada!';
     const msg = mode === 'campaign' && !cleared ? 'Terminaste las salas, pero el dominio del tema no llegó al 70 %. Repite la zona o entrena en el modo Aprendizaje.' : `${run.correct} de ${run.asked} correctas (${pct(acc)}).`;
-    const showSummary = (): void => {
+    const summary = (): void => {
     const s = h('div', { class: 'summary screen' },
       h('h2', {}, title), h('p', { class: 'lead' }, msg), h('div', { class: 'sum' }, rows),
       run.newCards.length ? h('div', {}, h('h3', {}, 'Cartas nuevas'), h('div', { class: 'reward-row' }, run.newCards.map(c => fullCard(c)))) : null,
@@ -95,6 +98,7 @@ export function startRun(ctx: RunCtx, level: Level, mode: Mode): void {
     sfx(cleared || mode !== 'campaign' ? 'win' : 'click');
     ctx.mount(s); playMusic('victoria', 0);
     };
+    const showSummary = (): void => playLevelClear({ level, hero, cleared, mode, accuracy: acc, mount: ctx.mount, next: summary });
     if (cleared && mode === 'campaign' && ctx.story?.(level, showSummary)) return;
     showSummary();
   }

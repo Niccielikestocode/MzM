@@ -10,6 +10,10 @@ import { pickQuestion } from '../game/picker';
 import { sfx, sfxForCard, playMusic, playAmbient, setIntensity } from './audio';
 import * as A from '../game/arena';
 import { artCanvas } from './cards';
+import { victorySequence } from '../gfx/finale';
+import { buildPicker, Picker } from './gpanel';
+import { optionPicto, questionVisual } from '../gfx/visual';
+import { parseVal } from '../game/vis';
 
 export interface ArenaOpts {
   save: SaveData; hero: HeroDef; monster: MonsterDef; room: Room; level: Level; heroHp: number; rng: Rng; lastTemplate?: string;
@@ -39,7 +43,7 @@ export function startArena(o: ArenaOpts): void {
   const heroHpBar = h('i'), heroTxt = h('span'), shieldTxt = h('span', { class: 'c-block' }), monHpBar = h('i'), monTxt = h('span'), monStat = h('span', { class: 'c-phase' });
   const comboNum = h('b', { class: 'a-cn' }, '0'), comboTier = h('span', { class: 'a-ct' }), comboBar = h('i'), comboBox = h('div', { class: 'a-combo', hidden: true }, h('span', { class: 'a-cx' }, '×'), comboNum, h('small', {}, 'COMBO'), comboTier, h('div', { class: 'bar mini' }, comboBar));
   const labels = h('div', { class: 'a-labels' }), overlayEl = h('div', { class: 'c-overlay', hidden: true }), popEl = h('div', { class: 'a-pop', hidden: true });
-  const qTag = h('div', { class: 'q-tag' }, 'Prepárate…'), qText = h('p', { class: 'q-text hint' }, 'Golpea el orbe con la respuesta correcta para herir de verdad al monstruo. ¡Esquiva sus ataques!'), qMedia = h('div', { class: 'q-media' }), legend = h('div', { class: 'a-legend' });
+  const qTag = h('div', { class: 'q-tag' }, 'Prepárate…'), qText = h('p', { class: 'q-text hint' }, 'Golpea el orbe con la respuesta correcta para herir de verdad al monstruo. ¡Esquiva sus ataques!'), qMedia = h('div', { class: 'q-media' }), legend = h('div', { class: 'a-legend' }), pickerBox = h('div', { class: 'pickbox' });
   const timerBar = h('i'), timer = h('div', { class: 'bar a-timer' }, timerBar), qFb = h('div', { class: 'q-fb', 'aria-live': 'polite' });
   const hintBtn = h('button', { class: 'pbtn small', onclick: () => useHint() }, 'Pista (H)'), pauseBtn = h('button', { class: 'pbtn small ghost', onclick: () => pause(true) }, 'Pausa (P)');
   const skillEls = slots.map((sl, i) => {
@@ -64,7 +68,7 @@ export function startArena(o: ArenaOpts): void {
       h('div', { class: 'c-side r' }, h('span', { class: 'c-name' }, m.name + (room.miniBoss ? ' (mini jefe)' : '')), h('div', { class: 'bar mhp' }, monHpBar), h('div', { class: 'c-nums' }, monTxt, monStat))),
     h('div', { class: 'a-main' },
       h('div', { class: 'a-left' }, h('div', { class: 'c-stage' }, view.cv, labels, popEl, overlayEl), h('div', { class: 'a-skills' }, ...skillEls.map(e => e.b))),
-      h('div', { class: 'a-side' }, h('div', { class: 'q-panel' }, qTag, qText, qMedia, legend, timer, qFb), h('div', { class: 'c-tools' }, hintBtn, pauseBtn),
+      h('div', { class: 'a-side' }, h('div', { class: 'q-panel' }, qTag, qText, qMedia, legend, pickerBox, timer, qFb), h('div', { class: 'c-tools' }, hintBtn, pauseBtn),
         h('p', { class: 'a-help' }, 'A/D mover · W/Espacio saltar · K dash · J/clic golpear · 1-4 cartas · H pista'))),
     touch);
 
@@ -72,6 +76,7 @@ export function startArena(o: ArenaOpts): void {
   const H = { x: 40, yo: 0, vy: 0, face: 1, dashT: 0, dashCd: 0, inv: 0, atkCd: 0, chainT: 0, step: 0, swing: -1, hitStun: 0, air: false };
   const M = { x: monBase, st: 'idle' as 'idle' | 'tele' | 'act' | 'back', t: 0, pat: '', tx: 0, hit: false, next: 3.5, clock: 0, burnAcc: 0, nearT: 0, shots: [] as number[] };
   const orbs: Orb[] = [], projs: Proj[] = [], waves: { x: number; vx: number }[] = [], marks: { x: number; t: number }[] = [];
+  let picker: Picker | null = null, chal: { q: Question; settled: boolean } | null = null;
   let prob: { q: Question; t: number; total: number } | null = null, nextProb = 2, pop: { q: Question; card: A.Slot; t: number; total: number } | null = null;
   let phase: 'intro' | 'fight' | 'end' = 'intro', paused = false, hints = 1, lastTemplate = o.lastTemplate ?? '', hintsUsed = 0, shotT = 0, clockT = 0;
   const keys = new Set<string>(), pressed: Record<string, boolean> = {}, queued = { jump: false, dash: false, atk: false };
@@ -90,7 +95,9 @@ export function startArena(o: ArenaOpts): void {
     if (!overlayEl.hidden) return;
     if (k === 'p' || k === 'escape') { pause(!paused); return; }
     if (paused) return;
+    if (chal) { if (/^[1-4]$/.test(k)) (root.querySelectorAll('.chal-in .opt')[+k - 1] as HTMLElement | undefined)?.click(); return; }
     if (pop && /^[1-4]$/.test(k)) { answerPop(+k - 1); return; }
+    if (k === 'e') { picker?.submit(); return; }
     if (k === 'w' || k === 'arrowup' || k === ' ') queued.jump = true;
     else if (k === 'k' || k === 'shift' || k === 'l') queued.dash = true;
     else if (k === 'j' || k === 'z' || k === 'x') queued.atk = true;
@@ -197,9 +204,9 @@ export function startArena(o: ArenaOpts): void {
     const [lo, hi] = m.difficulty, base = (room.difficulty ?? lo) + s.diff + s.prep.delta;
     return Math.max(1, Math.min(4, Math.max(lo > 1 ? lo - 1 : 1, Math.min(hi, base))));
   }
-  function makeQ(): Question {
+  function makeQ(allowStage = false): Question {
     const topic = A.topicNow(s, level.topic, room); let q: Question;
-    for (let i = 0; i < 14; i++) { q = pickQuestion({ topics: [topic], difficulty: topicDiff(), rng, save, lastTemplate }); if (!q.stage && !q.clickTarget && q.options.length >= 2) break; }
+    for (let i = 0; i < 14; i++) { q = pickQuestion({ topics: [topic], difficulty: topicDiff(), rng, save, lastTemplate }); if (allowStage ? (q.stage || q.options.length >= 2) : (!q.stage && !q.clickTarget && q.options.length >= 2)) break; }
     lastTemplate = q!.template; return q!;
   }
   function renderMedia(q: Question, into: HTMLElement): void {
@@ -208,7 +215,8 @@ export function startArena(o: ArenaOpts): void {
     if (q.numberLine) { const cv = h('canvas', { class: 'q-cv nl', 'aria-label': 'Recta numérica' }); drawNumberLine(cv, q.numberLine); into.append(cv); }
   }
   function spawnProblem(): void {
-    const q = makeQ(), total = noTimeout ? 0 : A.answerTime(topicDiff());
+    const q = makeQ(true), total = noTimeout ? 0 : A.answerTime(topicDiff());
+    if (q.stage) { openChallenge(q); return; }
     let opts = q.options.map((t, i) => ({ t, ok: i === q.correct }));
     if (opts.length > 4) { const wr = opts.filter(x => !x.ok).slice(0, 3); opts = [opts.find(x => x.ok)!, ...wr]; }
     const xs = [66, 108, 150, 192].sort(() => rng() - 0.5), hs = [GY - 14, GY - 14, GY - 46, GY - 46].sort(() => rng() - 0.5);
@@ -216,13 +224,16 @@ export function startArena(o: ArenaOpts): void {
     opts.sort(() => rng() - 0.5).forEach((op, i) => {
       const el = h('div', { class: 'orb-lbl', style: { borderColor: COLS[i] } }, op.t); labels.append(el);
       orbs.push({ x: xs[i], y: hs[i], ph: rng() * 6, label: op.t, ok: op.ok, dim: false, col: COLS[i], el, gone: false });
-      const lg = h('div', { class: 'lg' }, h('i', {}), h('span', {}, op.t)); lg.style.setProperty('--oc', COLS[i]); legend.append(lg);
+      const allV = opts.map(x => parseVal(x.t)).filter(Boolean) as any[], pic = allV.length === opts.length ? optionPicto(parseVal(op.t), allV, COLS[i]) : null;
+      const lg = h('div', { class: 'lg' }, pic ?? h('i', {}), h('span', {}, op.t)); lg.style.setProperty('--oc', COLS[i]); legend.append(lg);
     });
+    pickerBox.replaceChildren(); picker = buildPicker({ q, items: orbs.map(ob => ({ label: ob.label, col: ob.col })), onHover: i => orbs.forEach((ob, k) => ob.el.classList.toggle('sel', k === i)), onSubmit: i => { const ob = orbs[i]; if (ob && !ob.gone && !ob.dim) hitOrb(ob, true); } });
+    if (picker) pickerBox.append(picker.el);
     let rm = s.prep.remove; s.prep.remove = 0; s.prep.delta = 0;
     for (const ob of orbs.filter(x => !x.ok).sort(() => rng() - 0.5)) { if (rm <= 0) break; dimOrb(ob); rm--; }
     prob = { q, t: total, total };
     qTag.replaceChildren(`${topicById[q.topic]?.name ?? ''} · `, h('span', { class: 'diff' }, '●'.repeat(q.difficulty) + '○'.repeat(4 - q.difficulty)));
-    qText.textContent = q.text; qText.className = 'q-text'; qFb.textContent = ''; qFb.className = 'q-fb'; renderMedia(q, qMedia); timer.hidden = noTimeout; timerBar.style.width = '100%';
+    qText.textContent = q.text; qText.className = 'q-text'; qFb.textContent = ''; qFb.className = 'q-fb'; renderMedia(q, qMedia); { const qv = questionVisual(q); if (qv) qMedia.append(qv); } timer.hidden = noTimeout; timerBar.style.width = '100%';
     sfx('orb'); view.banner('¡PROBLEMA!', '#9fe8ff', 34); (window as any).__jmQ = q; (window as any).__jmOrbs = orbs;
     updHint();
   }
@@ -237,18 +248,18 @@ export function startArena(o: ArenaOpts): void {
     const q = prob!.q; prob = null;
     A.recordAnswer(save, q, ok, given); o.onAnswer(q, ok); A.adaptDiff(s, ok); save.stats.bestStreak = Math.max(save.stats.bestStreak, s.best); o.persist();
     s.asked++; if (ok) s.correct++;
-    orbs.forEach(ob => { ob.gone = true; ob.el.remove(); });
+    orbs.forEach(ob => { ob.gone = true; ob.el.remove(); }); picker = null; pickerBox.replaceChildren();
     qFb.className = 'q-fb ' + (ok ? 'ok' : 'no'); qFb.replaceChildren(h('b', {}, why + ' '), 'Respuesta: ' + q.options[q.correct] + '. ', q.explain);
     labels.replaceChildren(); nextProb = (A.questionGap(1) / 1000) * (ok ? 0.8 : 1); timerBar.style.width = '0%'; updHint(); legend.replaceChildren(); qMedia.replaceChildren();
     hints = Math.min(2, hints + (ok && s.correct % 3 === 0 ? 1 : 0)); updHint();
   }
-  function hitOrb(ob: Orb): void {
+  function hitOrb(ob: Orb, graphic = false): void {
     if (!prob || ob.gone) return;
     view.burst(ob.x, ob.y, ob.col, 20);
     if (ob.ok) {
-      const d = A.orbDamage(s.maxHp, s.combo, room.questions ?? m.questions); sfx('orbok'); { const hl = Math.min(2, s.heroMax - s.heroHp); if (hl > 0) { s.heroHp += hl; view.bigNum(`+${hl}`, view.heroCenter()[0], view.heroCenter()[1] - 6, '#6fcf8f'); } } gain(3); view.cv.dataset.last = 'ok';
+      const d = Math.round(A.orbDamage(s.maxHp, s.combo, room.questions ?? m.questions) * (graphic ? 1.25 : 1)); sfx('orbok'); { const hl = Math.min(2, s.heroMax - s.heroHp); if (hl > 0) { s.heroHp += hl; view.bigNum(`+${hl}`, view.heroCenter()[0], view.heroCenter()[1] - 6, '#6fcf8f'); } } gain(3); view.cv.dataset.last = 'ok';
       view.fx.push({ t: 0, life: 380, draw(ctx: CanvasRenderingContext2D, p: number) { ctx.globalAlpha = 1 - p; ctx.strokeStyle = ob.col; ctx.lineWidth = 3; ctx.beginPath(); ctx.arc(ob.x, ob.y, 8 + 50 * p, 0, 6.3); ctx.stroke(); ctx.globalAlpha = 1; } });
-      view.hero.play('attack'); view.zoomPulse(0.06); view.banner('¡CORRECTO!', '#8bf0a8', 40);
+      view.hero.play('attack'); view.zoomPulse(0.06); view.banner(graphic ? '¡PRECISIÓN!' : '¡CORRECTO!', '#8bf0a8', 40);
       endProblem(true, ob.label, '✓ ¡Correcto!'); hitMonster(d, 'orb', true);
     } else {
       sfx('orbbad'); loseCombat(); view.banner('¡INCORRECTO!', '#ff6f7a', 40); qPanelShake();
@@ -257,6 +268,31 @@ export function startArena(o: ArenaOpts): void {
   }
   function qPanelShake(): void { const p = root.querySelector('.q-panel')!; p.classList.remove('shake'); void (p as HTMLElement).offsetWidth; p.classList.add('shake'); }
   function problemTimeout(): void { sfx('bad'); loseCombat(); view.banner('¡TIEMPO!', '#ff9a3c', 40); endProblem(false, '—', '⏱ Se acabó el tiempo.'); }
+
+  /* ---------- retos gráficos (animados) ---------- */
+  function openChallenge(q: Question): void {
+    const v2 = new BattleView(h('canvas', { class: 'c-canvas chal-cv', 'aria-label': 'Reto gráfico' }));
+    v2.setup(level.world, heroSprite(hero), monsterSprite(m)); v2.monVisible = true;
+    const offT = ticker.add(dt => v2.step(dt)); const click = !!q.clickTarget;
+    const st = { q, settled: false }; chal = st; (window as any).__jmQ = q;
+    const optsEl = h('div', { class: 'q-opts' }), help = h('p', { class: 'muted' }, click ? 'Toca el plano para lanzar el hechizo en esa intersección.' : 'Elige la respuesta y mira cómo se resuelve en la escena.');
+    const fin = (ok: boolean, given: string): void => { if (st.settled) return; st.settled = true; setTimeout(() => { offT(); modal.remove(); chal = null; resolveChallenge(q, ok, given); }, 1000); };
+    q.options.slice(0, 4).forEach((t, i) => optsEl.append(h('button', { class: 'opt', onclick: () => { if (st.settled || !v2.stageReady()) return; optsEl.querySelectorAll('button').forEach(b => ((b as HTMLButtonElement).disabled = true)); v2.stagePick(i); stageGiven = t; } }, h('b', {}, String(i + 1)), h('span', {}, t))));
+    let stageGiven = '';
+    v2.beginStage(q.stage!.id, q.stage!.meta, q, ok => fin(ok, click ? '(punto tocado)' : stageGiven));
+    v2.cv.addEventListener('pointermove', e => v2.pointer('move', e.clientX, e.clientY)); v2.cv.addEventListener('pointerdown', e => { if (click) v2.pointer('down', e.clientX, e.clientY); });
+    const modal = h('div', { class: 'a-chal' }, h('div', { class: 'chal-in' }, h('b', { class: 'chal-t' }, '⚔ Reto gráfico'), h('p', { class: 'q-text' }, q.text), v2.cv, click ? null : optsEl, help));
+    root.append(modal); sfx('swell'); view.banner('¡RETO GRÁFICO!', '#9fe8ff', 34);
+  }
+  function resolveChallenge(q: Question, ok: boolean, given: string): void {
+    A.recordAnswer(save, q, ok, given); o.onAnswer(q, ok); A.adaptDiff(s, ok); save.stats.bestStreak = Math.max(save.stats.bestStreak, s.best); o.persist(); s.asked++; if (ok) s.correct++;
+    qTag.textContent = 'Reto gráfico'; qText.textContent = q.text; qText.className = 'q-text'; qFb.className = 'q-fb ' + (ok ? 'ok' : 'no'); qFb.replaceChildren(h('b', {}, ok ? '✓ ¡Reto superado! ' : '✗ No salió. '), q.explain);
+    nextProb = (A.questionGap(1) / 1000) * (ok ? 0.8 : 1); if (phase !== 'fight') return;
+    if (ok) {
+      const d = Math.round(A.orbDamage(s.maxHp, s.combo, room.questions ?? m.questions) * 1.3), hl = Math.min(2, s.heroMax - s.heroHp); if (hl > 0) s.heroHp += hl;
+      const [mx, my] = view.monCenter(); sfx('orbok'); gain(3); view.zoomPulse(0.06); view.banner('¡RETO SUPERADO!', '#8bf0a8', 40); view.burst(mx, my, '#9fe8ff', 24); view.hero.play('attack'); hitMonster(d, 'orb', true);
+    } else { sfx('orbbad'); loseCombat(); view.banner('¡FALLASTE EL RETO!', '#ff6f7a', 40); qPanelShake(); hurtHero(Math.max(2, Math.round(m.attack.damage * 0.7))); }
+  }
 
   /* ---------- cartas ---------- */
   function castSlot(i: number): void {
@@ -352,7 +388,8 @@ export function startArena(o: ArenaOpts): void {
   /* ---------- bucle principal ---------- */
   function frame(rawDt: number): void {
     if (phase !== 'fight' || paused) { queued.jump = queued.dash = queued.atk = false; return; }
-    const scale = pop ? 0.12 : prob ? tScale : 1, dt = Math.min(0.05, rawDt / 1000) * scale;
+    if (chal) { queued.jump = queued.dash = queued.atk = false; H.inv = Math.max(H.inv, 0.3); }
+    const scale = pop ? 0.12 : chal ? 0.04 : prob ? tScale : 1, dt = Math.min(0.05, rawDt / 1000) * scale;
     // acciones
     if (queued.jump) { doJump(); } if (queued.dash) { doDash(); } if (queued.atk) { doAttack(); }
     queued.jump = queued.dash = queued.atk = false;
@@ -383,7 +420,7 @@ export function startArena(o: ArenaOpts): void {
     if (pop) { const bar = popEl.querySelector('.pt') as HTMLElement | null; if (!noTimeout && pop.total) { pop.t -= rawDt; if (bar) bar.style.width = Math.max(0, pop.t / pop.total * 100) + '%'; if (pop.t <= 0) answerPop(-1); } }
     else if (prob) {
       if (!noTimeout) { prob.t -= rawDt; timerBar.style.width = Math.max(0, prob.t / prob.total * 100) + '%'; timer.classList.toggle('low', prob.t < prob.total * 0.25); if (prob.t <= 0) problemTimeout(); }
-    } else { nextProb -= dt; if (nextProb <= 0 && s.hp > 0) spawnProblem(); }
+    } else if (!chal) { nextProb -= dt; if (nextProb <= 0 && s.hp > 0) spawnProblem(); }
     // orbes (posición en DOM)
     for (const ob of orbs) { ob.ph += dt * 2.2; const by = ob.y + Math.sin(ob.ph) * 3; ob.el.style.left = (ob.x / 320) * 100 + '%'; ob.el.style.top = ((by - 18) / 180) * 100 + '%'; }
     updMonster(dt); uiBars();
@@ -405,11 +442,11 @@ export function startArena(o: ArenaOpts): void {
 
   /* ---------- fin ---------- */
   function finish(won: boolean): void {
-    if (phase === 'end') return; phase = 'end'; prob = null; pop = null; popEl.hidden = true; labels.replaceChildren(); orbs.length = 0; projs.length = 0; waves.length = 0; marks.length = 0; view.setAura(0);
-    if (won) { view.deathFx(); view.monDie(); sfx('explode'); view.zoomPulse(0.08); view.banner('¡VICTORIA!', '#ffd24d', 50); setTimeout(() => { view.heroWin(); sfx('win'); }, 500); }
+    if (phase === 'end') return; phase = 'end'; root.querySelector('.a-chal')?.remove(); chal = null; picker = null; prob = null; pop = null; popEl.hidden = true; labels.replaceChildren(); orbs.length = 0; projs.length = 0; waves.length = 0; marks.length = 0; view.setAura(0);
+    let dur = 1700; if (won) dur = victorySequence(view, { combo: s.best, boss: !!m.boss || !!room.miniBoss, sfx: n => sfx(n as any) }) + 500;
     else { view.hero.play('die'); sfx('lose'); view.banner('DERROTA', '#ff6f7a', 50); playMusic('story', 0); }
     uiBars(); const res = { won, heroHp: Math.max(0, s.heroHp), hints: hintsUsed, best: s.best, lastTemplate };
-    setTimeout(() => { cleanup(); o.onEnd(res); }, won ? 2100 : 1700);
+    setTimeout(() => { cleanup(); o.onEnd(res); }, dur);
   }
 
   /* ---------- inicio ---------- */

@@ -14,7 +14,7 @@ export class BattleView {
   bg!: HTMLCanvasElement; hero!: any; mon!: any; world = 'cavernas'; tk = 0; private acc = 0;
   fx: any[] = []; monVisible = true; heroVisible = true; shake = 0; flash = 0;
   freeze = 0; zoom = 0; tint: { col: string; left: number; total: number } | null = null; tweens: any[] = []; aura = 0; private tmp: HTMLCanvasElement | null = null;
-  backHook: ((ctx: CanvasRenderingContext2D) => void) | null = null; frontHook: ((ctx: CanvasRenderingContext2D) => void) | null = null; arena = false;
+  slow = 1; backHook: ((ctx: CanvasRenderingContext2D) => void) | null = null; frontHook: ((ctx: CanvasRenderingContext2D) => void) | null = null; arena = false;
   stage: { impl: any; S: any; done: boolean; ok: boolean; cb: (ok: boolean) => void } | null = null;
   constructor(readonly cv: HTMLCanvasElement) { cv.width = 320; cv.height = 180; this.ctx = cv.getContext('2d')!; this.ctx.imageSmoothingEnabled = false; }
 
@@ -82,6 +82,7 @@ export class BattleView {
 
   /* ---- bucle ---- */
   step(dt: number): void {
+    dt *= this.slow;
     this.acc += dt; if (this.acc >= 125) { this.acc = 0; this.tk++; }
     C.tk = this.tk;
     const adt = this.freeze > 0 ? 0 : dt; if (this.freeze > 0) this.freeze -= dt;
