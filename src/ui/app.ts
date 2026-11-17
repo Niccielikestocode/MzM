@@ -7,7 +7,7 @@ import { freeRun, learningRun } from '../game/levelgen';
 import { newSeed } from '../core/rng';
 import { h, ticker, spriteCanvas, heroSprite, monsterSprite, pct, glyph } from './dom';
 import { fullCard } from './cards';
-import { setSound, setVolumes, sfx, playMusic, playAmbient, unlockAudio } from './audio';
+import { setSound, setVolumes, sfx, playMusic, playAmbient, unlockAudio, soundtrackStatus, playSoundtrackNow, AUDIO_BUILD } from './audio';
 import { loadoutOf } from '../game/arena';
 import { gfxFlags } from '../gfx/scene';
 import { Mode, startRun } from './run';
@@ -186,8 +186,9 @@ export function settings(): void {
   const toggle = (label: string, key: 'sound' | 'colorBlind' | 'reduceMotion') => h('label', { class: 'chk' }, h('input', { type: 'checkbox', checked: s.settings[key], onchange: (e: Event) => { s.settings[key] = (e.target as HTMLInputElement).checked; persist(); applySettings(); } }), label);
   const range = h('input', { type: 'range', min: 0.9, max: 1.5, step: 0.1, value: s.settings.textScale, 'aria-label': 'Tamaño del texto', oninput: (e: Event) => { s.settings.textScale = +(e.target as HTMLInputElement).value; persist(); applySettings(); } });
   const vol = (label: string, key: 'musicVol' | 'sfxVol' | 'ambVol', d: number) => h('label', { class: 'lbl' }, label, h('input', { type: 'range', min: 0, max: 1, step: 0.05, value: s.settings[key] ?? d, 'aria-label': label, oninput: (e: Event) => { s.settings[key] = +(e.target as HTMLInputElement).value; persist(); applySettings(); }, onchange: () => sfx('ok') }));
+  const musicRow = () => { const st = h('p', { class: 'muted', role: 'status' }, soundtrackStatus()); const upd = () => { st.textContent = soundtrackStatus(); }; return h('div', { class: 'col left' }, st, btn('Reproducir banda sonora', () => { playSoundtrackNow(); setTimeout(upd, 500); setTimeout(upd, 2000); }, 'ghost'), h('small', { class: 'muted' }, 'Versión de audio: ' + AUDIO_BUILD)); };
   mount(h('div', { class: 'screen' }, back(), h('h2', {}, 'Ajustes'), h('div', { class: 'col left' },
-    h('label', { class: 'lbl' }, 'Tamaño del texto', range), toggle('Sonido', 'sound'), vol('Música', 'musicVol', 0.5), vol('Efectos', 'sfxVol', 0.8), vol('Ambiente', 'ambVol', 0.6), toggle('Reducir movimiento', 'reduceMotion'),
+    h('label', { class: 'lbl' }, 'Tamaño del texto', range), toggle('Sonido', 'sound'), vol('Música', 'musicVol', 0.5), vol('Efectos', 'sfxVol', 0.8), vol('Ambiente', 'ambVol', 0.6), musicRow(), toggle('Reducir movimiento', 'reduceMotion'),
     h('label', { class: 'lbl' }, 'Velocidad del combate mientras resuelves un problema', h('select', { 'aria-label': 'Velocidad durante problemas', onchange: (e: Event) => { s.settings.timeMode = (e.target as HTMLSelectElement).value as any; persist(); } }, ([['normal', 'Normal'], ['slow', 'Lento (70 %)'], ['veryslow', 'Muy lento (45 %)']] as const).map(([v, t]) => h('option', { value: v, selected: (s.settings.timeMode ?? 'normal') === v }, t)))),
     h('label', { class: 'chk' }, h('input', { type: 'checkbox', checked: !!s.settings.noTimeout, onchange: (e: Event) => { s.settings.noTimeout = (e.target as HTMLInputElement).checked; persist(); } }), 'Sin límite de tiempo para responder (accesibilidad)'),
     toggle('Modo daltónico (formas y etiquetas extra)', 'colorBlind'),

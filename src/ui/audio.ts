@@ -174,6 +174,20 @@ function fileResume(): void {
 function fileStart(): void { fileWanted = true; fileResume(); }
 function fileStop(ms = 500): void { fileWanted = false; if (!fileEl) return; const a = fileEl; fileFade(0, ms, () => { if (!fileWanted) a.pause(); }); }
 if (typeof window !== 'undefined') { const kick = () => { fileResume(); if (fileEl && !fileEl.paused) { window.removeEventListener('pointerdown', kick); window.removeEventListener('keydown', kick); } }; window.addEventListener('pointerdown', kick); window.addEventListener('keydown', kick); }
+export const AUDIO_BUILD = 'banda-sonora-v2';
+export function soundtrackStatus(): string {
+  if (!vol.on) return 'Sonido desactivado en Ajustes.';
+  if (!fileOk) return 'No se pudo cargar la canción: suena la música sintetizada.';
+  if (fileEl && !fileEl.paused && fileEl.volume > 0.001) return 'Banda sonora sonando.';
+  if (fileEl && !fileEl.paused) return 'Banda sonora iniciando…';
+  return 'Banda sonora en espera: pulsa «Reproducir banda sonora».';
+}
+/** Reintenta la banda sonora desde un clic del usuario (permite el audio y reinicia si falló la carga). */
+export function playSoundtrackNow(): void {
+  ac(); if (!fileOk) { fileOk = true; fileEl = null; }
+  if (!cur) cur = { name: 'menu', intensity: 0 };
+  clearInterval(timer); timer = 0; fileStart();
+}
 export const soundtrackActive = (): boolean => !!fileEl && !fileEl.paused;
 
 export function playMusic(name: string, intensity = 0): void {
