@@ -1,16 +1,17 @@
-/** Audio 100 % sintetizado: efectos, música procedural por mundo y ambientes. Sin archivos. */
+/** Audio: efectos y ambientes sintetizados; banda sonora = pista MP3 (Beyond the Kingdom Gates), con música procedural de respaldo y para la fanfarria de victoria. */
 let ctx: AudioContext | null = null;
 let master: GainNode, sfxBus: GainNode, musBus: GainNode, ambBus: GainNode, delayBus: GainNode;
 const vol = { sfx: 0.8, music: 0.5, amb: 0.6, on: true };
 let noiseBuf: AudioBuffer | null = null;
 
-export function setSound(on: boolean): void { vol.on = on; apply(); }
-export function setVolumes(v: { sfx?: number; music?: number; amb?: number }): void { Object.assign(vol, v); apply(); }
+export function setSound(on: boolean): void { vol.on = on; applyAll(); }
+export function setVolumes(v: { sfx?: number; music?: number; amb?: number }): void { Object.assign(vol, v); applyAll(); }
 function apply(): void {
   if (!ctx) return; const t = ctx.currentTime;
   master.gain.setTargetAtTime(vol.on ? 1 : 0, t, 0.05); sfxBus.gain.setTargetAtTime(vol.sfx, t, 0.05);
   musBus.gain.setTargetAtTime(vol.music * 0.5, t, 0.1); ambBus.gain.setTargetAtTime(vol.amb * 0.5, t, 0.1);
 }
+function applyAll(): void { apply(); fileVol(); }
 function ac(): AudioContext | null {
   try {
     if (!ctx) {
@@ -28,7 +29,7 @@ function ac(): AudioContext | null {
   } catch { return null; }
 }
 /** Hay que llamarlo desde un gesto del usuario para que el navegador permita sonar. */
-export function unlockAudio(): void { ac(); }
+export function unlockAudio(): void { ac(); fileResume(); }
 
 type Out = AudioNode;
 function tone(freq: number, dur: number, type: OscillatorType, v: number, delay = 0, slide = 0, out?: Out, echo = 0): void {
@@ -147,15 +148,46 @@ function schedule(): void {
     nextT += spb; step++; if (step % 16 === 0) bar++;
   }
 }
+/* ---------- Banda sonora en archivo ---------- */
+const SOUNDTRACK_URL: string = (globalThis as any).__JM_SOUNDTRACK__ ?? (import.meta.env.BASE_URL + 'music/beyond-the-kingdom-gates.mp3');
+const PROCEDURAL_ONLY = new Set(['victoria']); // la fanfarria de victoria sigue siendo sintetizada
+let fileEl: HTMLAudioElement | null = null, fileOk = true, fileWanted = false, fadeT = 0;
+const fileTarget = (): number => (vol.on && fileWanted ? Math.min(1, vol.music * 0.7) : 0);
+function fileGet(): HTMLAudioElement | null {
+  if (!fileOk || typeof Audio === 'undefined') return null;
+  if (!fileEl) {
+    fileEl = new Audio(SOUNDTRACK_URL); fileEl.loop = true; fileEl.preload = 'auto'; fileEl.volume = 0;
+    fileEl.addEventListener('error', () => { fileOk = false; fileEl = null; if (cur) { const n = cur.name, i = cur.intensity; cur = null; playMusic(n, i); } });
+  }
+  return fileEl;
+}
+function fileVol(): void { if (fileEl) fileEl.volume = Math.max(0, Math.min(1, fileTarget())); }
+function fileFade(to: number, ms: number, done?: () => void): void {
+  clearInterval(fadeT); const a = fileEl; if (!a) { done?.(); return; }
+  const from = a.volume, n = Math.max(1, Math.round(ms / 40)); let k = 0;
+  fadeT = window.setInterval(() => { k++; a.volume = Math.max(0, Math.min(1, from + (to - from) * (k / n))); if (k >= n) { clearInterval(fadeT); done?.(); } }, 40);
+}
+function fileResume(): void {
+  if (!fileWanted) return; const a = fileGet(); if (!a) return;
+  if (a.paused) { a.volume = 0; void a.play().then(() => fileFade(fileTarget(), 900)).catch(() => { /* espera un gesto del usuario */ }); } else fileFade(fileTarget(), 600);
+}
+function fileStart(): void { fileWanted = true; fileResume(); }
+function fileStop(ms = 500): void { fileWanted = false; if (!fileEl) return; const a = fileEl; fileFade(0, ms, () => { if (!fileWanted) a.pause(); }); }
+if (typeof window !== 'undefined') { const kick = () => { fileResume(); if (fileEl && !fileEl.paused) { window.removeEventListener('pointerdown', kick); window.removeEventListener('keydown', kick); } }; window.addEventListener('pointerdown', kick); window.addEventListener('keydown', kick); }
+export const soundtrackActive = (): boolean => !!fileEl && !fileEl.paused;
+
 export function playMusic(name: string, intensity = 0): void {
-  if (!vol.on) { cur = { name, intensity }; return; }
   if (cur && cur.name === name) { cur.intensity = intensity; return; }
-  const c = ac(); if (!c) { cur = { name, intensity }; return; }
-  cur = { name, intensity }; step = 0; bar = 0; nextT = c.currentTime + 0.1;
+  const prev = cur; cur = { name, intensity };
+  if (fileOk && !PROCEDURAL_ONLY.has(name)) { clearInterval(timer); timer = 0; fileStart(); return; } // banda sonora en archivo
+  void prev; fileStop(300); // fanfarria / respaldo sintetizado
+  if (!vol.on) return;
+  const c = ac(); if (!c) return;
+  step = 0; bar = 0; nextT = c.currentTime + 0.1;
   clearInterval(timer); timer = window.setInterval(schedule, 120); schedule();
 }
 export function setIntensity(i: number): void { if (cur) cur.intensity = i; }
-export function stopMusic(): void { clearInterval(timer); timer = 0; cur = null; }
+export function stopMusic(): void { clearInterval(timer); timer = 0; cur = null; fileStop(); }
 export function musicName(): string | null { return cur?.name ?? null; }
 
 /* ============================ AMBIENTE ============================ */
