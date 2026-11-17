@@ -9,6 +9,7 @@ import { h, ticker, spriteCanvas, heroSprite, monsterSprite, pct, glyph } from '
 import { fullCard } from './cards';
 import { setSound, setVolumes, sfx, playMusic, playAmbient, unlockAudio, soundtrackStatus, playSoundtrackNow, AUDIO_BUILD } from './audio';
 import { loadoutOf } from '../game/arena';
+import { detectCheat } from '../game/cheats';
 import { gfxFlags } from '../gfx/scene';
 import { Mode, startRun } from './run';
 import { playCinematic } from './cinematic';
@@ -79,7 +80,7 @@ export function home(): void {
   if (!save) { title(); return; }
   applySettings();
   const hero = heroById[save.profile.heroId];
-  const cleared = save.progress.levelsCleared.length;
+  const cleared = levels.filter(l => !l.bonus && !l.optional && save!.progress.levelsCleared.includes(l.id)).length;
   const tile = (name: string, desc: string, icon: string, fn: () => void) => h('button', { class: 'tile', onclick: () => { sfx('click'); fn(); } }, glyph(icon, 5), h('b', {}, name), h('span', {}, desc));
   const weak = topics.map(t => ({ t, m: masteryOf(save!, t.id) })).sort((a, b) => a.m - b.m)[0];
   mount(h('div', { class: 'screen home' },
@@ -192,7 +193,24 @@ export function settings(): void {
     h('label', { class: 'lbl' }, 'Velocidad del combate mientras resuelves un problema', h('select', { 'aria-label': 'Velocidad durante problemas', onchange: (e: Event) => { s.settings.timeMode = (e.target as HTMLSelectElement).value as any; persist(); } }, ([['normal', 'Normal'], ['slow', 'Lento (70 %)'], ['veryslow', 'Muy lento (45 %)']] as const).map(([v, t]) => h('option', { value: v, selected: (s.settings.timeMode ?? 'normal') === v }, t)))),
     h('label', { class: 'chk' }, h('input', { type: 'checkbox', checked: !!s.settings.noTimeout, onchange: (e: Event) => { s.settings.noTimeout = (e.target as HTMLInputElement).checked; persist(); } }), 'Sin límite de tiempo para responder (accesibilidad)'),
     toggle('Modo daltónico (formas y etiquetas extra)', 'colorBlind'),
+    (() => { const inp = h('input', { class: 'inp', maxLength: 24, placeholder: 'Código secreto', 'aria-label': 'Código secreto' }) as HTMLInputElement; const go = () => { if (runCheat(inp.value, false)) inp.value = ''; else sfx('bad'); }; inp.addEventListener('keydown', e => { if ((e as KeyboardEvent).key === 'Enter') go(); }); return h('div', { class: 'row' }, inp, btn('Probar', go, 'ghost small')); })(),
     h('hr'), btn('Borrar partida', () => { mount(h('div', { class: 'screen' }, h('h2', {}, '¿Borrar todo el progreso?'), h('div', { class: 'row' }, btn('Cancelar', settings, 'ghost'), btn('Borrar', () => { repo.clear(); save = null; title(); })))); }, 'ghost'))));
 }
 
-export function boot(): void { applySettings(); title(); window.addEventListener('pointerdown', () => unlockAudio(), { once: true }); window.addEventListener('keydown', () => unlockAudio(), { once: true }); }
+/* ---------------- trucos (estilo GTA) ---------------- */
+let cheatBuf = '', cheatT = 0;
+function runCheat(text: string, refresh: boolean): boolean {
+  const c = save ? detectCheat(text) : null; if (!save || !c) return false;
+  c.apply(save); persist(); sfx('win');
+  const el = h('div', { class: 'cheat-toast', role: 'status' }, h('b', {}, '¡TRUCO ACTIVADO!'), h('span', {}, c.label)); document.body.append(el); setTimeout(() => el.remove(), 3400);
+  if (refresh) home();
+  return true;
+}
+function cheatKeys(e: KeyboardEvent): void {
+  const t = e.target as HTMLElement | null; if (t && /^(INPUT|TEXTAREA|SELECT)$/.test(t.tagName)) return;
+  if (document.querySelector('.arena, .a-chal') || e.ctrlKey || e.metaKey || e.altKey) return;
+  if (e.key.length !== 1 || !/[a-z]/i.test(e.key)) return;
+  cheatBuf = (cheatBuf + e.key.toUpperCase()).slice(-16); clearTimeout(cheatT); cheatT = window.setTimeout(() => { cheatBuf = ''; }, 3000);
+  if (runCheat(cheatBuf, true)) cheatBuf = '';
+}
+export function boot(): void { window.addEventListener('keydown', cheatKeys); applySettings(); title(); window.addEventListener('pointerdown', () => unlockAudio(), { once: true }); window.addEventListener('keydown', () => unlockAudio(), { once: true }); }

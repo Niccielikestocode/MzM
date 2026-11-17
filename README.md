@@ -47,3 +47,14 @@ Cada carta se compone de un marco (`frames/`) y una ilustración animada de 8 cu
 ## Retos animados
 
 `data/challenge-stages.json` describe cada reto como una escena: héroe, monstruo, parámetros y los pasos de la animación. La respuesta elegida alimenta la animación (por ejemplo la flecha sigue y = −x² + 2·√k·x con el k elegido), de modo que el acierto y el error se ven. El Atlas contiene una implementación de referencia de cada uno.
+
+## Trucos (estilo GTA)
+
+Escríbelos con el teclado en cualquier pantalla (menos en combate), sin tildes ni espacios, o en **Ajustes → Código secreto**. Aparece el aviso «¡TRUCO ACTIVADO!».
+
+| Código | Efecto |
+| --- | --- |
+| `PASEJUEGO` | Deja la partida como si hubieras terminado el juego: campaña y jefes superados, todas las cartas, maestría 100 %, historia y diario vistos, logros |
+| `ZONASYA` | Solo desbloquea la campaña: todas las zonas superadas |
+| `CARTASYA` | Todas las cartas y reliquias |
+| `MAESTRIA` | Dominio completo de todos los temas |
