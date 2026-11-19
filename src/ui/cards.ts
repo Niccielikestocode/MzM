@@ -19,7 +19,14 @@ export function artCanvas(c: CardDef, phase = 0): HTMLCanvasElement {
   const cv = h('canvas', { width: 64, height: 40, class: 'artcv' }); let t = phase, acc = 0, vis = true;
   if ('IntersectionObserver' in window) new IntersectionObserver(es => { vis = es[0].isIntersecting; }, { rootMargin: '60px' }).observe(cv);
   blit(cv, CA.art(c, t), 64, 40);
-  ticker.add(dt => { if (!vis) return; acc += dt; if (acc >= 125) { acc = 0; t = (t + 1) % 8; blit(cv, CA.art(c, t), 64, 40); } });
+  let mounted = false;
+  const off = ticker.add(dt => {
+    if (cv.isConnected) mounted = true;
+    else if (mounted) { off(); return; }
+    if (!vis) return;
+    acc += dt;
+    if (acc >= 125) { acc = 0; t = (t + 1) % 8; blit(cv, CA.art(c, t), 64, 40); }
+  });
   return cv;
 }
 export function unlockText(c: CardDef): string {
@@ -29,18 +36,27 @@ export function unlockText(c: CardDef): string {
 }
 /** Carta completa con marco y holograma (galería). */
 export function fullCard(c: CardDef, owned = true): HTMLElement {
-  const f = Math.min(6.4, 118 / c.name.length).toFixed(2);
+  const cost = c.rarity === 'comun' ? 1 : c.rarity === 'rara' ? 2 : 3;
   const face = h('div', { class: 'gc-face' });
   const cv = h('canvas', { width: 80, height: 112, class: 'gc-cv', 'aria-hidden': 'true' }); face.append(cv);
-  face.append(h('div', { class: 'gc-name', style: { fontSize: f + 'cqw' } }, c.name), h('div', { class: 'gc-fx' }, c.effect), h('div', { class: 'gc-type' }, `${TYPENAME[c.type]} · ${RARNAME[c.rarity]}`));
+  face.append(
+    h('span', { class: 'gc-cost' }, `⚡${cost}`),
+    h('div', { class: 'gc-name' }, c.name),
+    h('div', { class: 'gc-fx' }, c.effect),
+    h('div', { class: 'gc-type' }, `${TYPENAME[c.type]} · ${RARNAME[c.rarity]}`)
+  );
   const el = h('article', { class: `gcard r-${c.rarity}${owned ? '' : ' locked'}`, style: { '--c': TYPECOL[c.type] } as any }, h('div', { class: 'gc-tilt' }, face), h('div', { class: 'gc-un' }, owned ? 'En tu colección' : unlockText(c)));
   let t = 0, acc = Math.random() * 100, vis = true;
   if ('IntersectionObserver' in window) new IntersectionObserver(es => { vis = es[0].isIntersecting; }, { rootMargin: '80px' }).observe(el);
   blit(cv, CA.composite(c, t), 80, 112);
-  ticker.add(dt => { if (!vis) return; acc += dt; if (acc >= 125) { acc = 0; t = (t + 1) % 8; blit(cv, CA.composite(c, t), 80, 112); } });
-  const tilt = el.querySelector('.gc-tilt') as HTMLElement;
-  el.addEventListener('pointermove', e => { const r = face.getBoundingClientRect(), x = (e.clientX - r.left) / r.width - 0.5, y = (e.clientY - r.top) / r.height - 0.5; tilt.style.transform = `perspective(600px) rotateY(${x * 16}deg) rotateX(${-y * 16}deg) translateY(-4px)`; });
-  el.addEventListener('pointerleave', () => { tilt.style.transform = ''; });
+  let mounted = false;
+  const off = ticker.add(dt => {
+    if (cv.isConnected) mounted = true;
+    else if (mounted) { off(); return; }
+    if (!vis) return;
+    acc += dt;
+    if (acc >= 125) { acc = 0; t = (t + 1) % 8; blit(cv, CA.composite(c, t), 80, 112); }
+  });
   return el;
 }
 /** Carta compacta de la mano. */

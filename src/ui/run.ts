@@ -31,8 +31,9 @@ export function startRun(ctx: RunCtx, level: Level, mode: Mode): void {
     const overlay = h('div', { class: 'c-overlay' }, h('div', { class: 'dlg wide' }, h('h3', {}, title), ...body, h('div', { class: 'dlg-btns' }, buttons.map(([t, fn, ghost]) => h('button', { class: 'pbtn' + (ghost ? ' ghost' : ''), onclick: () => { sfx('click'); fn(); } }, t)))));
     const dots = h('div', { class: 'c-dots', 'aria-label': 'Salas' }, level.rooms.map((r, i) => h('span', { class: `dot${i === run.idx ? ' now' : ''}${i < run.idx ? ' done' : ''}`, title: r.type }, glyph(roomIcon[r.type === 'boss' ? 'boss' : r.type] ?? 'star', 2, i === run.idx ? '#f2c14e' : '#9a90b8'))));
     if (opts.win) { sunburst(view, 160, 110, 7000); confetti(view, 60, 2800); overlay.classList.add('win'); }
-    ctx.mount(h('div', { class: 'combat solo' }, h('div', { class: 'c-left' }, dots, h('div', { class: 'c-stage' }, view.cv, overlay))));
-    ticker.add(dt => view.step(dt)); playMusic(level.world, 0); playAmbient(level.world);
+    let off: (() => void) | null = null;
+    ctx.mount(h('div', { class: 'combat solo' }, h('div', { class: 'c-left' }, dots, h('div', { class: 'c-stage' }, view.cv, overlay))), () => { off?.(); off = null; });
+    off = ticker.add(dt => view.step(dt)); playMusic(level.world, 0); playAmbient(level.world);
     ($('button', overlay) as HTMLElement).focus(); return view;
   }
   const next = (): void => { run.idx++; nextRoom(); };

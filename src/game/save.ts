@@ -1,16 +1,12 @@
 import type { SaveData } from '../core/types';
 import { heroById } from '../core/data';
+import { HybridRepo, type SaveRepository } from '../domain/save/storage';
 
-export interface SaveRepository { load(): SaveData | null; save(d: SaveData): void; clear(): void }
-const KEY = 'juego-mate-save-v1';
-export class LocalRepo implements SaveRepository {
-  private mem: string | null = null;
-  load(): SaveData | null {
-    try { const s = localStorage.getItem(KEY) ?? this.mem; if (!s) return null; const d = JSON.parse(s); return d?.version === 1 ? d : null; } catch { return null; }
-  }
-  save(d: SaveData): void { const s = JSON.stringify(d); this.mem = s; try { localStorage.setItem(KEY, s); } catch { /* sin almacenamiento */ } }
-  clear(): void { this.mem = null; try { localStorage.removeItem(KEY); } catch { /* nada */ } }
-}
+export type { SaveRepository };
+export { HybridRepo, exportSaveJSON, importSaveJSON, validateSaveData } from '../domain/save/storage';
+
+export class LocalRepo extends HybridRepo {}
+
 export function newSave(heroId: string, name: string): SaveData {
   const h = heroById[heroId];
   return {

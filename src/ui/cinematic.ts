@@ -35,10 +35,11 @@ export function playCinematic(o: { save: SaveData; id: string; mount: (el: HTMLE
 
   let idx = -1, bt = 0, shown = 0, full = '', tk = 0, tacc = 0, finished = false;
   let beat!: Beat; let dur = 3000; const parts: P[] = []; let actors: { a: any; sil: boolean; x: number }[] = []; let fxT: Record<string, number> = {};
+  let off: (() => void) | null = null;
   const kh = (e: KeyboardEvent) => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); advance(); } else if (e.key === 'Escape') finish(); };
   document.addEventListener('keydown', kh);
-  o.mount(root, () => document.removeEventListener('keydown', kh));
-  ticker.add(dt => frame(dt));
+  o.mount(root, () => { off?.(); off = null; document.removeEventListener('keydown', kh); });
+  off = ticker.add(dt => frame(dt));
 
   const defFor = (id: string, flip?: boolean): any => {
     const base = id === 'hero' ? spriteDefs[hero.id] : id === 'mentor' ? MENTOR_DEF : spriteDefs[id];
@@ -65,7 +66,7 @@ export function playCinematic(o: { save: SaveData; id: string; mount: (el: HTMLE
     if (idx + 1 >= CINE_BY_ID[o.id].beats.length) { finish(); return; }
     sfx('click'); start(idx + 1);
   }
-  function finish(): void { if (finished) return; finished = true; document.removeEventListener('keydown', kh); o.done(); }
+  function finish(): void { if (finished) return; finished = true; off?.(); off = null; document.removeEventListener('keydown', kh); o.done(); }
   start(0);
 
   const wcol = (): string => WORLD_COLOR[beat.scene] ?? '#e0b84c';

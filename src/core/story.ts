@@ -9,44 +9,44 @@ export interface Beat {
 export interface Cinematic { id: string; title: string; world?: string; beats: Beat[] }
 const N = 'narrador', M = 'Maestra Aritmia', H = 'heroe';
 export const HERO_LINE: Record<string, string> = {
-  lia: 'El álgebra es equilibrio: lo que hago de un lado, lo hago del otro. Yo repararé la Ecuación.',
-  teo: 'Soy guardián de la Balanza. Mientras yo vigile, nada se perderá del todo.',
-  mara: 'Una flecha bien calculada traza la curva perfecta. Apuntemos al Divisor.'
+  lia: 'El álgebra es equilibrio, como una buena balanza andina: lo que hago de un lado, lo hago del otro. ¡Yo repararé la Ecuación!',
+  teo: 'Soy guardián de la Balanza y de la Sierra. Mientras vigile, nada se perderá entre ceros.',
+  mara: 'Desde el litoral hasta los páramos, una flecha bien calculada traza la curva perfecta. ¡Apuntemos al Divisor!'
 };
-export const MENTOR_DEF = { archetype: 'humanoid', size: 32, facing: 'right', colors: { body: '#e8c8a8', shade: '#b08a68', light: '#f8e6d0', accent: '#e0b84c', cloth: '#2f8f9e', clothShade: '#1d5a66', emblem: 'pi', glyph: '#ffd77a' }, opts: { hat: 'pointy' } };
+export const MENTOR_DEF = { archetype: 'humanoid', size: 32, facing: 'right', colors: { body: '#e8c8a8', shade: '#b08a68', light: '#f8e6d0', accent: '#f5c542', cloth: '#2a8c48', clothShade: '#1a5c30', emblem: 'pi', glyph: '#fff099' }, opts: { hat: 'pointy' } };
 
 export const CINEMATICS: Cinematic[] = [
   { id: 'prologo', title: 'La Ecuación Maestra', beats: [
-    { scene: 'cosmos', who: N, line: 'Antes de las piedras y de las estrellas existió una sola frase: x = x.', layers: ['stars', 'numbers'], music: 'story', cam: [1, 1.25, 160, 160], fx: ['fade'] },
-    { scene: 'cosmos', who: N, line: 'Era la Ecuación Maestra. Mientras se mantuvo en equilibrio, el mundo tuvo forma: las fracciones repartían el pan, las rectas tendían los caminos y las ciudades encajaban piedra con piedra.', layers: ['stars', 'numbers'], cam: [1.25, 1.1, 160, 160] },
-    { scene: 'academia', who: N, line: 'En la Academia de los Calculistas, un joven calculista estudiaba, sin saber que esa noche cambiaría su vida.', cast: [{ id: 'hero', x: 90 }, { id: 'mentor', x: 200, flip: true }], layers: ['dust'], cam: [1, 1.3, 130, 150], fx: ['fade'], music: 'story' },
-    { scene: 'academia', who: M, line: '{n}, llegas justo a tiempo. La Torre del Igual guardaba la Ecuación Maestra... hasta anoche.', cast: [{ id: 'hero', x: 90 }, { id: 'mentor', x: 200, flip: true }], cam: [1.4, 1.6, 200, 200] },
-    { scene: 'academia', who: N, line: 'Alguien había dividido entre cero.', cast: [{ id: 'hero', x: 90 }, { id: 'mentor', x: 200, flip: true }], fx: ['crack', 'shake', 'flash'], sfx: 'explode', tint: '#2a0f3a', cam: [1.2, 1.2, 160, 160] },
-    { scene: 'vacio', who: 'El Divisor', line: 'Todo lo divido. Todo lo reduzco a cero.', cast: [{ id: 'el_divisor', x: 170, sil: true }], layers: ['stars', 'embers'], sfx: 'roar', music: 'vacio', cam: [1.1, 1.6, 170, 170], fx: ['fade'] },
-    { scene: 'cosmos', who: N, line: 'La Ecuación se partió en tres fragmentos —el del Número, el de la Función y el de la Medida— y cayeron a los reinos de abajo.', layers: ['stars', 'numbers'], music: 'story', cam: [1.4, 1, 160, 160], sfx: 'swell' },
-    { scene: 'academia', who: M, line: 'Cada reino guarda un jefe que custodia su fragmento. Los Calculistas los llamamos parciales. Domina cada tema y los guardianes cederán el paso.', cast: [{ id: 'hero', x: 90 }, { id: 'mentor', x: 200, flip: true }], layers: ['dust'], cam: [1.2, 1.4, 190, 190], fx: ['fade'] },
+    { scene: 'cosmos', who: N, line: 'Antes de las cordilleras y de las estrellas sobre la Tatacoa, existió una sola frase: x = x.', layers: ['stars', 'numbers'], music: 'story', cam: [1, 1.25, 160, 160], fx: ['fade'] },
+    { scene: 'cosmos', who: N, line: 'Era la Ecuación Maestra. Mientras se mantuvo en equilibrio, las tierras de Aritmia florecieron: las fracciones repartían el pan y la sal, las rectas tendían los caminos de montaña y los pueblos de piedra encajaban a la medida.', layers: ['stars', 'numbers'], cam: [1.25, 1.1, 160, 160] },
+    { scene: 'academia', who: N, line: 'En la Academia de los Calculistas Andinos, un joven estudiante practicaba sin saber que esa noche cambiaría su destino.', cast: [{ id: 'hero', x: 90 }, { id: 'mentor', x: 200, flip: true }], layers: ['dust'], cam: [1, 1.3, 130, 150], fx: ['fade'], music: 'story' },
+    { scene: 'academia', who: M, line: '{n}, ¡llegas justo a tiempo! La Torre del Igual custodiaba la Ecuación Maestra... hasta anoche.', cast: [{ id: 'hero', x: 90 }, { id: 'mentor', x: 200, flip: true }], cam: [1.4, 1.6, 200, 200] },
+    { scene: 'academia', who: N, line: 'Alguien había cometido lo prohibido: dividir entre cero.', cast: [{ id: 'hero', x: 90 }, { id: 'mentor', x: 200, flip: true }], fx: ['crack', 'shake', 'flash'], sfx: 'explode', tint: '#2a0f3a', cam: [1.2, 1.2, 160, 160] },
+    { scene: 'vacio', who: 'El Divisor', line: 'Todo lo parto. Todo lo reduzco a la nada del cero.', cast: [{ id: 'el_divisor', x: 170, sil: true }], layers: ['stars', 'embers'], sfx: 'roar', music: 'vacio', cam: [1.1, 1.6, 170, 170], fx: ['fade'] },
+    { scene: 'cosmos', who: N, line: 'La Ecuación estalló en tres fragmentos —el del Número, el de la Función y el de la Medida— y cayeron sobre las regiones: las Cavernas de Sal, los Páramos de Niebla y la Ciudadela de Piedra.', layers: ['stars', 'numbers'], music: 'story', cam: [1.4, 1, 160, 160], sfx: 'swell' },
+    { scene: 'academia', who: M, line: 'Un guardián custodia cada fragmento. Los Calculistas los llamamos parciales. ¡Pilas! Domina cada tema y los guardianes te abrirán el paso.', cast: [{ id: 'hero', x: 90 }, { id: 'mentor', x: 200, flip: true }], layers: ['dust'], cam: [1.2, 1.4, 190, 190], fx: ['fade'] },
     { scene: 'academia', who: H, line: '{h}', cast: [{ id: 'hero', x: 90 }, { id: 'mentor', x: 200, flip: true }], cam: [1.5, 1.7, 90, 90] },
-    { scene: 'academia', who: M, line: 'Llévate este cuaderno: se llena con cada error que corrijas. Equivocarse es la mitad de calcular. Ahora ve: las Cavernas Numéricas te esperan.', cast: [{ id: 'hero', x: 90 }, { id: 'mentor', x: 200, flip: true }], cam: [1.6, 1.3, 200, 150], sfx: 'coin' }
+    { scene: 'academia', who: M, line: 'Llévate este Libro de Errores: analiza cada tropiezo para que lo corrijas a la fija. Equivocarse es parte de aprender. ¡Arranca pues hacia las Cavernas de Sal y Oro!', cast: [{ id: 'hero', x: 90 }, { id: 'mentor', x: 200, flip: true }], cam: [1.6, 1.3, 200, 150], sfx: 'coin' }
   ] },
-  { id: 'mundo_cavernas', title: 'Cavernas numéricas', world: 'cavernas', beats: [
-    { scene: 'cavernas', who: N, line: 'Los números reales se desmoronaron y rodaron hasta lo más profundo. Allí, entre cristales y goteras, esperan a quien sepa ordenarlos.', cast: [{ id: 'hero', x: 60 }], layers: ['dust'], music: 'cavernas', cam: [1.1, 1.35, 90, 70], fx: ['fade'] },
-    { scene: 'cavernas', who: H, line: 'Fracciones, raíces, porcentajes... Todo está revuelto. Hay que ir paso a paso.', cast: [{ id: 'hero', x: 60 }], cam: [1.6, 1.6, 60, 60] },
-    { scene: 'cavernas', who: N, line: 'Un moco verde se despegó de la pared. Decía ser un medio. A veces, un tercio.', cast: [{ id: 'hero', x: 60 }, { id: 'slime_fraccionario', x: 220 }], cam: [1.2, 1.5, 150, 215], sfx: 'whoosh' }
+  { id: 'mundo_cavernas', title: 'Cavernas de Sal y Oro', world: 'cavernas', beats: [
+    { scene: 'cavernas', who: N, line: 'Los números reales rodaron hasta las profundidades de las minas de sal y las lagunas de oro muisca. Entre cristales y vetas esperan a quien sepa ordenarlos.', cast: [{ id: 'hero', x: 60 }], layers: ['dust'], music: 'cavernas', cam: [1.1, 1.35, 90, 70], fx: ['fade'] },
+    { scene: 'cavernas', who: H, line: 'Fracciones, raíces, porcentajes... Todo está revuelto en estas minas. ¡Vamos paso a paso!', cast: [{ id: 'hero', x: 60 }], cam: [1.6, 1.6, 60, 60] },
+    { scene: 'cavernas', who: N, line: 'Un slime de salmuera verde se despegó de la roca. Decía ser un medio... y a veces un tercio.', cast: [{ id: 'hero', x: 60 }, { id: 'slime_fraccionario', x: 220 }], cam: [1.2, 1.5, 150, 215], sfx: 'whoosh' }
   ] },
-  { id: 'mundo_bosque', title: 'Bosque de las funciones', world: 'bosque', beats: [
-    { scene: 'bosque', who: N, line: 'Más allá de las cavernas, los caminos se curvan solos. En el Bosque de las Funciones cada sendero es una función y cada cruce, una ecuación.', cast: [{ id: 'hero', x: 60 }], layers: ['fireflies'], music: 'bosque', cam: [1.1, 1.4, 90, 130], fx: ['fade'] },
-    { scene: 'bosque', who: H, line: 'Si encuentro dónde se cruzan los caminos, sabré por dónde seguir.', cast: [{ id: 'hero', x: 60 }], cam: [1.6, 1.6, 60, 60] },
-    { scene: 'bosque', who: N, line: 'Entre las ramas brilló un destello: el eco del Fragmento del Número vibraba al fondo del bosque, esperando a su próximo guardián.', cast: [{ id: 'hero', x: 60 }, { id: 'murcielago_balanza', x: 230 }], layers: ['fireflies'], cam: [1.2, 1.2, 160, 200], sfx: 'swell' }
+  { id: 'mundo_bosque', title: 'Bosque de Niebla y Páramo', world: 'bosque', beats: [
+    { scene: 'bosque', who: N, line: 'Más arriba de las minas, la neblina de los páramos y los frailejones trazan curvas vivas. Aquí cada sendero es una función y cada cruce, una ecuación.', cast: [{ id: 'hero', x: 60 }], layers: ['fireflies'], music: 'bosque', cam: [1.1, 1.4, 90, 130], fx: ['fade'] },
+    { scene: 'bosque', who: H, line: 'Si encuentro dónde se cruzan los caminos entre la niebla, sabré por dónde seguir.', cast: [{ id: 'hero', x: 60 }], cam: [1.6, 1.6, 60, 60] },
+    { scene: 'bosque', who: N, line: 'Entre los frailejones brilló un destello esmeralda: la Madremonte Cuadrática custodiaba el segundo fragmento al fondo del páramo.', cast: [{ id: 'hero', x: 60 }, { id: 'murcielago_balanza', x: 230 }], layers: ['fireflies'], cam: [1.2, 1.2, 160, 200], sfx: 'swell' }
   ] },
-  { id: 'mundo_ciudadela', title: 'Ciudadela métrica', world: 'ciudadela', beats: [
-    { scene: 'ciudadela', who: N, line: 'La Ciudadela Métrica fue la más bella de las ciudades. Ahora se midió mal y nada encaja: los puentes no llegan, las torres no alcanzan.', cast: [{ id: 'hero', x: 60 }], layers: ['dust'], music: 'ciudadela', cam: [1.1, 1.4, 90, 130], fx: ['fade'] },
-    { scene: 'ciudadela', who: H, line: 'Hay que volver a medir, mover y convertir. Con Pitágoras, Tales y mucho cuidado.', cast: [{ id: 'hero', x: 60 }], cam: [1.6, 1.6, 60, 60] },
-    { scene: 'ciudadela', who: N, line: 'En lo alto del puente, un troll con garrote en diagonal no dejaba pasar a nadie que no supiera su hipotenusa.', cast: [{ id: 'hero', x: 60 }, { id: 'troll_puente', x: 220 }], cam: [1.2, 1.5, 150, 220], sfx: 'roar' }
+  { id: 'mundo_ciudadela', title: 'Ciudadela Colonial de Piedra', world: 'ciudadela', beats: [
+    { scene: 'ciudadela', who: N, line: 'La Ciudadela de Piedra, con sus tejados de barro y murallas ancestrales, fue la más bella de las villas. Ahora todo se midió mal: los puentes no llegan y las torres se tuercen.', cast: [{ id: 'hero', x: 60 }], layers: ['dust'], music: 'ciudadela', cam: [1.1, 1.4, 90, 130], fx: ['fade'] },
+    { scene: 'ciudadela', who: H, line: 'Toca volver a medir, rotar y convertir. Con Pitágoras, Tales y buen ojo.', cast: [{ id: 'hero', x: 60 }], cam: [1.6, 1.6, 60, 60] },
+    { scene: 'ciudadela', who: N, line: 'En lo alto del puente de piedra, un coloso con garrote en diagonal no dejaba pasar a nadie que no calculara su hipotenusa.', cast: [{ id: 'hero', x: 60 }, { id: 'troll_puente', x: 220 }], cam: [1.2, 1.5, 150, 220], sfx: 'roar' }
   ] },
-  { id: 'mundo_vacio', title: 'El Vacío del Divisor', world: 'vacio', beats: [
-    { scene: 'vacio', who: N, line: 'Tres fragmentos de la Ecuación latían juntos en las manos de {n}. Entonces la grieta del cielo se abrió.', cast: [{ id: 'hero', x: 70 }], layers: ['stars', 'embers'], music: 'vacio', cam: [1.1, 1.4, 90, 100], fx: ['fade', 'flash'], sfx: 'swell' },
-    { scene: 'vacio', who: M, line: 'Allí abajo no hay suelo ni medida. Solo quien lo divide todo entre cero. {n}: recuerda que un error no es un final, es un dato.', cast: [{ id: 'hero', x: 70 }], layers: ['stars', 'embers'], cam: [1.5, 1.5, 70, 70] },
-    { scene: 'vacio', who: N, line: 'El suelo se partió en dos... luego en cuatro... luego en ocho.', cast: [{ id: 'hero', x: 70 }, { id: 'el_divisor', x: 200, sil: true }], layers: ['stars', 'embers'], fx: ['shake', 'crack'], sfx: 'explode', cam: [1.2, 1.1, 150, 160] }
+  { id: 'mundo_vacio', title: 'El Desierto de la Tatacoa', world: 'vacio', beats: [
+    { scene: 'vacio', who: N, line: 'Los tres fragmentos de la Ecuación latían juntos en manos de {n}. Entonces, sobre el cielo rojo del Desierto de la Tatacoa, la grieta cósmica se abrió.', cast: [{ id: 'hero', x: 70 }], layers: ['stars', 'embers'], music: 'vacio', cam: [1.1, 1.4, 90, 100], fx: ['fade', 'flash'], sfx: 'swell' },
+    { scene: 'vacio', who: M, line: 'Allí no hay suelo ni medida, solo quien divide todo entre cero. {n}, recuerda: un error no es un final, es una pista para mejorar. ¡Con toda!', cast: [{ id: 'hero', x: 70 }], layers: ['stars', 'embers'], cam: [1.5, 1.5, 70, 70] },
+    { scene: 'vacio', who: N, line: 'La tierra roja se partió en dos... luego en cuatro... luego en ocho.', cast: [{ id: 'hero', x: 70 }, { id: 'el_divisor', x: 200, sil: true }], layers: ['stars', 'embers'], fx: ['shake', 'crack'], sfx: 'explode', cam: [1.2, 1.1, 150, 160] }
   ] },
   { id: 'jefe_parcial_cavernas', title: 'Parcial 1: Rey Irracional', world: 'cavernas', beats: [
     { scene: 'cavernas', who: N, line: 'En el fondo de la caverna, sobre un trono de decimales sin fin, esperaba el guardián del Fragmento del Número.', cast: [{ id: 'hero', x: 55 }, { id: 'rey_irracional', x: 200 }], layers: ['dust'], cam: [1, 1.4, 100, 200], sfx: 'swell', fx: ['fade'] },

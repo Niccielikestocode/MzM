@@ -1,1 +1,27 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" shape-rendering="crispEdges"><rect width="64" height="64" fill="#14101f"/><rect x="6" y="6" width="52" height="52" fill="#2f2648"/><rect x="6" y="6" width="52" height="4" fill="#6a4fc8"/><g fill="#e0b84c"><rect x="28" y="14" width="8" height="36"/><rect x="14" y="28" width="36" height="8"/></g><g fill="#14101f"><rect x="30" y="16" width="4" height="32"/><rect x="16" y="30" width="32" height="4"/></g></svg>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32" shape-rendering="crispEdges">
+  <!-- Fondo obsidiana de Zipaquirá -->
+  <rect width="32" height="32" fill="#0f0c18"/>
+  <!-- Marco de piedra ancestral -->
+  <rect x="2" y="2" width="28" height="28" fill="#1e1730"/>
+  <rect x="2" y="2" width="28" height="2" fill="#4e3b70"/>
+  <rect x="2" y="28" width="28" height="2" fill="#090710"/>
+  <rect x="2" y="2" width="2" height="28" fill="#3a2c54"/>
+  <rect x="28" y="2" width="2" height="28" fill="#090710"/>
+  <!-- Escudo de Oro Calima -->
+  <path d="M8 6h16v2h2v10h-2v4h-2v2h-2v2h-2v2h-4v-2h-2v-2h-2v-2H8v-4H6V8h2z" fill="#c98a1e"/>
+  <path d="M9 7h14v2h2v8h-2v4h-2v2h-2v2h-6v-2h-2v-2H9v-4H7V9h2z" fill="#f5c542"/>
+  <path d="M10 8h12v2h1v7h-2v3h-2v2h-6v-2h-2v-3H9v-7h1z" fill="#261c3d"/>
+  <!-- Brillo superior oro -->
+  <rect x="10" y="7" width="12" height="1" fill="#fff099"/>
+  <!-- Símbolo π / Espada en Esmeralda Muzo -->
+  <rect x="11" y="11" width="10" height="2" fill="#4ecb71"/>
+  <rect x="11" y="11" width="10" height="1" fill="#8bf5a8"/>
+  <rect x="13" y="13" width="2" height="7" fill="#4ecb71"/>
+  <rect x="17" y="13" width="2" height="7" fill="#2a8c48"/>
+  <rect x="17" y="13" width="1" height="7" fill="#4ecb71"/>
+  <!-- Gemas en las esquinas -->
+  <rect x="4" y="4" width="2" height="2" fill="#f5c542"/>
+  <rect x="26" y="4" width="2" height="2" fill="#f5c542"/>
+  <rect x="4" y="26" width="2" height="2" fill="#4ecb71"/>
+  <rect x="26" y="26" width="2" height="2" fill="#4ecb71"/>
+</svg>

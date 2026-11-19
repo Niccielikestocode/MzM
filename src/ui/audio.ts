@@ -13,6 +13,7 @@ function apply(): void {
 }
 function applyAll(): void { apply(); fileVol(); }
 function ac(): AudioContext | null {
+  if (isHidden || !vol.on) return null;
   try {
     if (!ctx) {
       ctx = new (window.AudioContext || (window as any).webkitAudioContext)();
@@ -104,55 +105,74 @@ export function sfxForCard(kind: string): void {
   sfx(m[kind] ?? 'whoosh');
 }
 
-/* ============================ MÚSICA ============================ */
+/* ============================ MÚSICA DINÁMICA ============================ */
 interface Track { bpm: number; root: number; scale: number[]; prog: number[][]; lead: 'square' | 'triangle' | 'sawtooth'; pad: OscillatorType; bass: OscillatorType; seed: number; swing?: number; density: number }
-const MIN = [0, 2, 3, 5, 7, 8, 10], DOR = [0, 2, 3, 5, 7, 9, 10], MIX = [0, 2, 4, 5, 7, 9, 10], PHR = [0, 1, 3, 5, 7, 8, 10], MAJ = [0, 2, 4, 5, 7, 9, 11];
+const MIN = [0, 2, 3, 5, 7, 8, 10], DOR = [0, 2, 3, 5, 7, 9, 10], MIX = [0, 2, 4, 5, 7, 9, 10], PHR = [0, 1, 3, 5, 7, 8, 10], MAJ = [0, 2, 4, 5, 7, 9, 11], PENT = [0, 2, 4, 7, 9];
 export const TRACKS: Record<string, Track> = {
-  menu:      { bpm: 72,  root: 57, scale: MIN, prog: [[0, 2, 4], [5, 0, 2], [3, 5, 0], [4, 6, 1]], lead: 'triangle', pad: 'sine', bass: 'triangle', seed: 3, density: 0.35 },
-  story:     { bpm: 60,  root: 50, scale: DOR, prog: [[0, 2, 4], [3, 5, 0], [5, 0, 2], [4, 6, 1]], lead: 'sine' as any, pad: 'sine', bass: 'sine', seed: 8, density: 0.25 },
-  cavernas:  { bpm: 82,  root: 52, scale: MIN, prog: [[0, 2, 4], [5, 0, 2], [3, 5, 0], [6, 1, 3]], lead: 'triangle', pad: 'sine', bass: 'triangle', seed: 11, density: 0.45 },
-  bosque:    { bpm: 100, root: 55, scale: DOR, prog: [[0, 2, 4], [3, 5, 0], [6, 1, 3], [4, 6, 1]], lead: 'square', pad: 'triangle', bass: 'triangle', seed: 21, density: 0.6 },
-  ciudadela: { bpm: 112, root: 53, scale: MIX, prog: [[0, 2, 4], [6, 1, 3], [3, 5, 0], [4, 6, 1]], lead: 'sawtooth', pad: 'triangle', bass: 'square', seed: 31, density: 0.65 },
-  vacio:     { bpm: 124, root: 45, scale: PHR, prog: [[0, 2, 4], [1, 3, 5], [0, 2, 4], [6, 1, 3]], lead: 'sawtooth', pad: 'sawtooth', bass: 'sawtooth', seed: 41, density: 0.7 },
-  victoria:  { bpm: 96,  root: 60, scale: MAJ, prog: [[0, 2, 4], [3, 5, 0], [4, 6, 1], [0, 2, 4]], lead: 'square', pad: 'triangle', bass: 'triangle', seed: 51, density: 0.7 }
+  menu:      { bpm: 84,  root: 57, scale: DOR,  prog: [[0, 2, 4], [5, 0, 2], [3, 5, 0], [4, 6, 1]], lead: 'triangle', pad: 'sine', bass: 'triangle', seed: 3, density: 0.45 },
+  overworld: { bpm: 108, root: 60, scale: MAJ,  prog: [[0, 2, 4], [4, 6, 1], [5, 0, 2], [3, 5, 0]], lead: 'square',   pad: 'triangle', bass: 'triangle', seed: 19, density: 0.65 },
+  dojo:      { bpm: 78,  root: 55, scale: PENT, prog: [[0, 2, 4], [2, 4, 1], [3, 0, 2], [4, 1, 3]], lead: 'triangle', pad: 'sine', bass: 'sine', seed: 7, density: 0.4 },
+  story:     { bpm: 64,  root: 50, scale: DOR,  prog: [[0, 2, 4], [3, 5, 0], [5, 0, 2], [4, 6, 1]], lead: 'triangle', pad: 'sine', bass: 'sine', seed: 8, density: 0.3 },
+  cavernas:  { bpm: 88,  root: 52, scale: MIN,  prog: [[0, 2, 4], [5, 0, 2], [3, 5, 0], [6, 1, 3]], lead: 'triangle', pad: 'sine', bass: 'triangle', seed: 11, density: 0.5 },
+  bosque:    { bpm: 104, root: 55, scale: DOR,  prog: [[0, 2, 4], [3, 5, 0], [6, 1, 3], [4, 6, 1]], lead: 'square',   pad: 'triangle', bass: 'triangle', seed: 21, density: 0.62 },
+  ciudadela: { bpm: 116, root: 53, scale: MIX,  prog: [[0, 2, 4], [6, 1, 3], [3, 5, 0], [4, 6, 1]], lead: 'sawtooth', pad: 'triangle', bass: 'square', seed: 31, density: 0.68 },
+  vacio:     { bpm: 128, root: 45, scale: PHR,  prog: [[0, 2, 4], [1, 3, 5], [0, 2, 4], [6, 1, 3]], lead: 'sawtooth', pad: 'sawtooth', bass: 'sawtooth', seed: 41, density: 0.75 },
+  victoria:  { bpm: 104, root: 60, scale: MAJ,  prog: [[0, 2, 4], [3, 5, 0], [4, 6, 1], [0, 2, 4]], lead: 'square',   pad: 'triangle', bass: 'triangle', seed: 51, density: 0.75 }
 };
 let cur: { name: string; intensity: number } | null = null;
 let timer = 0, nextT = 0, step = 0, bar = 0, rngS = 1;
+let isHidden = false;
+let musicMode: 'dynamic' | 'soundtrack' = 'dynamic';
+
+export function setMusicMode(m: 'dynamic' | 'soundtrack'): void {
+  if (musicMode === m) return;
+  musicMode = m;
+  if (cur) {
+    const n = cur.name, i = cur.intensity;
+    cur = null;
+    playMusic(n, i);
+  }
+}
+
 const r = () => { rngS = (rngS * 1664525 + 1013904223) >>> 0; return rngS / 4294967296; };
 const hz = (m: number) => 440 * Math.pow(2, (m - 69) / 12);
 function degree(t: Track, d: number, oct = 0): number { const n = t.scale.length; return t.root + t.scale[((d % n) + n) % n] + 12 * (Math.floor(d / n) + oct); }
 let motif: number[] = [];
 function schedule(): void {
-  const c = ac(); if (!c || !cur) return;
-  const t = TRACKS[cur.name]; if (!t) return;
-  const spb = 60 / t.bpm / 2; // corchea
-  while (nextT < c.currentTime + 0.4) {
+  if (isHidden || !vol.on) return;
+  const c = ac(); if (!c || c.state !== 'running' || !cur) return;
+  if (nextT < c.currentTime) nextT = c.currentTime + 0.04;
+  const t = TRACKS[cur.name] ?? TRACKS.menu;
+  const bpmBoost = cur.intensity >= 2 ? 1.12 : cur.intensity === 1 ? 1.04 : 1;
+  const spb = 60 / (t.bpm * bpmBoost) / 2; // corchea
+  let guard = 0;
+  while (nextT < c.currentTime + 0.35 && guard++ < 4) {
     const chord = t.prog[bar % t.prog.length], at = Math.max(0, nextT - c.currentTime), s16 = step % 16, inten = cur.intensity;
     if (s16 === 0) { // pad + bajo sostenido
-      chord.forEach(d => tone(hz(degree(t, d, 0)), spb * 15, t.pad, 0.045, at, 0, musBus, 0.25));
+      chord.forEach(d => tone(hz(degree(t, d, 0)), spb * 15, t.pad, 0.042, at, 0, musBus, 0.25));
       tone(hz(degree(t, chord[0], -2)), spb * 7.5, t.bass, 0.16, at, 0, musBus);
       if (bar % 4 === 0) { rngS = t.seed * 977 + bar * 13; motif = Array.from({ length: 8 }, () => Math.floor(r() * 7)); }
     }
     if (s16 % 4 === 2 || (inten > 0 && s16 % 2 === 0)) tone(hz(degree(t, chord[0], -2)), spb * 1.4, t.bass, 0.13, at, 0, musBus); // pulso de bajo
-    // arpegio
-    if (s16 % 2 === 0 || (t.density > 0.6 && s16 % 2 === 1 && r() < 0.3)) { const d = chord[(s16 >> 1) % 3]; tone(hz(degree(t, d, 1)), spb * 1.6, 'triangle', 0.05, at, 0, musBus, 0.3); }
+    // arpegio 16-bit
+    if (s16 % 2 === 0 || (t.density > 0.6 && s16 % 2 === 1 && r() < 0.3)) { const d = chord[(s16 >> 1) % 3]; tone(hz(degree(t, d, 1)), spb * 1.5, 'triangle', 0.052, at, 0, musBus, 0.28); }
     // melodía
-    if (s16 % 2 === 0 && r() < t.density * (inten ? 1.2 : 0.8)) { const d = motif[(s16 >> 1) % motif.length] + (bar % 2 ? 2 : 0); tone(hz(degree(t, d, 2)), spb * (1 + r()), t.lead, 0.045, at, 0, musBus, 0.35); }
-    // percusión
+    if (s16 % 2 === 0 && r() < t.density * (inten ? 1.2 : 0.85)) { const d = motif[(s16 >> 1) % motif.length] + (bar % 2 ? 2 : 0); tone(hz(degree(t, d, 2)), spb * (1 + r()), t.lead, 0.048, at, 0, musBus, 0.32); }
+    // percusión reactiva
     if (inten > 0 || t.density > 0.55) {
-      if (s16 % 8 === 0) { tone(110, 0.14, 'sine', 0.26, at, -70, musBus); noise(0.05, 0.06, 150, 60, 'lowpass', at, 1, musBus); }
-      if (s16 % 8 === 4) noise(0.12, 0.12, 2200, 1500, 'bandpass', at, 1.5, musBus);
-      if (s16 % 2 === 1 && inten > 0) noise(0.03, 0.05, 7000, 7000, 'highpass', at, 1, musBus);
-      if (inten > 1 && s16 % 4 === 3) tone(80, 0.1, 'sine', 0.2, at, -40, musBus);
+      if (s16 % 8 === 0) { tone(110, 0.14, 'sine', 0.24, at, -70, musBus); noise(0.05, 0.06, 150, 60, 'lowpass', at, 1, musBus); }
+      if (s16 % 8 === 4) noise(0.12, 0.11, 2200, 1500, 'bandpass', at, 1.5, musBus);
+      if (s16 % 2 === 1 && inten > 0) noise(0.03, 0.045, 7000, 7000, 'highpass', at, 1, musBus);
+      if (inten > 1 && s16 % 4 === 3) tone(85, 0.1, 'sine', 0.2, at, -40, musBus);
     } else if (s16 % 8 === 0) noise(0.08, 0.04, 1800, 1800, 'bandpass', at, 3, musBus);
     nextT += spb; step++; if (step % 16 === 0) bar++;
   }
 }
-/* ---------- Banda sonora en archivo ---------- */
+
+/* ---------- Banda sonora en archivo (opcional en menús) ---------- */
 const SOUNDTRACK_URL: string = (globalThis as any).__JM_SOUNDTRACK__ ?? (import.meta.env.BASE_URL + 'music/beyond-the-kingdom-gates.mp3');
-const PROCEDURAL_ONLY = new Set(['victoria']); // la fanfarria de victoria sigue siendo sintetizada
 let fileEl: HTMLAudioElement | null = null, fileOk = true, fileWanted = false, fadeT = 0;
-const fileTarget = (): number => (vol.on && fileWanted ? Math.min(1, vol.music * 0.7) : 0);
+const fileTarget = (): number => (vol.on && fileWanted && !isHidden ? Math.min(1, vol.music * 0.7) : 0);
 function fileGet(): HTMLAudioElement | null {
   if (!fileOk || typeof Audio === 'undefined') return null;
   if (!fileEl) {
@@ -168,36 +188,97 @@ function fileFade(to: number, ms: number, done?: () => void): void {
   fadeT = window.setInterval(() => { k++; a.volume = Math.max(0, Math.min(1, from + (to - from) * (k / n))); if (k >= n) { clearInterval(fadeT); done?.(); } }, 40);
 }
 function fileResume(): void {
-  if (!fileWanted) return; const a = fileGet(); if (!a) return;
-  if (a.paused) { a.volume = 0; void a.play().then(() => fileFade(fileTarget(), 900)).catch(() => { /* espera un gesto del usuario */ }); } else fileFade(fileTarget(), 600);
+  if (!fileWanted || isHidden) return; const a = fileGet(); if (!a) return;
+  if (a.paused) { a.volume = 0; void a.play().then(() => fileFade(fileTarget(), 700)).catch(() => { /* espera gesto */ }); } else fileFade(fileTarget(), 500);
 }
 function fileStart(): void { fileWanted = true; fileResume(); }
-function fileStop(ms = 500): void { fileWanted = false; if (!fileEl) return; const a = fileEl; fileFade(0, ms, () => { if (!fileWanted) a.pause(); }); }
-if (typeof window !== 'undefined') { const kick = () => { fileResume(); if (fileEl && !fileEl.paused) { window.removeEventListener('pointerdown', kick); window.removeEventListener('keydown', kick); } }; window.addEventListener('pointerdown', kick); window.addEventListener('keydown', kick); }
-export const AUDIO_BUILD = 'banda-sonora-v2';
+function fileStop(ms = 350): void { fileWanted = false; if (!fileEl) return; const a = fileEl; fileFade(0, ms, () => { if (!fileWanted) a.pause(); }); }
+
+/* ---------- Ciclo de vida: detener TODO el sonido al salir o cambiar pestaña ---------- */
+function suspendAllAudio(): void {
+  isHidden = true;
+  clearInterval(timer); timer = 0;
+  clearInterval(fadeT); fadeT = 0;
+  if (fileEl && !fileEl.paused) { fileEl.pause(); }
+  if (ctx && ctx.state === 'running') { void ctx.suspend(); }
+}
+
+function resumeAllAudio(): void {
+  if (!isHidden) return;
+  isHidden = false;
+  if (!vol.on) return;
+  if (ctx && ctx.state === 'suspended') { void ctx.resume(); }
+  if (fileWanted && musicMode === 'soundtrack') {
+    fileResume();
+  } else if (cur && !timer) {
+    const c = ac();
+    if (c) {
+      nextT = c.currentTime + 0.1;
+      timer = window.setInterval(schedule, 120);
+      schedule();
+    }
+  }
+}
+
+if (typeof window !== 'undefined') {
+  const kick = () => {
+    unlockAudio();
+    if (cur && !timer && musicMode === 'dynamic' && vol.on && !isHidden) {
+      const c = ac();
+      if (c) { nextT = c.currentTime + 0.08; timer = window.setInterval(schedule, 120); schedule(); }
+    }
+    if (fileEl && !fileEl.paused) {
+      window.removeEventListener('pointerdown', kick); window.removeEventListener('keydown', kick);
+    }
+  };
+  window.addEventListener('pointerdown', kick);
+  window.addEventListener('keydown', kick);
+  document.addEventListener('visibilitychange', () => {
+    if (document.hidden) suspendAllAudio();
+    else resumeAllAudio();
+  });
+  window.addEventListener('pagehide', suspendAllAudio);
+  window.addEventListener('blur', () => {
+    if (document.hidden) suspendAllAudio();
+  });
+  window.addEventListener('focus', () => {
+    if (!document.hidden) resumeAllAudio();
+  });
+}
+
+export const AUDIO_BUILD = 'dinamico-16bit-v3';
 export function soundtrackStatus(): string {
   if (!vol.on) return 'Sonido desactivado en Ajustes.';
-  if (!fileOk) return 'No se pudo cargar la canción: suena la música sintetizada.';
-  if (fileEl && !fileEl.paused && fileEl.volume > 0.001) return 'Banda sonora sonando.';
-  if (fileEl && !fileEl.paused) return 'Banda sonora iniciando…';
-  return 'Banda sonora en espera: pulsa «Reproducir banda sonora».';
+  if (musicMode === 'dynamic') return `Banda sonora 16-bit dinámica activa (${cur?.name ?? 'en espera'}).`;
+  if (!fileOk) return 'No se pudo cargar la pista MP3: usando sintetizador 16-bit.';
+  if (fileEl && !fileEl.paused && fileEl.volume > 0.001) return 'Pista MP3 sonando en menús.';
+  return 'Listo para reproducir.';
 }
-/** Reintenta la banda sonora desde un clic del usuario (permite el audio y reinicia si falló la carga). */
 export function playSoundtrackNow(): void {
-  ac(); if (!fileOk) { fileOk = true; fileEl = null; }
-  if (!cur) cur = { name: 'menu', intensity: 0 };
-  clearInterval(timer); timer = 0; fileStart();
+  ac();
+  if (musicMode === 'soundtrack') {
+    if (!fileOk) { fileOk = true; fileEl = null; }
+    if (!cur) cur = { name: 'menu', intensity: 0 };
+    clearInterval(timer); timer = 0; fileStart();
+  } else {
+    const n = cur?.name ?? 'menu', i = cur?.intensity ?? 0;
+    cur = null;
+    playMusic(n, i);
+  }
 }
-export const soundtrackActive = (): boolean => !!fileEl && !fileEl.paused;
+export const soundtrackActive = (): boolean => (!!fileEl && !fileEl.paused) || timer > 0;
 
 export function playMusic(name: string, intensity = 0): void {
-  if (cur && cur.name === name) { cur.intensity = intensity; return; }
-  const prev = cur; cur = { name, intensity };
-  if (fileOk && !PROCEDURAL_ONLY.has(name)) { clearInterval(timer); timer = 0; fileStart(); return; } // banda sonora en archivo
-  void prev; fileStop(300); // fanfarria / respaldo sintetizado
-  if (!vol.on) return;
+  const trackName = TRACKS[name] ? name : 'menu';
+  if (cur && cur.name === trackName) { cur.intensity = intensity; return; }
+  cur = { name: trackName, intensity };
+  if (isHidden || !vol.on) return;
+  if (musicMode === 'soundtrack' && fileOk && trackName === 'menu') {
+    clearInterval(timer); timer = 0; fileStart(); return;
+  }
+  fileStop(250);
   const c = ac(); if (!c) return;
-  step = 0; bar = 0; nextT = c.currentTime + 0.1;
+  step = 0; bar = 0; nextT = c.currentTime + 0.08;
   clearInterval(timer); timer = window.setInterval(schedule, 120); schedule();
 }
 export function setIntensity(i: number): void { if (cur) cur.intensity = i; }
@@ -217,8 +298,16 @@ function drone(freqs: number[], type: OscillatorType, v: number, lfo = 0.1): voi
   const c = ac(); if (!c) return;
   for (const f of freqs) { const o = c.createOscillator(), g = c.createGain(), l = c.createOscillator(), lg = c.createGain(); o.type = type; o.frequency.value = f; g.gain.value = v; l.frequency.value = lfo * (0.7 + Math.random() * 0.6); lg.gain.value = v * 0.6; l.connect(lg).connect(g.gain); o.connect(g).connect(ambBus); o.start(); l.start(); ambNodes.push(o, g, l, lg); }
 }
-const every = (ms: number, jitter: number, fn: () => void): void => { const go = () => { fn(); ambTimers.push(window.setTimeout(go, ms + Math.random() * jitter)); }; ambTimers.push(window.setTimeout(go, ms * Math.random() + 400)); };
-const atAmb = (f: () => void) => { if (vol.on) f(); };
+const every = (ms: number, jitter: number, fn: () => void): void => {
+  const idx = ambTimers.length;
+  ambTimers.push(0);
+  const go = () => {
+    fn();
+    ambTimers[idx] = window.setTimeout(go, ms + Math.random() * jitter);
+  };
+  ambTimers[idx] = window.setTimeout(go, ms * Math.random() + 400);
+};
+const atAmb = (f: () => void) => { if (vol.on && !isHidden && ctx && ctx.state === 'running') f(); };
 export function stopAmbient(): void {
   ambTimers.forEach(clearTimeout); ambTimers = []; const c = ctx;
   ambNodes.forEach(n => { try { (n as any).stop?.(); } catch { /* ya parado */ } try { n.disconnect(); } catch { /* nada */ } }); ambNodes = []; ambName = ''; void c;

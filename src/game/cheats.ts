@@ -15,7 +15,7 @@ function zonas(s: SaveData): void {
 function cartas(s: SaveData): void { for (const c of cards) give(s, c); }
 function maestria(s: SaveData): void {
   const now = new Date().toISOString();
-  for (const t of topics) { const cur = s.mastery[t.id]; s.mastery[t.id] = { m: 1, attempts: Math.max(cur?.attempts ?? 0, 20), correct: Math.max(cur?.correct ?? 0, 20), lastSeen: now }; }
+  for (const t of topics) { const cur = s.mastery[t.id]; s.mastery[t.id] = { m: 1, attempts: Math.max(cur?.attempts ?? 0, 20), correct: Math.max(cur?.correct ?? 0, 20), lastSeen: cur?.lastSeen ?? now }; }
 }
 function historia(s: SaveData): void {
   s.seen ??= []; addAll(s.seen, CINEMATICS.map(c => c.id));

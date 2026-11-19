@@ -32,7 +32,13 @@ export function spriteCanvas(def: any, scale = 3, anim = 'idle', opts: { vary?: 
   a.anim = anim; if (opts.vary) a.t = Math.floor(Math.random() * 4);
   const draw = () => { ctx.clearRect(0, 0, cv.width, cv.height); a.draw(ctx); };
   draw();
-  ticker.add(dt => { a.step(dt); if (a.dirty) { a.dirty = false; draw(); } });
+  let mounted = false;
+  const off = ticker.add(dt => {
+    if (cv.isConnected) mounted = true;
+    else if (mounted) { off(); return; }
+    a.step(dt);
+    if (a.dirty) { a.dirty = false; draw(); }
+  });
   return cv;
 }
 export function glyph(name: string, scale = 3, color = '#f3ead8'): HTMLCanvasElement {

@@ -55,9 +55,36 @@ export interface SaveData {
   progress: { levelsCleared: string[]; bossesDefeated: string[] };
   mastery: Record<string, Mastery>;
   deck: string[]; relics: string[]; achievements: string[];
-  errorBook: { template: string; topic: string; text: string; given: string; answer: string; explain: string; date: string; resolved: boolean }[];
+  errorBook: {
+    template: string;
+    topic: string;
+    text: string;
+    given: string;
+    answer: string;
+    explain: string;
+    date: string;
+    resolved: boolean;
+    misconceptionId?: string;
+    diagnosis?: string;
+    steps?: string[];
+  }[];
   diaryPages: string[];
-  settings: { textScale: number; colorBlind: boolean; sound: boolean; reduceMotion: boolean; timeMode?: 'normal' | 'slow' | 'veryslow'; noTimeout?: boolean; musicVol?: number; sfxVol?: number; ambVol?: number };
+  tutorialDone?: boolean;
+  settings: {
+    textScale: number;
+    colorBlind: boolean;
+    sound: boolean;
+    reduceMotion: boolean;
+    difficulty?: 'casual' | 'normal' | 'expert';
+    timeMode?: 'normal' | 'slow' | 'veryslow';
+    noTimeout?: boolean;
+    musicVol?: number;
+    sfxVol?: number;
+    ambVol?: number;
+    musicMode?: 'dynamic' | 'soundtrack';
+    keybinds?: Record<string, string>;
+    joystickMode?: 'joystick' | 'dpad';
+  };
   seen?: string[]; loadout?: string[];
   stats: { questionsAnswered: number; correct: number; bestStreak: number; freePlayLevels: number; combatsWon: number; bossNoHint: boolean; reviewed: number };
 }

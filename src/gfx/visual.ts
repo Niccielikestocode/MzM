@@ -2,8 +2,19 @@
 import type { Question } from '../core/types';
 import { Val, valNum, textFractions, textPoints, textPercents, fmt } from '../game/vis';
 const BG = '#120d1e', GRID = '#3a3160', AX = '#9a90b8', INK = '#f3ead8';
+const VIS_FONT = '"Nunito", "Segoe UI", system-ui, sans-serif';
 type Ctx = CanvasRenderingContext2D;
-export function mkCanvas(w: number, h: number, cls = 'vis-cv'): [HTMLCanvasElement, Ctx] { const cv = document.createElement('canvas'); cv.width = w; cv.height = h; cv.className = cls; const c = cv.getContext('2d')!; c.imageSmoothingEnabled = false; return [cv, c]; }
+export function mkCanvas(w: number, h: number, cls = 'vis-cv'): [HTMLCanvasElement, Ctx] {
+  const dpr = 2;
+  const cv = document.createElement('canvas');
+  cv.width = w * dpr;
+  cv.height = h * dpr;
+  cv.style.maxWidth = w + 'px';
+  cv.className = cls;
+  const c = cv.getContext('2d')!;
+  c.scale(dpr, dpr);
+  return [cv, c];
+}
 
 export function drawPie(c: Ctx, cx: number, cy: number, r: number, n: number, d: number, col: string): void {
   const whole = Math.floor(Math.abs(n) / d), rest = Math.abs(n) % d;
@@ -12,13 +23,13 @@ export function drawPie(c: Ctx, cx: number, cy: number, r: number, n: number, d:
     const a0 = -Math.PI / 2 + (i / d) * 6.2832, a1 = -Math.PI / 2 + ((i + 1) / d) * 6.2832;
     c.beginPath(); c.moveTo(cx, cy); c.arc(cx, cy, r, a0, a1); c.closePath(); c.fillStyle = whole > 0 || i < rest ? col : '#2a2347'; c.fill(); c.stroke();
   }
-  if (whole > 1) { c.fillStyle = INK; c.font = `bold ${Math.round(r * 0.7)}px monospace`; c.textAlign = 'center'; c.fillText('×' + whole, cx, cy + r * 0.25); }
+  if (whole > 1) { c.fillStyle = INK; c.font = `bold ${Math.round(r * 0.7)}px ${VIS_FONT}`; c.textAlign = 'center'; c.fillText('×' + whole, cx, cy + r * 0.25); }
 }
 export function drawBar(c: Ctx, x: number, y: number, w: number, h: number, frac: number, col: string, label?: string): void {
   c.fillStyle = '#2a2347'; c.fillRect(x, y, w, h); c.fillStyle = col; c.fillRect(x, y, Math.max(0, Math.min(1, frac)) * w, h);
   c.strokeStyle = '#0b0714'; c.lineWidth = 2; c.strokeRect(x, y, w, h);
   c.strokeStyle = '#0b0714'; c.lineWidth = 1; for (let i = 1; i < 10; i++) { c.beginPath(); c.moveTo(x + (w * i) / 10, y); c.lineTo(x + (w * i) / 10, y + h * 0.35); c.stroke(); }
-  if (label) { c.fillStyle = INK; c.font = 'bold 11px monospace'; c.textAlign = 'center'; c.fillText(label, x + w / 2, y + h / 2 + 4); }
+  if (label) { c.fillStyle = INK; c.font = `bold 12px ${VIS_FONT}`; c.textAlign = 'center'; c.fillText(label, x + w / 2, y + h / 2 + 4); }
 }
 /** Plano cartesiano pequeño que ajusta su escala a los puntos dados. */
 export function drawPlane(c: Ctx, x0: number, y0: number, w: number, h: number, pts: { x: number; y: number; col?: string; label?: string }[], opts: { segments?: boolean; sel?: number } = {}): { sx: (v: number) => number; sy: (v: number) => number; ux: (px: number) => number; uy: (py: number) => number } {
@@ -31,11 +42,11 @@ export function drawPlane(c: Ctx, x0: number, y0: number, w: number, h: number, 
   for (let gx = Math.ceil(lx / step) * step; gx <= hx; gx += step) { c.beginPath(); c.moveTo(sx(gx) + 0.5, y0); c.lineTo(sx(gx) + 0.5, y0 + h); c.stroke(); }
   for (let gy = Math.ceil(ly / step) * step; gy <= hy; gy += step) { c.beginPath(); c.moveTo(x0, sy(gy) + 0.5); c.lineTo(x0 + w, sy(gy) + 0.5); c.stroke(); }
   c.strokeStyle = AX; c.lineWidth = 2; c.beginPath(); c.moveTo(x0, sy(0)); c.lineTo(x0 + w, sy(0)); c.moveTo(sx(0), y0); c.lineTo(sx(0), y0 + h); c.stroke();
-  c.fillStyle = AX; c.font = '9px monospace'; c.textAlign = 'center';
-  for (let gx = Math.ceil(lx / step) * step; gx <= hx; gx += step) if (gx) c.fillText(String(gx), sx(gx), sy(0) + 10);
-  c.textAlign = 'right'; for (let gy = Math.ceil(ly / step) * step; gy <= hy; gy += step) if (gy) c.fillText(String(gy), sx(0) - 3, sy(gy) + 3);
+  c.fillStyle = AX; c.font = `bold 11px ${VIS_FONT}`; c.textAlign = 'center';
+  for (let gx = Math.ceil(lx / step) * step; gx <= hx; gx += step) if (gx) c.fillText(String(gx), sx(gx), sy(0) + 11);
+  c.textAlign = 'right'; for (let gy = Math.ceil(ly / step) * step; gy <= hy; gy += step) if (gy) c.fillText(String(gy), sx(0) - 4, sy(gy) + 4);
   if (opts.segments && pts.length > 1) { c.strokeStyle = '#ffd24d'; c.lineWidth = 2; c.setLineDash([4, 3]); c.beginPath(); pts.forEach((p, i) => (i ? c.lineTo(sx(p.x), sy(p.y)) : c.moveTo(sx(p.x), sy(p.y)))); if (pts.length > 2) c.closePath(); c.stroke(); c.setLineDash([]); }
-  pts.forEach((p, i) => { c.fillStyle = p.col ?? '#ffd24d'; c.beginPath(); c.arc(sx(p.x), sy(p.y), opts.sel === i ? 6 : 4.5, 0, 6.3); c.fill(); c.strokeStyle = '#0b0714'; c.lineWidth = 2; c.stroke(); if (p.label) { c.fillStyle = INK; c.textAlign = 'left'; c.font = 'bold 10px monospace'; c.fillText(p.label, sx(p.x) + 7, sy(p.y) - 6); } });
+  pts.forEach((p, i) => { c.fillStyle = p.col ?? '#ffd24d'; c.beginPath(); c.arc(sx(p.x), sy(p.y), opts.sel === i ? 6 : 4.5, 0, 6.3); c.fill(); c.strokeStyle = '#0b0714'; c.lineWidth = 2; c.stroke(); if (p.label) { c.fillStyle = INK; c.textAlign = 'left'; c.font = `bold 12px ${VIS_FONT}`; c.fillText(p.label, sx(p.x) + 7, sy(p.y) - 6); } });
   c.restore(); c.strokeStyle = '#4a3f6c'; c.lineWidth = 2; c.strokeRect(x0, y0, w, h);
   return { sx, sy, ux: px => lx + (px - ox) / scale, uy: py => (ly + hy) / 2 - (py - (y0 + h / 2)) / scale };
 }
@@ -43,7 +54,7 @@ export function drawLine(c: Ctx, x0: number, y: number, w: number, lo: number, h
   const sx = (v: number): number => x0 + ((v - lo) / (hi - lo || 1)) * w;
   c.strokeStyle = AX; c.lineWidth = 3; c.beginPath(); c.moveTo(x0, y); c.lineTo(x0 + w, y); c.stroke();
   const raw = (hi - lo) / 8, mag = Math.pow(10, Math.floor(Math.log10(raw || 1))), step = [1, 2, 5, 10].map(m => m * mag).find(s => s >= raw) ?? mag;
-  c.fillStyle = AX; c.font = '10px monospace'; c.textAlign = 'center'; c.lineWidth = 2;
+  c.fillStyle = AX; c.font = `bold 12px ${VIS_FONT}`; c.textAlign = 'center'; c.lineWidth = 2;
   for (let v = Math.ceil(lo / step) * step; v <= hi + 1e-9; v += step) { c.beginPath(); c.moveTo(sx(v), y - 5); c.lineTo(sx(v), y + 5); c.stroke(); c.fillText(fmt(v), sx(v), y + 18); }
   marks.forEach((m, i) => { c.fillStyle = m.col; c.beginPath(); c.arc(sx(m.v), y, sel === i ? 7 : 5, 0, 6.3); c.fill(); c.strokeStyle = '#0b0714'; c.stroke(); if (m.label) { c.fillStyle = INK; c.fillText(m.label, sx(m.v), y - 12); } });
   return sx;
@@ -68,8 +79,8 @@ export function questionVisual(q: Question): HTMLCanvasElement | null {
     drawPlane(c, 0, 0, 300, 150, pts.map((p, i) => ({ ...p, col: cols[i], label: `${L[i]}` })), { segments: pts.length > 1 }); return cv;
   }
   if (fr.length) {
-    const op = (/\d\s*([+\-−×÷*·])\s*\(?-?\d/.exec(q.text)?.[1] ?? '+').replace('*', '×').replace('-', '−'), [cv, c] = mkCanvas(Math.max(150, fr.length * 100), 70), cols = ['#6fb7ff', '#ffb347', '#6fcf8f'];
-    fr.forEach((f, i) => { drawPie(c, 36 + i * 100, 32, 28, f.n, f.d, cols[i]); c.fillStyle = INK; c.font = 'bold 12px monospace'; c.textAlign = 'center'; c.fillText(`${f.n}/${f.d}`, 36 + i * 100, 68); if (i < fr.length - 1) { c.font = 'bold 22px monospace'; c.fillText(op, 86 + i * 100, 38); } });
+    const op = (/\d\s*([+\-−×÷*·])\s*\(?-?\d/.exec(q.text)?.[1] ?? '+').replace('*', '×').replace('-', '−'), [cv, c] = mkCanvas(Math.max(150, fr.length * 100), 74), cols = ['#6fb7ff', '#ffb347', '#6fcf8f'];
+    fr.forEach((f, i) => { drawPie(c, 36 + i * 100, 32, 28, f.n, f.d, cols[i]); c.fillStyle = INK; c.font = `bold 12px ${VIS_FONT}`; c.textAlign = 'center'; c.fillText(`${f.n}/${f.d}`, 36 + i * 100, 70); if (i < fr.length - 1) { c.font = `bold 22px ${VIS_FONT}`; c.fillText(op, 86 + i * 100, 38); } });
     return cv;
   }
   if (pc.length) { const [cv, c] = mkCanvas(300, 20 + pc.length * 34); pc.forEach((p, i) => drawBar(c, 10, 10 + i * 34, 280, 22, p / 100, ['#6fb7ff', '#ffb347', '#6fcf8f'][i], fmt(p) + ' %')); return cv; }
