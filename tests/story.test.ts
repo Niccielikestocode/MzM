@@ -14,6 +14,10 @@ describe('historia', () => {
     CINEMATICS.forEach(c => c.beats.forEach(b => { expect(b.line.length).toBeGreaterThan(2); (b.cast ?? []).forEach(k => { if (k.id !== 'hero' && k.id !== 'mentor') expect(spriteDefs[k.id], k.id).toBeTruthy(); }); }));
     expect(CINE_BY_ID.prologo.beats.length).toBeGreaterThan(5);
   });
+  it('incluye una cinemática de derrota donde la Maestra anima a reintentar', () => {
+    const retry = CINE_BY_ID.derrota_intenta_otra_vez;
+    expect(retry.beats.some(beat => beat.who === 'Maestra Aritmia' && beat.line.includes('intentarlo'))).toBe(true);
+  });
   it('el diario cubre las zonas principales', () => { Object.keys(DIARY).forEach(id => expect(levels.some(l => l.id === id)).toBe(true)); expect(Object.keys(DIARY).length).toBeGreaterThanOrEqual(19); });
   it('cada carta tiene efecto visual propio', () => { cards.filter(c => c.type !== 'reliquia').forEach(c => expect(CARD_FX[c.id], c.id).toBeTruthy()); });
 });

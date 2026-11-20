@@ -21,7 +21,7 @@ function bgFor(scene: string): HTMLCanvasElement {
 const rnd = (a: number, b: number) => a + Math.random() * (b - a);
 interface P { x: number; y: number; vx: number; vy: number; life: number; t: number; ch?: string; col: string; sz: number; ph: number }
 
-export function playCinematic(o: { save: SaveData; id: string; mount: (el: HTMLElement, cleanup?: () => void) => void; done: () => void; persist: () => void; skipOnly?: boolean }): void {
+export function playCinematic(o: { save: SaveData; id: string; mount: (el: HTMLElement, cleanup?: () => void, preserveMusic?: boolean) => void; done: () => void; persist: () => void; skipOnly?: boolean; preserveMusic?: boolean }): void {
   const cine: Cinematic = CINE_BY_ID[o.id]; if (!cine) { o.done(); return; }
   const save = o.save, hero = heroById[save.profile.heroId], first = hero.name.split(',')[0];
   const sub = (t: string) => t.replace('{n}', save.profile.name).replace('{h}', HERO_LINE[hero.id] ?? '');
@@ -38,7 +38,7 @@ export function playCinematic(o: { save: SaveData; id: string; mount: (el: HTMLE
   let off: (() => void) | null = null;
   const kh = (e: KeyboardEvent) => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); advance(); } else if (e.key === 'Escape') finish(); };
   document.addEventListener('keydown', kh);
-  o.mount(root, () => { off?.(); off = null; document.removeEventListener('keydown', kh); });
+  o.mount(root, () => { off?.(); off = null; document.removeEventListener('keydown', kh); }, o.preserveMusic);
   off = ticker.add(dt => frame(dt));
 
   const defFor = (id: string, flip?: boolean): any => {
@@ -56,7 +56,9 @@ export function playCinematic(o: { save: SaveData; id: string; mount: (el: HTMLE
     (beat.fx ?? []).forEach(f => { fxT[f] = 0; });
     if (beat.sfx) sfx(beat.sfx);
     const w = beat.scene === 'cosmos' || beat.scene === 'academia' ? beat.scene : beat.scene;
-    if (beat.music) playMusic(beat.music, 0); else if (idx === 0) playMusic('story', 0);
+    if (!o.preserveMusic) {
+      if (beat.music) playMusic(beat.music, 0); else if (idx === 0) playMusic('story', 0);
+    }
     if (beat.scene === 'cosmos') stopAmbient(); else playAmbient(beat.scene); void w;
     if (beat.layers?.includes('stars')) for (let k = 0; k < 60; k++) parts.push({ x: rnd(0, W), y: rnd(0, H * 0.8), vx: 0, vy: 0, life: 1e9, t: 0, col: '#ffffff', sz: Math.random() < .2 ? 2 : 1, ph: rnd(0, 6) });
   }

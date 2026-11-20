@@ -5,14 +5,19 @@ const vol = { sfx: 0.8, music: 0.5, amb: 0.6, on: true };
 let noiseBuf: AudioBuffer | null = null;
 let audioUnlocked = false;
 
-export function setSound(on: boolean): void { vol.on = on; applyAll(); if (on) resumeBattleSoundtrack(); }
+export function setSound(on: boolean): void {
+  vol.on = on;
+  if (!on) { clearInterval(cinematicFadeT); cinematicFadeT = 0; }
+  applyAll();
+  if (on) { resumeBattleSoundtrack(); resumeCinematicSoundtrack(); }
+}
 export function setVolumes(v: { sfx?: number; music?: number; amb?: number }): void { Object.assign(vol, v); applyAll(); }
 function apply(): void {
   if (!ctx) return; const t = ctx.currentTime;
   master.gain.setTargetAtTime(vol.on ? 1 : 0, t, 0.05); sfxBus.gain.setTargetAtTime(vol.sfx, t, 0.05);
   musBus.gain.setTargetAtTime(vol.music * 0.5, t, 0.1); ambBus.gain.setTargetAtTime(vol.amb * 0.5, t, 0.1);
 }
-function applyAll(): void { apply(); fileVol(); battleFileVol(); }
+function applyAll(): void { apply(); fileVol(); battleFileVol(); cinematicFileVol(); }
 function ac(): AudioContext | null {
   if (!audioUnlocked || isHidden || !vol.on) return null;
   try {
@@ -31,7 +36,7 @@ function ac(): AudioContext | null {
   } catch { return null; }
 }
 /** Hay que llamarlo desde un gesto del usuario para que el navegador permita sonar. */
-export function unlockAudio(): void { audioUnlocked = true; ac(); fileResume(); resumeBattleSoundtrack(); }
+export function unlockAudio(): void { audioUnlocked = true; ac(); fileResume(); resumeBattleSoundtrack(); resumeCinematicSoundtrack(); }
 
 type Out = AudioNode;
 function tone(freq: number, dur: number, type: OscillatorType, v: number, delay = 0, slide = 0, out?: Out, echo = 0): void {
@@ -197,12 +202,15 @@ function schedule(): void {
 
 /* ---------- Pistas MP3 opcionales para menús y jefes ---------- */
 const SOUNDTRACK_URL: string = (globalThis as any).__JM_SOUNDTRACK__ ?? (import.meta.env.BASE_URL + 'music/beyond-the-kingdom-gates.mp3');
+const DEFEAT_SOUNDTRACK_PATH = 'music/Victory_at_the_Limit.mp3';
 let fileEl: HTMLAudioElement | null = null, fileOk = true, fileWanted = false, fadeT = 0;
 let battleFileEl: HTMLAudioElement | null = null, battleFileWanted = false;
 let battleFallback: { name: string; intensity: number } | null = null, battleFileName = '';
 let battleFileStatus: 'loading' | 'playing' | 'blocked' | null = null;
+let cinematicFileEl: HTMLAudioElement | null = null, cinematicFileWanted = false, cinematicFadeT = 0, battleFadeT = 0;
 const fileTarget = (): number => (vol.on && fileWanted && !isHidden ? Math.min(1, vol.music * 0.7) : 0);
 const battleFileTarget = (): number => (vol.on && battleFileWanted && !isHidden ? Math.min(1, vol.music * 0.7) : 0);
+const cinematicFileTarget = (): number => (vol.on && cinematicFileWanted && !isHidden ? Math.min(1, vol.music * 0.7) : 0);
 function fileGet(): HTMLAudioElement | null {
   if (!fileOk || typeof Audio === 'undefined') return null;
   if (!fileEl) {
@@ -217,6 +225,15 @@ function fileFade(to: number, ms: number, done?: () => void): void {
   const from = a.volume, n = Math.max(1, Math.round(ms / 40)); let k = 0;
   fadeT = window.setInterval(() => { k++; a.volume = Math.max(0, Math.min(1, from + (to - from) * (k / n))); if (k >= n) { clearInterval(fadeT); done?.(); } }, 40);
 }
+function fadeElement(a: HTMLAudioElement, to: number, ms: number, done?: () => void): number {
+  if (ms <= 0) { a.volume = to; done?.(); return 0; }
+  const from = a.volume, n = Math.max(1, Math.round(ms / 40)); let k = 0, timer = 0;
+  timer = window.setInterval(() => {
+    k++; a.volume = Math.max(0, Math.min(1, from + (to - from) * (k / n)));
+    if (k >= n) { clearInterval(timer); done?.(); }
+  }, 40);
+  return timer;
+}
 function fileResume(): void {
   if (!fileWanted || isHidden) return; const a = fileGet(); if (!a) return;
   if (a.paused) { a.volume = 0; void a.play().then(() => fileFade(fileTarget(), 700)).catch(() => { /* espera gesto */ }); } else fileFade(fileTarget(), 500);
@@ -224,7 +241,9 @@ function fileResume(): void {
 function fileStart(): void { fileWanted = true; fileResume(); }
 function fileStop(ms = 350): void { fileWanted = false; if (!fileEl) return; const a = fileEl; fileFade(0, ms, () => { if (!fileWanted) a.pause(); }); }
 function battleFileVol(): void { if (battleFileEl) battleFileEl.volume = battleFileTarget(); }
+function cinematicFileVol(): void { if (cinematicFileEl) cinematicFileEl.volume = cinematicFileTarget(); }
 function stopBattleSoundtrack(): void {
+  clearInterval(battleFadeT); battleFadeT = 0;
   battleFileWanted = false; battleFallback = null; battleFileName = ''; battleFileStatus = null;
   if (battleFileEl) { battleFileEl.pause(); battleFileEl = null; }
 }
@@ -250,6 +269,7 @@ function resumeBattleSoundtrack(): void {
   }
 }
 export function playBattleMusic(world: string, kind: BattleMusicKind): void {
+  stopCinematicSoundtrack(500);
   const trackName = TRACKS[world] ? world : 'menu';
   const path = battleSoundtrackPath(world, kind);
   if (!path || typeof Audio === 'undefined') { playMusic(trackName, kind === 'common' ? 1 : 2); return; }
@@ -266,6 +286,69 @@ export function playBattleMusic(world: string, kind: BattleMusicKind): void {
   resumeBattleSoundtrack();
 }
 
+export function playCinematicSoundtrack(): void {
+  stopCinematicSoundtrack(0);
+  clearInterval(timer); timer = 0; cur = null; fileStop(700);
+  if (ctx && musBus) musBus.gain.setTargetAtTime(0.0001, ctx.currentTime, 0.3);
+
+  const battle = battleFileEl;
+  battleFileWanted = false; battleFallback = null; battleFileName = ''; battleFileStatus = null;
+  clearInterval(battleFadeT); battleFadeT = 0;
+  if (battle) {
+    battleFadeT = fadeElement(battle, 0, 1300, () => {
+      if (battleFileEl === battle) { battle.pause(); battleFileEl = null; }
+      battleFadeT = 0;
+    });
+  }
+
+  if (typeof Audio === 'undefined') { playMusic('story', 0); return; }
+  const a = new Audio(new URL(import.meta.env.BASE_URL + DEFEAT_SOUNDTRACK_PATH, document.baseURI).href);
+  a.loop = false; a.preload = 'auto'; a.volume = 0;
+  cinematicFileEl = a; cinematicFileWanted = true;
+  a.addEventListener('ended', () => {
+    if (cinematicFileEl !== a) return;
+    clearInterval(cinematicFadeT); cinematicFadeT = 0; cinematicFileEl = null; cinematicFileWanted = false;
+  });
+  a.addEventListener('error', () => {
+    if (cinematicFileEl !== a) return;
+    console.error('No se pudo reproducir la música de la cinemática de derrota.', a.error);
+    clearInterval(cinematicFadeT); cinematicFadeT = 0; cinematicFileEl = null; cinematicFileWanted = false;
+    playMusic('story', 0);
+  });
+  a.load();
+  resumeCinematicSoundtrack();
+}
+function resumeCinematicSoundtrack(): void {
+  if (!cinematicFileWanted || isHidden || !vol.on || !cinematicFileEl) return;
+  const a = cinematicFileEl;
+  if (a.ended) { cinematicFileWanted = false; cinematicFileEl = null; return; }
+  if (a.paused) {
+    void a.play().then(() => {
+      if (cinematicFileEl === a) {
+        clearInterval(cinematicFadeT);
+        cinematicFadeT = fadeElement(a, cinematicFileTarget(), 650);
+      }
+    }).catch(error => {
+      if (!(error instanceof Error && error.name === 'NotAllowedError')) {
+        console.error('No se pudo iniciar la música de la cinemática de derrota.', error);
+      }
+    });
+  } else {
+    clearInterval(cinematicFadeT);
+    cinematicFadeT = fadeElement(a, cinematicFileTarget(), 350);
+  }
+}
+export function stopCinematicSoundtrack(ms = 650): void {
+  cinematicFileWanted = false;
+  const a = cinematicFileEl;
+  if (!a) return;
+  clearInterval(cinematicFadeT);
+  cinematicFadeT = fadeElement(a, 0, ms, () => {
+    if (cinematicFileEl === a) { a.pause(); cinematicFileEl = null; }
+    cinematicFadeT = 0;
+  });
+}
+
 /* ---------- Ciclo de vida: detener TODO el sonido al salir o cambiar pestaña ---------- */
 function suspendAllAudio(): void {
   isHidden = true;
@@ -273,6 +356,7 @@ function suspendAllAudio(): void {
   clearInterval(fadeT); fadeT = 0;
   if (fileEl && !fileEl.paused) { fileEl.pause(); }
   if (battleFileEl && !battleFileEl.paused) battleFileEl.pause();
+  if (cinematicFileEl && !cinematicFileEl.paused) cinematicFileEl.pause();
   if (ctx && ctx.state === 'running') { void ctx.suspend(); }
 }
 
@@ -293,12 +377,14 @@ function resumeAllAudio(): void {
       schedule();
     }
   }
+  resumeCinematicSoundtrack();
 }
 
 if (typeof window !== 'undefined') {
   const kick = () => {
     unlockAudio();
     resumeBattleSoundtrack();
+    resumeCinematicSoundtrack();
     if (cur && !timer && !battleFileWanted && musicMode === 'dynamic' && vol.on && !isHidden) {
       const c = ac();
       if (c) { nextT = c.currentTime + 0.08; timer = window.setInterval(schedule, 120); schedule(); }
@@ -319,9 +405,10 @@ if (typeof window !== 'undefined') {
   });
 }
 
-export const AUDIO_BUILD = 'dinamico-16bit-v5';
+export const AUDIO_BUILD = 'dinamico-16bit-v6';
 export function soundtrackStatus(): string {
   if (!vol.on) return 'Sonido desactivado en Ajustes.';
+  if (cinematicFileWanted) return cinematicFileEl && !cinematicFileEl.paused ? 'Pista de cinemática sonando.' : 'Pista de cinemática lista.';
   if (battleFileWanted) {
     if (battleFileStatus === 'blocked') return `Toca o presiona una tecla para iniciar ${battleFileName}.`;
     if (battleFileStatus === 'loading') return `Cargando pista de jefe: ${battleFileName}.`;
@@ -344,14 +431,16 @@ export function playSoundtrackNow(): void {
     playMusic(n, i);
   }
 }
-export const soundtrackActive = (): boolean => (!!fileEl && !fileEl.paused) || (!!battleFileEl && !battleFileEl.paused) || timer > 0;
+export const soundtrackActive = (): boolean => (!!fileEl && !fileEl.paused) || (!!battleFileEl && !battleFileEl.paused) || (!!cinematicFileEl && !cinematicFileEl.paused) || timer > 0;
 
 export function playMusic(name: string, intensity = 0): void {
+  stopCinematicSoundtrack(500);
   const trackName = TRACKS[name] ? name : 'menu';
   if (battleFileWanted) { stopBattleSoundtrack(); cur = null; }
   if (cur && cur.name === trackName) { cur.intensity = intensity; return; }
   cur = { name: trackName, intensity };
   if (isHidden || !vol.on) return;
+  apply();
   if (musicMode === 'soundtrack' && fileOk && trackName === 'menu') {
     clearInterval(timer); timer = 0; fileStart(); return;
   }
@@ -361,7 +450,7 @@ export function playMusic(name: string, intensity = 0): void {
   clearInterval(timer); timer = window.setInterval(schedule, 120); schedule();
 }
 export function setIntensity(i: number): void { if (cur) cur.intensity = i; }
-export function stopMusic(): void { clearInterval(timer); timer = 0; cur = null; stopBattleSoundtrack(); fileStop(); }
+export function stopMusic(): void { clearInterval(timer); timer = 0; cur = null; stopBattleSoundtrack(); stopCinematicSoundtrack(0); fileStop(); }
 export function musicName(): string | null { return cur?.name ?? null; }
 
 /* ============================ AMBIENTE ============================ */

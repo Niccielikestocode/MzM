@@ -85,6 +85,10 @@ export const CINEMATICS: Cinematic[] = [
     { scene: 'cosmos', who: N, line: 'x = x.', layers: ['stars', 'numbers'], cam: [1.4, 1.1, 160, 160], sfx: 'swell' },
     { scene: 'academia', who: M, line: 'Lo lograste, {n}. Pero un calculista nunca termina: siempre hay otro problema esperando. Practica en el modo libre, repasa tu cuaderno de errores... y quizá vuelvas a verme en el segundo semestre.', cast: [{ id: 'hero', x: 90 }, { id: 'mentor', x: 200, flip: true }], layers: ['dust'], cam: [1, 1.3, 150, 150], fx: ['fade'], music: 'story' },
     { scene: 'academia', who: N, line: 'FIN DEL PRIMER SEMESTRE.', cast: [{ id: 'hero', x: 90 }, { id: 'mentor', x: 200, flip: true }], layers: ['dust'], cam: [1.3, 1, 150, 150] }
+  ] },
+  { id: 'derrota_intenta_otra_vez', title: 'Un intento más', world: 'academia', beats: [
+    { scene: 'academia', who: M, line: '¡{n}, no te desanimes! Un combate difícil no borra todo lo que ya aprendiste.', cast: [{ id: 'hero', x: 90, anim: 'hurt' }, { id: 'mentor', x: 205, flip: true }], layers: ['dust'], cam: [1.2, 1.4, 190, 160], fx: ['fade'] },
+    { scene: 'academia', who: M, line: 'Respira, revisemos qué podemos mejorar y volvamos a intentarlo. Cada error es una pista. ¡Yo creo en ti!', cast: [{ id: 'hero', x: 90 }, { id: 'mentor', x: 205, flip: true }], layers: ['dust'], cam: [1.5, 1.4, 200, 150] }
   ] }
 ];
 export const CINE_BY_ID = Object.fromEntries(CINEMATICS.map(c => [c.id, c])) as Record<string, Cinematic>;

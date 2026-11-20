@@ -8,7 +8,7 @@ import { BattleView, GY } from '../gfx/battle';
 import { gfxFlags } from '../gfx/scene';
 import { drawGraph, drawNumberLine } from '../gfx/plot';
 import { pickQuestion } from '../game/picker';
-import { sfx, sfxForCard, playMusic, playBattleMusic, battleMusicKind, playAmbient, setIntensity } from './audio';
+import { sfx, sfxForCard, playBattleMusic, battleMusicKind, playAmbient, setIntensity } from './audio';
 import * as A from '../game/arena';
 import { artCanvas } from './cards';
 import { victorySequence } from '../gfx/finale';
@@ -900,7 +900,7 @@ export function startArena(o: ArenaOpts): void {
       sayBubble('hero', pickBanter(hero.id, 'win'), 2600);
       dur = victorySequence(view, { combo: s.best, boss: !!m.boss || !!room.miniBoss, sfx: n => sfx(n as any) }) + 500;
     } else {
-      view.hero.play('die'); sfx('lose'); view.banner('DERROTA', '#e84a5f', 50); playMusic('story', 0);
+      view.hero.play('die'); sfx('lose'); view.banner('DERROTA', '#e84a5f', 50);
     }
     uiBars();
     const res = { won, heroHp: Math.max(0, s.heroHp), hints: hintsUsed, best: s.best, lastTemplate };

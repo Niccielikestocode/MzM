@@ -16,7 +16,7 @@ import { confetti, sunburst } from '../gfx/finale';
 import { playLevelClear } from './levelclear';
 
 export type Mode = 'campaign' | 'learning' | 'free' | 'errors';
-export interface RunCtx { story?(level: Level, then: () => void): boolean; save: SaveData; persist(): void; mount(el: HTMLElement, cleanup?: () => void): void; exit(): void; replay(level: Level, mode: Mode): void }
+export interface RunCtx { story?(level: Level, then: () => void): boolean; defeatStory?(then: () => void): void; save: SaveData; persist(): void; mount(el: HTMLElement, cleanup?: () => void): void; exit(): void; replay(level: Level, mode: Mode): void }
 export function startRun(ctx: RunCtx, level: Level, mode: Mode): void {
   const save = ctx.save, rng = mulberry32(newSeed()), hero = heroById[save.profile.heroId];
   const run = { idx: 0, hp: hero.hp, asked: 0, correct: 0, topics: new Set<string>(), before: {} as Record<string, number>, newCards: [] as CardDef[], newAch: [] as string[], lastTemplate: '' };
@@ -73,9 +73,12 @@ export function startRun(ctx: RunCtx, level: Level, mode: Mode): void {
     roomScreen(room, `¡Venciste a ${m.name}!`, [heal ? `Recuperas ${heal} de vida (${run.hp}/${hero.hp}).` : '', ...drops.map(c => h('div', { class: 'reward-card' }, fullCard(c)))], [[run.idx + 1 >= level.rooms.length ? 'Terminar' : 'Siguiente sala', next]], { win: true }); sfx('win');
   }
   function defeat(room: Room): void {
-    playMusic('story', 0);
-    roomScreen(room, 'Has caído', ['Nada se pierde: tu dominio sigue creciendo con cada pregunta. Puedes intentar la sala de nuevo con otras preguntas.'], [
-      ['Reintentar sala', () => { run.hp = Math.ceil(hero.hp * 0.6); nextRoom(); }], ['Salir', () => ctx.exit(), true]], { dead: true });
+    const showDefeat = (): void => {
+      playMusic('story', 0);
+      roomScreen(room, 'Has caído', ['Nada se pierde: tu dominio sigue creciendo con cada pregunta. Puedes intentar la sala de nuevo con otras preguntas.'], [
+        ['Reintentar sala', () => { run.hp = Math.ceil(hero.hp * 0.6); nextRoom(); }], ['Salir', () => ctx.exit(), true]], { dead: true });
+    };
+    if (ctx.defeatStory) ctx.defeatStory(showDefeat); else showDefeat();
   }
 
   /* ---------- fin del nivel ---------- */

@@ -7,7 +7,7 @@ import { freeRun, learningRun } from '../game/levelgen';
 import { mulberry32, newSeed } from '../core/rng';
 import { h, ticker, spriteCanvas, heroSprite, pct, glyph } from './dom';
 import { fullCard } from './cards';
-import { setSound, setVolumes, setMusicMode, sfx, playMusic, playAmbient, unlockAudio, soundtrackStatus, playSoundtrackNow, AUDIO_BUILD } from './audio';
+import { setSound, setVolumes, setMusicMode, sfx, playMusic, playAmbient, playCinematicSoundtrack, unlockAudio, soundtrackStatus, playSoundtrackNow, AUDIO_BUILD } from './audio';
 import { loadoutOf } from '../game/arena';
 import { CHEATS, detectCheat } from '../game/cheats';
 import { ActorClass, gfxFlags } from '../gfx/scene';
@@ -28,10 +28,10 @@ let save: SaveData | null = repo.load();
 const appEl = document.getElementById('app')!;
 let cleanup: (() => void) | null = null;
 
-function mount(el: HTMLElement, cb?: () => void): void {
+function mount(el: HTMLElement, cb?: () => void, preserveMusic = false): void {
   cleanup?.(); cleanup = cb ?? null;
   appEl.replaceChildren(el); window.scrollTo(0, 0);
-  playMusic('menu', 0); playAmbient('menu');
+  if (!preserveMusic) { playMusic('menu', 0); playAmbient('menu'); }
 }
 function applySettings(): void {
   const s = save?.settings; if (!s) return;
@@ -58,6 +58,12 @@ function play(level: Level, mode: Mode): void {
   startRun({
     save, persist, mount,
     story: (l, then) => { const id = POST_STORY[l.id]; if (!id) return false; stories([id], then, true); return true; },
+    defeatStory: then => {
+      const activeSave = save;
+      if (!activeSave) { then(); return; }
+      playCinematicSoundtrack();
+      playCinematic({ save: activeSave, id: 'derrota_intenta_otra_vez', mount, persist, done: then, preserveMusic: true });
+    },
     exit: () => { if (mode === 'learning') learning(); else if (mode === 'free') free(); else if (mode === 'errors') errors(); else campaign(); },
     replay: (l, m) => play(l, m)
   }, level, mode);
