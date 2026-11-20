@@ -3,6 +3,7 @@ let ctx: AudioContext | null = null;
 let master: GainNode, sfxBus: GainNode, musBus: GainNode, ambBus: GainNode, delayBus: GainNode;
 const vol = { sfx: 0.8, music: 0.5, amb: 0.6, on: true };
 let noiseBuf: AudioBuffer | null = null;
+let audioUnlocked = false;
 
 export function setSound(on: boolean): void { vol.on = on; applyAll(); if (on) resumeBattleSoundtrack(); }
 export function setVolumes(v: { sfx?: number; music?: number; amb?: number }): void { Object.assign(vol, v); applyAll(); }
@@ -13,7 +14,7 @@ function apply(): void {
 }
 function applyAll(): void { apply(); fileVol(); battleFileVol(); }
 function ac(): AudioContext | null {
-  if (isHidden || !vol.on) return null;
+  if (!audioUnlocked || isHidden || !vol.on) return null;
   try {
     if (!ctx) {
       ctx = new (window.AudioContext || (window as any).webkitAudioContext)();
@@ -30,7 +31,7 @@ function ac(): AudioContext | null {
   } catch { return null; }
 }
 /** Hay que llamarlo desde un gesto del usuario para que el navegador permita sonar. */
-export function unlockAudio(): void { ac(); fileResume(); resumeBattleSoundtrack(); }
+export function unlockAudio(): void { audioUnlocked = true; ac(); fileResume(); resumeBattleSoundtrack(); }
 
 type Out = AudioNode;
 function tone(freq: number, dur: number, type: OscillatorType, v: number, delay = 0, slide = 0, out?: Out, echo = 0): void {
