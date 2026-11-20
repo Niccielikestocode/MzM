@@ -128,8 +128,8 @@ const UNIT_BATTLE_SOUNDTRACKS: Record<string, string> = {
 const FINAL_BOSS_SOUNDTRACK = 'music/The_Geometry_of_Ruin.mp3';
 export type BattleMusicKind = 'common' | 'unit' | 'final';
 export function battleMusicKind(bossFight: boolean, unitBossLevel: boolean, finalLevel: boolean): BattleMusicKind {
-  if (bossFight && finalLevel) return 'final';
-  if (bossFight || (unitBossLevel && !finalLevel)) return 'unit';
+  if (finalLevel) return 'final';
+  if (bossFight || unitBossLevel) return 'unit';
   return 'common';
 }
 export function battleSoundtrackPath(world: string, kind: BattleMusicKind): string | null {

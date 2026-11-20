@@ -2,11 +2,12 @@ import { describe, expect, it } from 'vitest';
 import { battleMusicKind, battleSoundtrackPath } from '../src/ui/audio';
 
 describe('música de combate', () => {
-  it('mantiene la pista de unidad en todas las peleas del parcial, salvo el nivel final', () => {
+  it('usa la pista del parcial en todas sus peleas y la pista final durante todo el nivel final', () => {
     expect(battleMusicKind(false, true, false)).toBe('unit');
     expect(battleMusicKind(true, true, false)).toBe('unit');
     expect(battleMusicKind(false, false, false)).toBe('common');
-    expect(battleMusicKind(false, true, true)).toBe('common');
+    expect(battleMusicKind(false, true, true)).toBe('final');
+    expect(battleMusicKind(false, false, true)).toBe('final');
     expect(battleMusicKind(true, true, true)).toBe('final');
   });
 
