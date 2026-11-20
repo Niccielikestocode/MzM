@@ -1,4 +1,4 @@
-/** Audio: efectos y ambientes sintetizados, música procedural de combate común y MP3 para menús y jefes. */
+/** Audio: efectos y ambientes sintetizados, música procedural y soundtracks MP3 para combate y menús. */
 let ctx: AudioContext | null = null;
 let master: GainNode, sfxBus: GainNode, musBus: GainNode, ambBus: GainNode, delayBus: GainNode;
 const vol = { sfx: 0.8, music: 0.5, amb: 0.6, on: true };
@@ -125,16 +125,24 @@ const UNIT_BATTLE_SOUNDTRACKS: Record<string, string> = {
   bosque: 'music/Arc_of_the_Final_Strike.mp3',
   ciudadela: 'music/The_Pythagorean_Gambit.mp3'
 };
+const REGULAR_BATTLE_SOUNDTRACKS: Record<string, string> = {
+  cavernas: 'music/Steel_Stance.mp3',
+  bosque: 'music/Quadratic_Strike.mp3',
+  ciudadela: 'music/The_Acute_Angle.mp3'
+};
 const FINAL_BOSS_SOUNDTRACK = 'music/The_Geometry_of_Ruin.mp3';
-export type BattleMusicKind = 'common' | 'unit' | 'final';
-export function battleMusicKind(bossFight: boolean, unitBossLevel: boolean, finalLevel: boolean): BattleMusicKind {
+export type BattleMusicKind = 'common' | 'regular' | 'unit' | 'final';
+export function battleMusicKind(world: string, bossFight: boolean, unitBossLevel: boolean, finalLevel: boolean): BattleMusicKind {
   if (finalLevel) return 'final';
-  if (bossFight || unitBossLevel) return 'unit';
+  if (unitBossLevel) return 'unit';
+  if (REGULAR_BATTLE_SOUNDTRACKS[world]) return 'regular';
+  if (bossFight) return 'unit';
   return 'common';
 }
 export function battleSoundtrackPath(world: string, kind: BattleMusicKind): string | null {
   if (kind === 'common') return null;
-  return kind === 'final' ? FINAL_BOSS_SOUNDTRACK : UNIT_BATTLE_SOUNDTRACKS[world] ?? null;
+  if (kind === 'final') return FINAL_BOSS_SOUNDTRACK;
+  return (kind === 'regular' ? REGULAR_BATTLE_SOUNDTRACKS : UNIT_BATTLE_SOUNDTRACKS)[world] ?? null;
 }
 let cur: { name: string; intensity: number } | null = null;
 let timer = 0, nextT = 0, step = 0, bar = 0, rngS = 1;

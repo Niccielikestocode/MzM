@@ -232,7 +232,7 @@ export function startArena(o: ArenaOpts): void {
   };
   o.mount(root, cleanup);
   const bossFight = room.type === 'boss' || !!m.boss || !!room.miniBoss;
-  const musicKind = battleMusicKind(bossFight, !!level.boss, !!level.final);
+  const musicKind = battleMusicKind(level.world, bossFight, !!level.boss, !!level.final);
   playBattleMusic(level.world, musicKind); playAmbient(level.world); setIntensity(bossFight ? 2 : 1);
   off = ticker.add(rawDt => { view.step(rawDt); frame(rawDt); });
   view.frontHook = drawFront; view.backHook = drawBack;
