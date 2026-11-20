@@ -442,8 +442,8 @@ export function settings(): void {
         h('label', { class: 'lbl' }, 'Estilo de música', h('select', {
           onchange: (e: Event) => { s.settings.musicMode = (e.target as HTMLSelectElement).value as any; persist(); applySettings(); upd(); }
         }, ([
-          ['dynamic', '16-bit Dinámica por región y tensión (Recomendada)'],
-          ['soundtrack', 'Pista MP3 en menús + 16-bit en combate']
+          ['dynamic', '16-bit dinámica en combate común + MP3 en jefes (Recomendada)'],
+          ['soundtrack', 'Pista MP3 en menús y jefes + 16-bit en combate común']
         ] as const).map(([v, t]) => h('option', { value: v, selected: (s.settings.musicMode ?? 'dynamic') === v }, t)))),
         volSlider('Música', 'musicVol', 0.5),
         volSlider('Efectos (SFX)', 'sfxVol', 0.8),
