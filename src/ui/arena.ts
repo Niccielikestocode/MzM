@@ -9,6 +9,7 @@ import { gfxFlags } from '../gfx/scene';
 import { drawGraph, drawNumberLine } from '../gfx/plot';
 import { pickQuestion } from '../game/picker';
 import { sfx, sfxForCard, playBattleMusic, battleMusicKind, playAmbient, setIntensity } from './audio';
+import type { BattleMusicKind } from './audio';
 import * as A from '../game/arena';
 import { artCanvas } from './cards';
 import { victorySequence } from '../gfx/finale';
@@ -21,6 +22,7 @@ import { isCorrectAnswerHighlightActive } from '../game/cheats';
 
 export interface ArenaOpts {
   save: SaveData; hero: HeroDef; monster: MonsterDef; room: Room; level: Level; heroHp: number; rng: Rng; lastTemplate?: string;
+  musicKind?: BattleMusicKind;
   intro: { speaker: string; text: string }[];
   mount(el: HTMLElement, cleanup?: () => void): void; persist(): void; exit(): void;
   onAnswer(q: Question, correct: boolean): void;
@@ -337,7 +339,7 @@ export function startArena(o: ArenaOpts): void {
     window.addEventListener('resize', updateTourFocus);
   }
   const bossFight = room.type === 'boss' || !!m.boss || !!room.miniBoss;
-  const musicKind = battleMusicKind(level.world, bossFight, !!level.boss, !!level.final);
+  const musicKind = o.musicKind ?? battleMusicKind(level.world, bossFight, !!level.boss, !!level.final);
   playBattleMusic(level.world, musicKind); playAmbient(level.world); setIntensity(bossFight ? 2 : 1);
   off = ticker.add(rawDt => { view.step(rawDt); frame(rawDt); });
   view.frontHook = drawFront; view.backHook = drawBack;

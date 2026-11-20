@@ -7,7 +7,8 @@ import { freeRun, learningRun } from '../game/levelgen';
 import { mulberry32, newSeed } from '../core/rng';
 import { h, ticker, spriteCanvas, heroSprite, pct, glyph } from './dom';
 import { fullCard } from './cards';
-import { setSound, setVolumes, setMusicMode, sfx, playMusic, playAmbient, playCinematicSoundtrack, unlockAudio, soundtrackStatus, playSoundtrackNow, AUDIO_BUILD } from './audio';
+import { setSound, setVolumes, setMusicMode, sfx, playMusic, playAmbient, playBattleMusic, playCinematicSoundtrack, unlockAudio, soundtrackStatus, playSoundtrackNow, AUDIO_BUILD } from './audio';
+import type { BattleMusicKind } from './audio';
 import { loadoutOf } from '../game/arena';
 import { CHEATS, detectCheat, isCorrectAnswerHighlightActive } from '../game/cheats';
 import { ActorClass, gfxFlags } from '../gfx/scene';
@@ -47,17 +48,24 @@ const btn = (t: string, fn: () => void, cls = ''): HTMLButtonElement => h('butto
 const back = (fn: () => void = home): HTMLElement => h('div', { class: 'topbar' }, btn('← Volver', fn, 'small ghost'));
 
 /** Reproduce cinemáticas en cadena (solo las no vistas, salvo force) y luego continúa. */
-function stories(ids: string[], then: () => void, force = false): void {
+function stories(ids: string[], then: () => void, force = false, preserveMusic = false): void {
   const todo = ids.filter(id => CINE_BY_ID[id] && (force || !save!.seen?.includes(id)));
-  const go = (i: number): void => { if (i >= todo.length) { then(); return; } playCinematic({ save: save!, id: todo[i], mount, persist, done: () => go(i + 1) }); };
+  const go = (i: number): void => { if (i >= todo.length) { then(); return; } playCinematic({ save: save!, id: todo[i], mount, persist, done: () => go(i + 1), preserveMusic }); };
   go(0);
 }
 function play(level: Level, mode: Mode): void {
   if (!save) return;
-  if (mode === 'campaign' && PRE_STORY[level.id] && PRE_STORY[level.id].some(id => !save!.seen?.includes(id))) { stories(PRE_STORY[level.id], () => play(level, mode)); return; }
+  const continuousMusic: { world: string; kind: BattleMusicKind } | undefined = mode === 'campaign' && (level.id.startsWith('parcial_') || level.id === 'final')
+    ? { world: level.world, kind: level.id === 'final' ? 'final' : 'unit' }
+    : undefined;
+  if (continuousMusic) playBattleMusic(continuousMusic.world, continuousMusic.kind);
+  if (mode === 'campaign' && PRE_STORY[level.id] && PRE_STORY[level.id].some(id => !save!.seen?.includes(id))) {
+    stories(PRE_STORY[level.id], () => play(level, mode), false, !!continuousMusic);
+    return;
+  }
   startRun({
-    save, persist, mount,
-    story: (l, then) => { const id = POST_STORY[l.id]; if (!id) return false; stories([id], then, true); return true; },
+    save, persist, mount, continuousMusic,
+    story: (l, then) => { const id = POST_STORY[l.id]; if (!id) return false; stories([id], then, true, !!continuousMusic); return true; },
     defeatStory: then => {
       const activeSave = save;
       if (!activeSave) { then(); return; }

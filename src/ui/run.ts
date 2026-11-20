@@ -10,13 +10,14 @@ import { checkAchievements, dropCards, masteryCards, treasureCard } from '../gam
 import * as A from '../game/arena';
 import { achievements } from '../core/data';
 import { fullCard } from './cards';
-import { sfx, playMusic, playAmbient, setIntensity } from './audio';
+import { sfx, playMusic, playBattleMusic, stopBattleMusic, playAmbient, setIntensity } from './audio';
+import type { BattleMusicKind } from './audio';
 import { startArena } from './arena';
 import { confetti, sunburst } from '../gfx/finale';
 import { playLevelClear } from './levelclear';
 
 export type Mode = 'campaign' | 'learning' | 'free' | 'errors';
-export interface RunCtx { story?(level: Level, then: () => void): boolean; defeatStory?(then: () => void): void; save: SaveData; persist(): void; mount(el: HTMLElement, cleanup?: () => void): void; exit(): void; replay(level: Level, mode: Mode): void }
+export interface RunCtx { story?(level: Level, then: () => void): boolean; defeatStory?(then: () => void): void; continuousMusic?: { world: string; kind: BattleMusicKind }; save: SaveData; persist(): void; mount(el: HTMLElement, cleanup?: () => void, preserveMusic?: boolean): void; exit(): void; replay(level: Level, mode: Mode): void }
 export function startRun(ctx: RunCtx, level: Level, mode: Mode): void {
   const save = ctx.save, rng = mulberry32(newSeed()), hero = heroById[save.profile.heroId];
   const run = { idx: 0, hp: hero.hp, asked: 0, correct: 0, topics: new Set<string>(), before: {} as Record<string, number>, newCards: [] as CardDef[], newAch: [] as string[], lastTemplate: '' };
@@ -33,8 +34,10 @@ export function startRun(ctx: RunCtx, level: Level, mode: Mode): void {
     const dots = h('div', { class: 'c-dots', 'aria-label': 'Salas' }, level.rooms.map((r, i) => h('span', { class: `dot${i === run.idx ? ' now' : ''}${i < run.idx ? ' done' : ''}`, title: r.type }, glyph(roomIcon[r.type === 'boss' ? 'boss' : r.type] ?? 'star', 2, i === run.idx ? '#f2c14e' : '#9a90b8'))));
     if (opts.win) { sunburst(view, 160, 110, 7000); confetti(view, 60, 2800); overlay.classList.add('win'); }
     let off: (() => void) | null = null;
-    ctx.mount(h('div', { class: 'combat solo' }, h('div', { class: 'c-left' }, dots, h('div', { class: 'c-stage' }, view.cv, overlay))), () => { off?.(); off = null; });
-    off = ticker.add(dt => view.step(dt)); playMusic(level.world, 0); playAmbient(level.world);
+    ctx.mount(h('div', { class: 'combat solo' }, h('div', { class: 'c-left' }, dots, h('div', { class: 'c-stage' }, view.cv, overlay))), () => { off?.(); off = null; }, !!ctx.continuousMusic);
+    off = ticker.add(dt => view.step(dt));
+    if (ctx.continuousMusic) playBattleMusic(ctx.continuousMusic.world, ctx.continuousMusic.kind); else playMusic(level.world, 0);
+    playAmbient(level.world);
     ($('button', overlay) as HTMLElement).focus(); return view;
   }
   const next = (): void => { run.idx++; nextRoom(); };
@@ -60,7 +63,9 @@ export function startRun(ctx: RunCtx, level: Level, mode: Mode): void {
     const intro: { speaker: string; text: string }[] = [];
     if (run.idx === 0 && level.intro && dialogues[level.intro]) intro.push(...dialogues[level.intro]); else intro.push({ speaker: m.name, text: m.line });
     startArena({
-      save, hero, monster: m, room, level, heroHp: run.hp, rng, lastTemplate: run.lastTemplate, intro, mount: ctx.mount, persist: ctx.persist, exit: ctx.exit,
+      save, hero, monster: m, room, level, heroHp: run.hp, rng, lastTemplate: run.lastTemplate, intro,
+      musicKind: ctx.continuousMusic?.kind,
+      mount: (el, cleanup) => ctx.mount(el, cleanup, !!ctx.continuousMusic), persist: ctx.persist, exit: ctx.exit,
       onAnswer: (q, ok) => { run.asked++; if (ok) run.correct++; run.topics.add(q.topic); run.lastTemplate = q.template; },
       onEnd: r => { run.lastTemplate = r.lastTemplate; if (r.won) victory(room, r.heroHp, r.hints); else defeat(room); }
     });
@@ -74,7 +79,7 @@ export function startRun(ctx: RunCtx, level: Level, mode: Mode): void {
   }
   function defeat(room: Room): void {
     const showDefeat = (): void => {
-      playMusic('story', 0);
+      if (!ctx.continuousMusic) playMusic('story', 0);
       roomScreen(room, 'Has caído', ['Nada se pierde: tu dominio sigue creciendo con cada pregunta. Puedes intentar la sala de nuevo con otras preguntas.'], [
         ['Reintentar sala', () => { run.hp = Math.ceil(hero.hp * 0.6); nextRoom(); }], ['Salir', () => ctx.exit(), true]], { dead: true });
     };
@@ -103,7 +108,10 @@ export function startRun(ctx: RunCtx, level: Level, mode: Mode): void {
     sfx(cleared || mode !== 'campaign' ? 'win' : 'click');
     ctx.mount(s); playMusic('victoria', 0);
     };
-    const showSummary = (): void => playLevelClear({ level, hero, cleared, mode, accuracy: acc, mount: ctx.mount, next: summary });
+    const showSummary = (): void => {
+      if (ctx.continuousMusic) stopBattleMusic();
+      playLevelClear({ level, hero, cleared, mode, accuracy: acc, mount: ctx.mount, next: summary });
+    };
     if (cleared && mode === 'campaign' && ctx.story?.(level, showSummary)) return;
     showSummary();
   }

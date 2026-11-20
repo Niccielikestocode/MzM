@@ -204,7 +204,7 @@ function schedule(): void {
 const SOUNDTRACK_URL: string = (globalThis as any).__JM_SOUNDTRACK__ ?? (import.meta.env.BASE_URL + 'music/beyond-the-kingdom-gates.mp3');
 const DEFEAT_SOUNDTRACK_PATH = 'music/Victory_at_the_Limit.mp3';
 let fileEl: HTMLAudioElement | null = null, fileOk = true, fileWanted = false, fadeT = 0;
-let battleFileEl: HTMLAudioElement | null = null, battleFileWanted = false;
+let battleFileEl: HTMLAudioElement | null = null, battleFileWanted = false, battleFilePath = '';
 let battleFallback: { name: string; intensity: number } | null = null, battleFileName = '';
 let battleFileStatus: 'loading' | 'playing' | 'blocked' | null = null;
 let cinematicFileEl: HTMLAudioElement | null = null, cinematicFileWanted = false, cinematicFadeT = 0, battleFadeT = 0;
@@ -244,7 +244,7 @@ function battleFileVol(): void { if (battleFileEl) battleFileEl.volume = battleF
 function cinematicFileVol(): void { if (cinematicFileEl) cinematicFileEl.volume = cinematicFileTarget(); }
 function stopBattleSoundtrack(): void {
   clearInterval(battleFadeT); battleFadeT = 0;
-  battleFileWanted = false; battleFallback = null; battleFileName = ''; battleFileStatus = null;
+  battleFileWanted = false; battleFilePath = ''; battleFallback = null; battleFileName = ''; battleFileStatus = null;
   if (battleFileEl) { battleFileEl.pause(); battleFileEl = null; }
 }
 function failBattleSoundtrack(a: HTMLAudioElement): void {
@@ -273,17 +273,34 @@ export function playBattleMusic(world: string, kind: BattleMusicKind): void {
   const trackName = TRACKS[world] ? world : 'menu';
   const path = battleSoundtrackPath(world, kind);
   if (!path || typeof Audio === 'undefined') { playMusic(trackName, kind === 'common' ? 1 : 2); return; }
+  if (battleFileWanted && battleFilePath === path && battleFileEl) {
+    cur = { name: trackName, intensity: 2 };
+    clearInterval(timer); timer = 0;
+    resumeBattleSoundtrack();
+    return;
+  }
   stopBattleSoundtrack();
   fileStop(250);
   cur = { name: trackName, intensity: 2 };
   clearInterval(timer); timer = 0;
   const a = new Audio(new URL(import.meta.env.BASE_URL + path, document.baseURI).href);
   a.loop = true; a.preload = 'auto'; a.volume = 0;
-  battleFileEl = a; battleFileWanted = true; battleFileStatus = 'loading'; battleFileName = path.split('/').pop() ?? path;
+  battleFileEl = a; battleFileWanted = true; battleFilePath = path; battleFileStatus = 'loading'; battleFileName = path.split('/').pop() ?? path;
   battleFallback = { name: trackName, intensity: 2 };
   a.addEventListener('error', () => failBattleSoundtrack(a));
   a.load();
   resumeBattleSoundtrack();
+}
+
+export function stopBattleMusic(ms = 700): void {
+  battleFileWanted = false; battleFallback = null; battleFileName = ''; battleFileStatus = null;
+  const a = battleFileEl;
+  if (!a) { battleFilePath = ''; return; }
+  clearInterval(battleFadeT);
+  battleFadeT = fadeElement(a, 0, ms, () => {
+    if (battleFileEl === a) { a.pause(); battleFileEl = null; battleFilePath = ''; }
+    battleFadeT = 0;
+  });
 }
 
 export function playCinematicSoundtrack(): void {
@@ -292,7 +309,7 @@ export function playCinematicSoundtrack(): void {
   if (ctx && musBus) musBus.gain.setTargetAtTime(0.0001, ctx.currentTime, 0.3);
 
   const battle = battleFileEl;
-  battleFileWanted = false; battleFallback = null; battleFileName = ''; battleFileStatus = null;
+  battleFileWanted = false; battleFallback = null; battleFilePath = ''; battleFileName = ''; battleFileStatus = null;
   clearInterval(battleFadeT); battleFadeT = 0;
   if (battle) {
     battleFadeT = fadeElement(battle, 0, 1300, () => {
