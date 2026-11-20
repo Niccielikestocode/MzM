@@ -185,6 +185,7 @@ const SOUNDTRACK_URL: string = (globalThis as any).__JM_SOUNDTRACK__ ?? (import.
 let fileEl: HTMLAudioElement | null = null, fileOk = true, fileWanted = false, fadeT = 0;
 let battleFileEl: HTMLAudioElement | null = null, battleFileWanted = false;
 let battleFallback: { name: string; intensity: number } | null = null, battleFileName = '';
+let battleFileStatus: 'loading' | 'playing' | 'blocked' | null = null;
 const fileTarget = (): number => (vol.on && fileWanted && !isHidden ? Math.min(1, vol.music * 0.7) : 0);
 const battleFileTarget = (): number => (vol.on && battleFileWanted && !isHidden ? Math.min(1, vol.music * 0.7) : 0);
 function fileGet(): HTMLAudioElement | null {
@@ -209,12 +210,13 @@ function fileStart(): void { fileWanted = true; fileResume(); }
 function fileStop(ms = 350): void { fileWanted = false; if (!fileEl) return; const a = fileEl; fileFade(0, ms, () => { if (!fileWanted) a.pause(); }); }
 function battleFileVol(): void { if (battleFileEl) battleFileEl.volume = battleFileTarget(); }
 function stopBattleSoundtrack(): void {
-  battleFileWanted = false; battleFallback = null; battleFileName = '';
+  battleFileWanted = false; battleFallback = null; battleFileName = ''; battleFileStatus = null;
   if (battleFileEl) { battleFileEl.pause(); battleFileEl = null; }
 }
 function failBattleSoundtrack(a: HTMLAudioElement): void {
   if (battleFileEl !== a) return;
   const fallback = battleFallback;
+  console.error(`No se pudo reproducir la pista de jefe "${battleFileName}".`, a.error);
   stopBattleSoundtrack();
   if (fallback) { cur = null; playMusic(fallback.name, fallback.intensity); }
 }
@@ -222,9 +224,15 @@ function resumeBattleSoundtrack(): void {
   if (!battleFileWanted || isHidden || !vol.on || !battleFileEl) return;
   const a = battleFileEl;
   a.volume = battleFileTarget();
-  if (a.paused) void a.play().catch(error => {
-    if (!(error instanceof Error) || error.name !== 'NotAllowedError') failBattleSoundtrack(a);
-  });
+  if (a.paused) {
+    battleFileStatus = 'loading';
+    void a.play().then(() => {
+      if (battleFileEl === a) battleFileStatus = 'playing';
+    }).catch(error => {
+      if (error instanceof Error && error.name === 'NotAllowedError') battleFileStatus = 'blocked';
+      else failBattleSoundtrack(a);
+    });
+  }
 }
 export function playBattleMusic(world: string, isBoss: boolean, finalBoss = false): void {
   const trackName = TRACKS[world] ? world : 'menu';
@@ -234,11 +242,12 @@ export function playBattleMusic(world: string, isBoss: boolean, finalBoss = fals
   fileStop(250);
   cur = { name: trackName, intensity: 2 };
   clearInterval(timer); timer = 0;
-  const a = new Audio(import.meta.env.BASE_URL + path);
+  const a = new Audio(new URL(import.meta.env.BASE_URL + path, document.baseURI).href);
   a.loop = true; a.preload = 'auto'; a.volume = 0;
-  battleFileEl = a; battleFileWanted = true; battleFileName = path.split('/').pop() ?? path;
+  battleFileEl = a; battleFileWanted = true; battleFileStatus = 'loading'; battleFileName = path.split('/').pop() ?? path;
   battleFallback = { name: trackName, intensity: 2 };
   a.addEventListener('error', () => failBattleSoundtrack(a));
+  a.load();
   resumeBattleSoundtrack();
 }
 
@@ -275,12 +284,9 @@ if (typeof window !== 'undefined') {
   const kick = () => {
     unlockAudio();
     resumeBattleSoundtrack();
-    if (cur && !timer && musicMode === 'dynamic' && vol.on && !isHidden) {
+    if (cur && !timer && !battleFileWanted && musicMode === 'dynamic' && vol.on && !isHidden) {
       const c = ac();
       if (c) { nextT = c.currentTime + 0.08; timer = window.setInterval(schedule, 120); schedule(); }
-    }
-    if (fileEl && !fileEl.paused) {
-      window.removeEventListener('pointerdown', kick); window.removeEventListener('keydown', kick);
     }
   };
   window.addEventListener('pointerdown', kick);
@@ -298,10 +304,14 @@ if (typeof window !== 'undefined') {
   });
 }
 
-export const AUDIO_BUILD = 'dinamico-16bit-v4';
+export const AUDIO_BUILD = 'dinamico-16bit-v5';
 export function soundtrackStatus(): string {
   if (!vol.on) return 'Sonido desactivado en Ajustes.';
-  if (battleFileWanted) return `Pista MP3 de jefe activa: ${battleFileName}.`;
+  if (battleFileWanted) {
+    if (battleFileStatus === 'blocked') return `Toca o presiona una tecla para iniciar ${battleFileName}.`;
+    if (battleFileStatus === 'loading') return `Cargando pista de jefe: ${battleFileName}.`;
+    return `Pista MP3 de jefe activa: ${battleFileName}.`;
+  }
   if (musicMode === 'dynamic') return `Banda sonora 16-bit dinámica activa (${cur?.name ?? 'en espera'}).`;
   if (!fileOk) return 'No se pudo cargar la pista MP3: usando sintetizador 16-bit.';
   if (fileEl && !fileEl.paused && fileEl.volume > 0.001) return 'Pista MP3 sonando en menús.';

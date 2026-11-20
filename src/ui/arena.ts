@@ -231,7 +231,7 @@ export function startArena(o: ArenaOpts): void {
     document.removeEventListener('keydown', onKeyDown); document.removeEventListener('keyup', onKeyUp); window.removeEventListener('blur', onBlur); document.removeEventListener('visibilitychange', onVis); off?.(); off = null;
   };
   o.mount(root, cleanup);
-  const bossFight = !!m.boss || !!room.miniBoss;
+  const bossFight = room.type === 'boss' || !!m.boss || !!room.miniBoss;
   playBattleMusic(level.world, bossFight, bossFight && !!level.final); playAmbient(level.world); setIntensity(bossFight ? 2 : 1);
   off = ticker.add(rawDt => { view.step(rawDt); frame(rawDt); });
   view.frontHook = drawFront; view.backHook = drawBack;
