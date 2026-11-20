@@ -4,9 +4,12 @@ import { achievements, cards, levels, monsters, topics } from '../core/data';
 import { CINEMATICS, DIARY } from '../core/story';
 import { give } from './rewards';
 
-export interface Cheat { code: string; label: string; apply(s: SaveData): void }
+export interface Cheat { code: string; label: string; apply(s: SaveData): void; runtime?: boolean }
 
 const addAll = (list: string[], ids: string[]): void => { for (const id of ids) if (!list.includes(id)) list.push(id); };
+let correctAnswerHighlight = false;
+
+export function isCorrectAnswerHighlightActive(): boolean { return correctAnswerHighlight; }
 
 function zonas(s: SaveData): void {
   addAll(s.progress.levelsCleared, levels.map(l => l.id));
@@ -32,7 +35,8 @@ export const CHEATS: Cheat[] = [
   { code: 'PASEJUEGO', label: 'Juego pasado: campaña, jefes, cartas, maestría, historia y logros', apply: s => { zonas(s); cartas(s); maestria(s); historia(s); logros(s); } },
   { code: 'ZONASYA', label: 'Campaña desbloqueada: todas las zonas superadas', apply: zonas },
   { code: 'CARTASYA', label: 'Todas las cartas y reliquias', apply: cartas },
-  { code: 'MAESTRIA', label: 'Dominio completo de todos los temas', apply: maestria }
+  { code: 'MAESTRIA', label: 'Dominio completo de todos los temas', apply: maestria },
+  { code: 'FOCO', label: 'Alterna el brillo de la respuesta correcta en combate (sin seleccionarla)', runtime: true, apply: () => { correctAnswerHighlight = !correctAnswerHighlight; } }
 ];
 
 const norm = (t: string): string => t.toUpperCase().replace(/[^A-Z]/g, '');

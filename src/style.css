@@ -293,6 +293,9 @@ sub{font-size:.72em;vertical-align:sub;line-height:0}
 .q-ans-chip{display:flex;gap:10px;align-items:center;background:var(--panel2);border:2px solid var(--ac,#4a3f6c);border-radius:8px;padding:9px 12px;font:inherit;font-weight:700;color:#fff8eb;cursor:pointer;box-shadow:2px 2px 0 #07050c;text-align:left;transition:all .12s}
 .q-ans-chip:hover:not(:disabled){background:rgba(255,255,255,.08);transform:translateY(-2px);box-shadow:0 0 10px -2px var(--ac,#4a3f6c),2px 4px 0 #07050c}
 .q-ans-chip:active{transform:translateY(1px)}
+.orb-lbl.cheat-answer-correct{background:#14542f;color:#eafff1;border-color:#5cff96!important;box-shadow:0 0 16px 3px rgba(63,255,140,.9),inset 0 0 8px rgba(63,255,140,.3)}
+.q-ans-chip.cheat-answer-correct,.chal-in .opt.cheat-answer-correct{background:#14542f;color:#eafff1;border-color:#5cff96;box-shadow:0 0 16px 3px rgba(63,255,140,.65)}
+.q-ans-chip.cheat-answer-correct:hover:not(:disabled){background:#1b6b3f;box-shadow:0 0 18px 4px rgba(63,255,140,.9)}
 .q-ans-chip.dim{opacity:.25;text-decoration:line-through;pointer-events:none}
 .q-ans-num{font-family:var(--fb);font-weight:800;font-size:.92rem;line-height:1.25;background:var(--ac,#ffd24d);color:#0f0c1d;border:2px solid #0f0c1d;border-radius:5px;padding:1px 8px;flex:none}
 .q-ans-txt{font-size:1.05rem;font-weight:700;line-height:1.2}

@@ -9,7 +9,7 @@ import { h, ticker, spriteCanvas, heroSprite, pct, glyph } from './dom';
 import { fullCard } from './cards';
 import { setSound, setVolumes, setMusicMode, sfx, playMusic, playAmbient, playCinematicSoundtrack, unlockAudio, soundtrackStatus, playSoundtrackNow, AUDIO_BUILD } from './audio';
 import { loadoutOf } from '../game/arena';
-import { CHEATS, detectCheat } from '../game/cheats';
+import { CHEATS, detectCheat, isCorrectAnswerHighlightActive } from '../game/cheats';
 import { ActorClass, gfxFlags } from '../gfx/scene';
 import { Mode, startRun } from './run';
 import { startArena } from './arena';
@@ -540,21 +540,51 @@ export function settings(): void {
 
 /* ---------------- trucos (estilo GTA) ---------------- */
 let cheatBuf = '', cheatT = 0;
+function bufferCheat(value: string): void {
+  cheatBuf = value; clearTimeout(cheatT);
+  cheatT = value ? window.setTimeout(() => { cheatBuf = ''; cheatT = 0; }, 3000) : 0;
+}
 function runCheat(text: string, refresh: boolean): boolean {
   const c = save ? detectCheat(text) : null; if (!save || !c) return false;
-  c.apply(save); persist(); sfx('win');
-  const el = h('div', { class: 'cheat-toast', role: 'status' }, h('b', {}, '¡TRUCO ACTIVADO!'), h('span', {}, c.label)); document.body.append(el); setTimeout(() => el.remove(), 3400);
-  if (refresh) home();
+  c.apply(save); if (!c.runtime) persist(); sfx('win');
+  const title = c.runtime && !isCorrectAnswerHighlightActive() ? '¡TRUCO DESACTIVADO!' : '¡TRUCO ACTIVADO!';
+  const el = h('div', { class: 'cheat-toast', role: 'status' }, h('b', {}, title), h('span', {}, c.label)); document.body.append(el); setTimeout(() => el.remove(), 3400);
+  if (refresh && !c.runtime) home();
   return true;
+}
+function battleCheatKeys(e: KeyboardEvent): void {
+  const target = e.target as HTMLElement | null;
+  const inBattle = !!document.querySelector('.arena, .a-chal');
+  const isTextTarget = !!target && /^(INPUT|TEXTAREA|SELECT)$/.test(target.tagName);
+  if (!inBattle || isTextTarget || e.ctrlKey || e.metaKey || e.altKey || e.repeat) return;
+  if (e.key.length !== 1 || !/[a-z]/i.test(e.key)) return;
+  const key = e.key.toUpperCase();
+  const candidate = (cheatBuf + key).slice(-16);
+  const activeCheat = CHEATS.find(c => c.runtime && candidate.endsWith(c.code));
+  if (activeCheat) {
+    e.preventDefault(); e.stopPropagation();
+    runCheat(candidate, false);
+    bufferCheat('');
+    return;
+  }
+  if (CHEATS.some(c => c.runtime && c.code.startsWith(candidate))) {
+    e.preventDefault(); e.stopPropagation();
+    bufferCheat(candidate);
+    return;
+  }
+  const restart = CHEATS.some(c => c.runtime && c.code.startsWith(key)) ? key : '';
+  bufferCheat(restart);
+  if (restart) { e.preventDefault(); e.stopPropagation(); }
 }
 function cheatKeys(e: KeyboardEvent): void {
   const t = e.target as HTMLElement | null; if (t && /^(INPUT|TEXTAREA|SELECT)$/.test(t.tagName)) return;
   if (document.querySelector('.arena, .a-chal') || e.ctrlKey || e.metaKey || e.altKey) return;
   if (e.key.length !== 1 || !/[a-z]/i.test(e.key)) return;
-  cheatBuf = (cheatBuf + e.key.toUpperCase()).slice(-16); clearTimeout(cheatT); cheatT = window.setTimeout(() => { cheatBuf = ''; }, 3000);
-  if (runCheat(cheatBuf, true)) cheatBuf = '';
+  bufferCheat((cheatBuf + e.key.toUpperCase()).slice(-16));
+  if (runCheat(cheatBuf, true)) bufferCheat('');
 }
 export function boot(): void {
+  window.addEventListener('keydown', battleCheatKeys, true);
   window.addEventListener('keydown', cheatKeys);
   applySettings();
   if (!save) {

@@ -17,6 +17,7 @@ import { questionVisual } from '../gfx/visual';
 import { getKeyMap, matchesAction } from '../game/controls';
 import { createVirtualJoystick } from './joystick';
 import { smartHintFor } from '../domain/pedagogy/diagnosis';
+import { isCorrectAnswerHighlightActive } from '../game/cheats';
 
 export interface ArenaOpts {
   save: SaveData; hero: HeroDef; monster: MonsterDef; room: Room; level: Level; heroHp: number; rng: Rng; lastTemplate?: string;
@@ -178,6 +179,22 @@ export function startArena(o: ArenaOpts): void {
   const M = { x: monBase, st: 'idle' as 'idle' | 'tele' | 'act' | 'back', t: 0, pat: '', tx: 0, hit: false, next: 3.5, clock: 0, burnAcc: 0, shots: [] as number[] };
   const orbs: Orb[] = [], projs: Proj[] = [], waves: { x: number; vx: number }[] = [], marks: { x: number; t: number }[] = [];
   let chal: { q: Question; settled: boolean } | null = null;
+  let highlightedAnswers = isCorrectAnswerHighlightActive();
+  function syncCorrectAnswerHighlight(): void {
+    const active = isCorrectAnswerHighlightActive();
+    if (active === highlightedAnswers) return;
+    highlightedAnswers = active;
+    orbs.forEach((ob, i) => {
+      ob.el.classList.toggle('cheat-answer-correct', active && ob.ok);
+      (answerBar.children[i] as HTMLElement | undefined)?.classList.toggle('cheat-answer-correct', active && ob.ok);
+    });
+    if (chal) {
+      const correctIndex = chal.q.correct;
+      root.querySelectorAll<HTMLButtonElement>('.a-chal .q-opts .opt').forEach((el, i) => {
+        el.classList.toggle('cheat-answer-correct', active && i === correctIndex);
+      });
+    }
+  }
   let prob: { q: Question; t: number; total: number } | null = null, nextProb = 1.6;
   let phase: 'intro' | 'fight' | 'end' = 'intro', paused = false, disposed = false, hints = diffMode === 'casual' ? 2 : 1, lastTemplate = o.lastTemplate ?? '', hintsUsed = 0, shotT = 0;
   let tourActive = !!o.guidedTour, tourStep = 0;
@@ -492,11 +509,13 @@ export function startArena(o: ArenaOpts): void {
 
     const xs = [66, 108, 150, 192].sort(() => rng() - 0.5);
     const hs = [GY - 16, GY - 16, GY - 48, GY - 48].sort(() => rng() - 0.5);
+    const showCorrectAnswer = isCorrectAnswerHighlightActive();
 
     labels.replaceChildren(); orbs.length = 0; answerBar.replaceChildren();
 
     opts.sort(() => rng() - 0.5).forEach((op, i) => {
-      const el = h('div', { class: 'orb-lbl', style: { borderColor: COLS[i] } });
+      const answerClass = showCorrectAnswer && op.ok ? ' cheat-answer-correct' : '';
+      const el = h('div', { class: 'orb-lbl' + answerClass, style: { borderColor: COLS[i] } });
       renderMathText(el, `${i + 1}. ${op.t}`);
       labels.append(el);
 
@@ -506,7 +525,7 @@ export function startArena(o: ArenaOpts): void {
       const txt = h('span', { class: 'q-ans-txt' });
       renderMathText(txt, op.t);
       const chip = h('button', {
-        class: 'q-ans-chip',
+        class: 'q-ans-chip' + answerClass,
         onclick: () => { if (!ob.gone && !ob.dim) hitOrb(ob, true); }
       }, h('span', { class: 'q-ans-num' }, String(i + 1)), txt);
       chip.style.setProperty('--ac', ob.col);
@@ -612,8 +631,9 @@ export function startArena(o: ArenaOpts): void {
       }, 1000);
     };
     let stageGiven = '';
+    const showCorrectAnswer = isCorrectAnswerHighlightActive();
     q.options.slice(0, 4).forEach((t, i) => optsEl.append(h('button', {
-      class: 'opt',
+      class: 'opt' + (showCorrectAnswer && i === q.correct ? ' cheat-answer-correct' : ''),
       onclick: () => { if (st.settled || !v2.stageReady()) return; optsEl.querySelectorAll('button').forEach(b => ((b as HTMLButtonElement).disabled = true)); v2.stagePick(i); stageGiven = t; }
     }, h('b', {}, String(i + 1)), h('span', {}, t))));
     v2.beginStage(q.stage!.id, q.stage!.meta, q, ok => fin(ok, click ? '(punto tocado)' : stageGiven));
@@ -755,6 +775,7 @@ export function startArena(o: ArenaOpts): void {
 
   /* ---------- bucle principal (rawDt en milisegundos) ---------- */
   function frame(rawDt: number): void {
+    syncCorrectAnswerHighlight();
     if (tourActive) { queued.jump = queued.dash = queued.atk = false; return; }
     if (phase !== 'fight' || paused) { queued.jump = queued.dash = queued.atk = false; return; }
     if (chal) { queued.jump = queued.dash = queued.atk = false; H.inv = Math.max(H.inv, 0.3); }
