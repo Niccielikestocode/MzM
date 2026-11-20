@@ -24,6 +24,7 @@ export interface ArenaOpts {
   mount(el: HTMLElement, cleanup?: () => void): void; persist(): void; exit(): void;
   onAnswer(q: Question, correct: boolean): void;
   onEnd(r: { won: boolean; heroHp: number; hints: number; best: number; lastTemplate: string }): void;
+  guidedTour?: { complete(): void; skip(): void };
 }
 interface Orb { x: number; y: number; ph: number; label: string; ok: boolean; dim: boolean; col: string; el: HTMLElement; gone: boolean }
 interface Proj { x: number; y: number; vx: number; r: number; col: string }
@@ -179,8 +180,83 @@ export function startArena(o: ArenaOpts): void {
   let chal: { q: Question; settled: boolean } | null = null;
   let prob: { q: Question; t: number; total: number } | null = null, nextProb = 1.6;
   let phase: 'intro' | 'fight' | 'end' = 'intro', paused = false, disposed = false, hints = diffMode === 'casual' ? 2 : 1, lastTemplate = o.lastTemplate ?? '', hintsUsed = 0, shotT = 0;
+  let tourActive = !!o.guidedTour, tourStep = 0;
   let offChalT: (() => void) | null = null;
   const keys = new Set<string>(), pressed: Record<string, boolean> = {}, queued = { jump: false, dash: false, atk: false };
+  const tourSteps = [
+    { title: 'Controles', text: 'Muévete y esquiva los ataques. Usa A/D, Espacio, K y J; en móvil, utiliza el joystick y los botones.', targets: ['.a-help', '.a-touch'] },
+    { title: 'Arena de combate', text: 'Aquí ves a tu héroe, al enemigo y los orbes de respuesta. Golpea el orbe que corresponda a la respuesta correcta.', targets: ['.c-stage'] },
+    { title: 'Vidas y combo', text: 'Vigila la vida de ambos combatientes. Encadenar aciertos aumenta tu combo.', targets: ['.a-top'] },
+    { title: 'Pregunta y respuestas', text: 'Resuelve el ejercicio y elige su respuesta con los botones numerados o golpeando el orbe del mismo color.', targets: ['.q-panel'] },
+    { title: 'Energía y técnicas', text: 'Cada acierto te da energía. Cuando tengas suficiente, toca una carta para usar su técnica.', targets: ['.a-skills-wrap'] }
+  ];
+  const tourSpotlight = h('div', { class: 'battle-tour-spotlight', 'aria-hidden': 'true' });
+  const tourTitle = h('h2', {});
+  const tourText = h('p', { 'aria-live': 'polite' });
+  const tourProgress = h('span', { class: 'battle-tour-progress' });
+  const tourPrevious = h('button', { class: 'pbtn small ghost', 'aria-label': 'Paso anterior', onclick: () => moveTour(-1) }, '← Anterior');
+  const tourNext = h('button', { class: 'pbtn small', onclick: () => moveTour(1) }, 'Siguiente →');
+  const tourCard = h('section', { class: 'battle-tour-card', role: 'dialog', 'aria-modal': 'true', 'aria-labelledby': 'battle-tour-title' },
+    tourTitle, tourText,
+    h('div', { class: 'battle-tour-footer' }, tourProgress, h('div', { class: 'row' }, tourPrevious, tourNext)),
+    h('button', { class: 'battle-tour-skip', onclick: () => skipTour() }, 'Saltar tutorial')
+  );
+  tourTitle.id = 'battle-tour-title';
+  const tourLayer = h('div', { class: 'battle-tour-layer', hidden: true }, tourSpotlight, tourCard);
+  root.append(tourLayer);
+
+  function updateTourFocus(): void {
+    const target = tourSteps[tourStep].targets
+      .map(selector => root.querySelector<HTMLElement>(selector))
+      .find((el): el is HTMLElement => !!el && el.getBoundingClientRect().width > 0 && el.getBoundingClientRect().height > 0);
+    if (!target) {
+      tourSpotlight.hidden = true;
+      return;
+    }
+    tourSpotlight.hidden = false;
+    const rect = target.getBoundingClientRect();
+    const pad = 7;
+    const left = Math.max(0, rect.left - pad), top = Math.max(0, rect.top - pad);
+    tourSpotlight.style.left = `${left}px`;
+    tourSpotlight.style.top = `${top}px`;
+    tourSpotlight.style.width = `${Math.min(window.innerWidth - left, rect.width + pad * 2)}px`;
+    tourSpotlight.style.height = `${Math.min(window.innerHeight - top, rect.height + pad * 2)}px`;
+    const placeBelow = rect.top < window.innerHeight * 0.45;
+    tourCard.style.top = placeBelow ? 'auto' : '12px';
+    tourCard.style.bottom = placeBelow ? '12px' : 'auto';
+  }
+  function renderTourStep(): void {
+    const step = tourSteps[tourStep];
+    tourTitle.textContent = step.title;
+    tourText.textContent = step.text;
+    tourProgress.textContent = `${tourStep + 1} / ${tourSteps.length}`;
+    tourPrevious.disabled = tourStep === 0;
+    tourNext.textContent = tourStep === tourSteps.length - 1 ? 'Terminar guía ✓' : 'Siguiente →';
+    tourLayer.hidden = false;
+    window.requestAnimationFrame(updateTourFocus);
+  }
+  function closeTour(): void {
+    tourActive = false;
+    tourLayer.hidden = true;
+    window.removeEventListener('resize', updateTourFocus);
+  }
+  function moveTour(direction: number): void {
+    if (!tourActive) return;
+    const nextStep = tourStep + direction;
+    if (nextStep < 0) return;
+    if (nextStep >= tourSteps.length) {
+      closeTour();
+      o.guidedTour?.complete();
+      return;
+    }
+    tourStep = nextStep;
+    renderTourStep();
+  }
+  function skipTour(): void {
+    if (!tourActive) return;
+    closeTour();
+    o.guidedTour?.skip();
+  }
   (window as any).__jmArena = { H, M, s, orbs, projs, waves, marks, get phase() { return phase; }, get prob() { return prob; } };
   view.arena = true; view.hero.homeX = H.x; gfxFlags.reduce = save.settings.reduceMotion;
 
@@ -190,6 +266,12 @@ export function startArena(o: ArenaOpts): void {
   const onKeyDown = (e: KeyboardEvent): void => {
     if ((e.target as HTMLElement)?.tagName === 'INPUT') return;
     const k = e.key.toLowerCase();
+    if (tourActive) {
+      if (k === 'arrowleft') { e.preventDefault(); moveTour(-1); }
+      else if (k === 'arrowright') { e.preventDefault(); moveTour(1); }
+      else if (k === 'escape') { e.preventDefault(); skipTour(); }
+      return;
+    }
     if (['arrowleft', 'arrowright', 'arrowup', 'arrowdown', ' '].includes(k)) e.preventDefault();
     if (e.repeat) { keys.add(k); return; }
     keys.add(k);
@@ -228,9 +310,15 @@ export function startArena(o: ArenaOpts): void {
     disposed = true;
     joy.destroy();
     offChalT?.(); offChalT = null;
+    window.removeEventListener('resize', updateTourFocus);
     document.removeEventListener('keydown', onKeyDown); document.removeEventListener('keyup', onKeyUp); window.removeEventListener('blur', onBlur); document.removeEventListener('visibilitychange', onVis); off?.(); off = null;
   };
   o.mount(root, cleanup);
+  if (o.guidedTour) {
+    phase = 'fight';
+    renderTourStep();
+    window.addEventListener('resize', updateTourFocus);
+  }
   const bossFight = room.type === 'boss' || !!m.boss || !!room.miniBoss;
   const musicKind = battleMusicKind(level.world, bossFight, !!level.boss, !!level.final);
   playBattleMusic(level.world, musicKind); playAmbient(level.world); setIntensity(bossFight ? 2 : 1);
@@ -667,6 +755,7 @@ export function startArena(o: ArenaOpts): void {
 
   /* ---------- bucle principal (rawDt en milisegundos) ---------- */
   function frame(rawDt: number): void {
+    if (tourActive) { queued.jump = queued.dash = queued.atk = false; return; }
     if (phase !== 'fight' || paused) { queued.jump = queued.dash = queued.atk = false; return; }
     if (chal) { queued.jump = queued.dash = queued.atk = false; H.inv = Math.max(H.inv, 0.3); }
 
@@ -824,7 +913,10 @@ export function startArena(o: ArenaOpts): void {
 
   /* ---------- inicio ---------- */
   uiBars(); updHint();
-  say(o.intro.length ? o.intro : [{ speaker: m.name, text: m.line }], () => {
+  if (o.guidedTour) {
+    view.banner('BATALLA DE PRÁCTICA', '#5ab9ea', 70);
+    spawnProblem();
+  } else say(o.intro.length ? o.intro : [{ speaker: m.name, text: m.line }], () => {
     let n = 3;
     const tick = (): void => {
       if (disposed || phase === 'end') return;

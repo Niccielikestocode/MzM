@@ -4,7 +4,7 @@ import { COLOMBIA_WORLDS, calculatorRank } from '../core/lore';
 import { LocalRepo, newSave, exportSaveJSON, importSaveJSON } from '../game/save';
 import { masteryOf } from '../game/mastery';
 import { freeRun, learningRun } from '../game/levelgen';
-import { newSeed } from '../core/rng';
+import { mulberry32, newSeed } from '../core/rng';
 import { h, ticker, spriteCanvas, heroSprite, pct, glyph } from './dom';
 import { fullCard } from './cards';
 import { setSound, setVolumes, setMusicMode, sfx, playMusic, playAmbient, unlockAudio, soundtrackStatus, playSoundtrackNow, AUDIO_BUILD } from './audio';
@@ -12,6 +12,7 @@ import { loadoutOf } from '../game/arena';
 import { CHEATS, detectCheat } from '../game/cheats';
 import { ActorClass, gfxFlags } from '../gfx/scene';
 import { Mode, startRun } from './run';
+import { startArena } from './arena';
 import { playCinematic } from './cinematic';
 import { CINEMATICS, CINE_BY_ID, DIARY, POST_STORY, PRE_STORY } from '../core/story';
 import { showOverworld } from './overworld';
@@ -60,6 +61,35 @@ function play(level: Level, mode: Mode): void {
     exit: () => { if (mode === 'learning') learning(); else if (mode === 'free') free(); else if (mode === 'errors') errors(); else campaign(); },
     replay: (l, m) => play(l, m)
   }, level, mode);
+}
+
+function startPracticeTutorial(): void {
+  const activeSave = save;
+  if (!activeSave) return;
+  const practiceLevel = levels.find(level => level.id === 'zona_reales');
+  const practiceRoom = practiceLevel?.rooms.find(room => room.type === 'combat');
+  if (!practiceLevel || !practiceRoom?.monster) throw new Error('No se encontró el combate para el tutorial inicial.');
+  const monster = monsters.find(item => item.id === practiceRoom.monster);
+  if (!monster) throw new Error(`No se encontró el monstruo de práctica: ${practiceRoom.monster}.`);
+
+  const practiceSave = structuredClone(activeSave);
+  practiceSave.tutorialDone = true;
+  const hero = heroById[practiceSave.profile.heroId];
+  const finishTutorial = (): void => {
+    activeSave.tutorialDone = true;
+    persist();
+    home();
+  };
+  startArena({
+    save: practiceSave, hero, monster, room: practiceRoom, level: practiceLevel, heroHp: hero.hp, rng: mulberry32(newSeed()),
+    intro: [], mount, persist: () => {}, exit: finishTutorial,
+    onAnswer: () => {},
+    onEnd: () => finishTutorial(),
+    guidedTour: {
+      complete: () => { activeSave.tutorialDone = true; persist(); },
+      skip: finishTutorial
+    }
+  });
 }
 
 /* ---------------- Diorama Pixel Art Vivo (Portada) ---------------- */
@@ -166,7 +196,7 @@ function heroSelect(): void {
     spriteCanvas(heroSprite(x), 5, 'idle'), h('b', {}, x.name), h('span', {}, x.style), h('span', { class: 'muted' }, `Vida ${x.hp} · ${x.passive.text}`))));
   draw();
   mount(h('div', { class: 'screen' }, back(title), h('h2', {}, 'Elige a tu héroe'), grid, h('label', { class: 'lbl' }, 'Nombre', input),
-    btn('¡A la aventura!', () => { save = newSave(sel, (input.value.trim() || heroById[sel].name.split(',')[0]).slice(0, 16)); persist(); applySettings(); stories(['prologo'], home); })));
+    btn('¡A la aventura!', () => { save = newSave(sel, (input.value.trim() || heroById[sel].name.split(',')[0]).slice(0, 16)); persist(); applySettings(); stories(['prologo'], startPracticeTutorial); })));
 }
 
 /* ---------------- inicio (Cabecera con Rango RPG + Radar Matemático + Menú Colorido) ---------------- */

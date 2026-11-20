@@ -156,6 +156,14 @@ h2{font-size:1.7rem}h3{font-size:1.2rem}
 .sk-q{position:absolute;right:4px;top:2px;background:var(--gold);color:#000;border-radius:50%;width:16px;height:16px;font-size:.7rem;font-weight:700;display:grid;place-items:center}
 .a-pop{position:absolute;inset:0;background:rgba(10,6,20,.82);display:flex;align-items:center;justify-content:center;padding:10px;z-index:4}.a-pop[hidden]{display:none}
 .pop-in{background:var(--panel);border:3px solid var(--gold);border-radius:10px;padding:12px;display:flex;flex-direction:column;gap:8px;max-width:520px;max-height:100%;overflow:auto}.pop-in p{margin:0}.pop-in .q-opts{grid-template-columns:1fr 1fr}
+.battle-tour-layer{position:fixed;inset:0;z-index:1200;pointer-events:auto}
+.battle-tour-spotlight{position:fixed;z-index:1;border:2px solid var(--gold);border-radius:8px;box-shadow:0 0 0 9999px rgba(5,3,12,.84);pointer-events:none;transition:top .2s,left .2s,width .2s,height .2s}
+.battle-tour-card{position:fixed;z-index:2;left:50%;transform:translateX(-50%);width:min(560px,calc(100vw - 24px));max-height:calc(100dvh - 24px);overflow:auto;background:var(--panel);border:3px solid var(--gold);border-radius:10px;padding:14px;box-shadow:0 8px 32px rgba(0,0,0,.7);text-align:center}
+.battle-tour-card h2{margin:0 0 6px;font-family:var(--fl);color:var(--gold)}
+.battle-tour-card p{margin:0 0 12px;line-height:1.45}
+.battle-tour-footer{display:flex;align-items:center;justify-content:space-between;gap:8px}
+.battle-tour-progress{color:var(--muted);font-size:.85rem}
+.battle-tour-skip{margin-top:10px;padding:4px 8px;border:0;background:transparent;color:var(--muted);font:inherit;text-decoration:underline;cursor:pointer}
 .a-touch{display:none;justify-content:space-between;align-items:flex-end;gap:12px;padding:4px 4px calc(6px + env(safe-area-inset-bottom,0px))}
 .tpad{display:flex;gap:10px;align-items:flex-end}
 .tb{width:64px;height:64px;border-radius:50%;border:3px solid #6a5ea0;background:rgba(47,38,72,.92);color:#fff;font-size:1.5rem;touch-action:none;-webkit-tap-highlight-color:transparent}
