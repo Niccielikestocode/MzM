@@ -37,6 +37,7 @@ export function startArena(o: ArenaOpts): void {
   const { save, hero, monster: m, room, level, rng } = o;
   const diffMode = save.settings.difficulty ?? 'normal';
   const keyMap = getKeyMap(save.settings.keybinds);
+  const fallbackTopic = A.topicsForRoom(room, level.topic)[0];
 
   const s = A.newFight(m, room.questions ?? m.questions, room.hpMultiplier ?? 1, o.heroHp, hero.hp);
   const view = new BattleView(h('canvas', { class: 'c-canvas', 'aria-label': 'Arena de combate' }));
@@ -258,7 +259,7 @@ export function startArena(o: ArenaOpts): void {
     heroHpBar.style.width = Math.max(0, (s.heroHp / s.heroMax) * 100) + '%'; heroTxt.textContent = `♥ ${Math.max(0, s.heroHp)}/${s.heroMax}`;
     shieldTxt.textContent = s.shield ? `🛡 ${s.shield}` : ''; shieldTxt.hidden = !s.shield;
     monHpBar.style.width = Math.max(0, (s.hp / s.maxHp) * 100) + '%'; monTxt.textContent = `${Math.max(0, s.hp)}/${s.maxHp}`;
-    monStat.textContent = [s.stunT > 0 ? '⚡ aturdido' : '', s.burnT > 0 ? '🔥 quema' : '', s.weakT > 0 ? '↓ débil' : '', (room.phases ?? m.phases) ? topicById[A.topicNow(s, level.topic, room)]?.name ?? '' : ''].filter(Boolean).join(' · ');
+    monStat.textContent = [s.stunT > 0 ? '⚡ aturdido' : '', s.burnT > 0 ? '🔥 quema' : '', s.weakT > 0 ? '↓ débil' : '', (room.phases ?? m.phases) ? topicById[A.topicNow(s, fallbackTopic, room)]?.name ?? '' : ''].filter(Boolean).join(' · ');
     setIntensity(m.boss || s.heroHp / s.heroMax < 0.35 ? 2 : 1);
     updPA();
   };
@@ -377,7 +378,7 @@ export function startArena(o: ArenaOpts): void {
     return Math.max(1, Math.min(4, Math.max(lo > 1 ? lo - 1 : 1, Math.min(hi, base))));
   }
   function makeQ(allowStage = false): Question {
-    const topic = A.topicNow(s, level.topic, room); let q: Question;
+    const topic = A.topicNow(s, fallbackTopic, room); let q: Question;
     for (let i = 0; i < 14; i++) {
       q = pickQuestion({ topics: [topic], difficulty: topicDiff(), rng, save, lastTemplate });
       if (allowStage ? (q.stage || q.options.length >= 2) : (!q.stage && !q.clickTarget && q.options.length >= 2)) break;

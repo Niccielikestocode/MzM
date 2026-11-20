@@ -1,5 +1,9 @@
 import { describe, it, expect } from 'vitest';
-import { topics } from '../src/core/data';
+import { levels, topics } from '../src/core/data';
+import { mulberry32 } from '../src/core/rng';
+import { newSave } from '../src/game/save';
+import { pickQuestion } from '../src/game/picker';
+import { topicsForRoom } from '../src/game/arena';
 import { generate, GENERATORS } from '../src/questions';
 
 describe('generadores de preguntas', () => {
@@ -27,5 +31,20 @@ describe('generadores de preguntas', () => {
   }
   it('es determinista con la misma semilla', () => {
     expect(generate('pitagoras', 'hipotenusa', 2, 42)).toEqual(generate('pitagoras', 'hipotenusa', 2, 42));
+  });
+  it('resuelve bancos válidos para cada sala de parcial y del boss final', () => {
+    const save = newSave('lia', 'Prueba');
+    const ids = ['parcial_cavernas', 'parcial_bosque', 'parcial_ciudadela', 'final'];
+    for (const id of ids) {
+      const level = levels.find(item => item.id === id)!;
+      for (const room of level.rooms.filter(item => item.type === 'combat' || item.type === 'boss')) {
+        const roomTopics = topicsForRoom(room, level.topic);
+        expect(roomTopics.length).toBeGreaterThan(0);
+        for (const topic of roomTopics) {
+          expect(topics.some(item => item.id === topic), `${id} usa el banco inexistente ${topic}`).toBe(true);
+          expect(pickQuestion({ topics: [topic], difficulty: 4, rng: mulberry32(7), save }).topic).toBe(topic);
+        }
+      }
+    }
   });
 });

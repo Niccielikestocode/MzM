@@ -1,6 +1,6 @@
 /** Lógica pura del combate en tiempo real (sin DOM): daño, combo, cartas, enfriamientos y ataques del monstruo. */
-import type { CardDef, MonsterDef, Question, SaveData } from '../core/types';
-import { cardById, cards } from '../core/data';
+import type { CardDef, MonsterDef, Question, Room, SaveData } from '../core/types';
+import { cardById, cards, monsterById, topicById } from '../core/data';
 import { updateMastery } from './mastery';
 
 export const BASIC_DMG = [2, 3, 5]; // golpes 1, 2 y 3 de la cadena
@@ -100,9 +100,26 @@ export function patternsFor(m: MonsterDef): Pattern[] {
 export const answerTime = (d: number): number => 14000 + d * 2500;
 /** Pausa entre un problema y el siguiente (ms). */
 export const questionGap = (qLeft: number): number => (qLeft > 0 ? 3200 : 5000);
+export function topicsForRoom(room: Pick<Room, 'phases' | 'topic' | 'monster'>, fallback: string): string[] {
+  const monster = room.monster ? monsterById[room.monster] : undefined;
+  const phases = room.phases?.length ? room.phases : monster?.phases;
+  const roomTopic = room.topic && topicById[room.topic] ? room.topic : undefined;
+  const monsterTopic = monster && topicById[monster.topic] ? monster.topic : undefined;
+  const candidates = phases?.length ? phases : [roomTopic ?? monsterTopic ?? fallback];
+  const valid = [...new Set(candidates.filter(topic => !!topicById[topic]))];
+  if (!valid.length) throw new Error(`La sala ${room.monster ?? ''} no tiene un banco de preguntas válido.`);
+  return valid;
+}
 export function topicNow(s: FightState, fallback: string, room: { phases?: string[]; topic?: string }): string {
-  const ph = room.phases ?? s.monster.phases; if (!ph?.length) return room.topic ?? fallback;
-  const frac = 1 - s.hp / s.maxHp; return ph[Math.min(ph.length - 1, Math.floor(frac * ph.length))];
+  const ph = room.phases?.length ? room.phases : s.monster.phases;
+  const validPhases = ph?.filter(topic => !!topicById[topic]) ?? [];
+  if (!validPhases.length) {
+    const topic = room.topic && topicById[room.topic] ? room.topic : topicById[s.monster.topic] ? s.monster.topic : fallback;
+    if (!topicById[topic]) throw new Error(`El monstruo ${s.monster.id} no tiene un banco de preguntas válido.`);
+    return topic;
+  }
+  const frac = 1 - s.hp / s.maxHp;
+  return validPhases[Math.min(validPhases.length - 1, Math.floor(frac * validPhases.length))];
 }
 export function adaptDiff(s: FightState, ok: boolean): void {
   if (ok) { s.hitRun++; s.missRun = 0; if (s.hitRun >= 3) { s.diff = Math.min(1, s.diff + 1); s.hitRun = 0; } }

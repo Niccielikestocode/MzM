@@ -7,6 +7,7 @@ import { gfxFlags } from '../gfx/scene';
 import { masteryOf } from '../game/mastery';
 import { isCleared, zoneClearable } from '../game/campaign';
 import { checkAchievements, dropCards, masteryCards, treasureCard } from '../game/rewards';
+import * as A from '../game/arena';
 import { achievements } from '../core/data';
 import { fullCard } from './cards';
 import { sfx, playMusic, playAmbient, setIntensity } from './audio';
@@ -19,7 +20,7 @@ export interface RunCtx { story?(level: Level, then: () => void): boolean; save:
 export function startRun(ctx: RunCtx, level: Level, mode: Mode): void {
   const save = ctx.save, rng = mulberry32(newSeed()), hero = heroById[save.profile.heroId];
   const run = { idx: 0, hp: hero.hp, asked: 0, correct: 0, topics: new Set<string>(), before: {} as Record<string, number>, newCards: [] as CardDef[], newAch: [] as string[], lastTemplate: '' };
-  const topicsOf = (): string[] => { const s = new Set<string>(); level.rooms.forEach(r => { if (r.type === 'combat' || r.type === 'boss') { (r.phases ?? (r.topic ? [r.topic] : [])).forEach(t => s.add(t)); if (!r.phases && !r.topic) s.add(level.topic); if (r.monster && monsterById[r.monster].phases) monsterById[r.monster].phases!.forEach(t => s.add(t)); } }); return [...s].filter(t => topicById[t]); };
+  const topicsOf = (): string[] => { const s = new Set<string>(); level.rooms.forEach(r => { if (r.type === 'combat' || r.type === 'boss') A.topicsForRoom(r, level.topic).forEach(t => s.add(t)); }); return [...s]; };
   topicsOf().forEach(t => { run.before[t] = masteryOf(save, t); });
   gfxFlags.reduce = save.settings.reduceMotion;
 
