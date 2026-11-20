@@ -418,9 +418,10 @@ export function startArena(o: ArenaOpts): void {
       const txt = h('span', { class: 'q-ans-txt' });
       renderMathText(txt, op.t);
       const chip = h('button', {
-        class: 'q-ans-chip', style: { '--ac': COLS[i] } as any,
+        class: 'q-ans-chip',
         onclick: () => { if (!ob.gone && !ob.dim) hitOrb(ob, true); }
       }, h('span', { class: 'q-ans-num' }, String(i + 1)), txt);
+      chip.style.setProperty('--ac', ob.col);
       answerBar.append(chip);
     });
 
