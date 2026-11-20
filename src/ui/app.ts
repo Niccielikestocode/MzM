@@ -53,14 +53,18 @@ function stories(ids: string[], then: () => void, force = false, preserveMusic =
   const go = (i: number): void => { if (i >= todo.length) { then(); return; } playCinematic({ save: save!, id: todo[i], mount, persist, done: () => go(i + 1), preserveMusic }); };
   go(0);
 }
-function play(level: Level, mode: Mode): void {
+function play(level: Level, mode: Mode, skipEntranceStory = false): void {
   if (!save) return;
   const continuousMusic: { world: string; kind: BattleMusicKind } | undefined = mode === 'campaign' && (level.id.startsWith('parcial_') || level.id === 'final')
     ? { world: level.world, kind: level.id === 'final' ? 'final' : 'unit' }
     : undefined;
   if (continuousMusic) playBattleMusic(continuousMusic.world, continuousMusic.kind);
-  if (mode === 'campaign' && PRE_STORY[level.id] && PRE_STORY[level.id].some(id => !save!.seen?.includes(id))) {
-    stories(PRE_STORY[level.id], () => play(level, mode), false, !!continuousMusic);
+  const entranceStory = mode === 'campaign' ? PRE_STORY[level.id] : undefined;
+  const replayBossStory = !!entranceStory
+    && (level.id.startsWith('parcial_') || level.id === 'final')
+    && entranceStory.some(id => save!.seen?.includes(id));
+  if (!skipEntranceStory && entranceStory && (replayBossStory || entranceStory.some(id => !save!.seen?.includes(id)))) {
+    stories(entranceStory, () => play(level, mode, true), replayBossStory, !!continuousMusic);
     return;
   }
   startRun({
