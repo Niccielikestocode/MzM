@@ -126,9 +126,15 @@ const UNIT_BATTLE_SOUNDTRACKS: Record<string, string> = {
   ciudadela: 'music/The_Pythagorean_Gambit.mp3'
 };
 const FINAL_BOSS_SOUNDTRACK = 'music/The_Geometry_of_Ruin.mp3';
-export function battleSoundtrackPath(world: string, isBoss: boolean, finalBoss: boolean): string | null {
-  if (!isBoss) return null;
-  return finalBoss ? FINAL_BOSS_SOUNDTRACK : UNIT_BATTLE_SOUNDTRACKS[world] ?? null;
+export type BattleMusicKind = 'common' | 'unit' | 'final';
+export function battleMusicKind(bossFight: boolean, unitBossLevel: boolean, finalLevel: boolean): BattleMusicKind {
+  if (bossFight && finalLevel) return 'final';
+  if (bossFight || (unitBossLevel && !finalLevel)) return 'unit';
+  return 'common';
+}
+export function battleSoundtrackPath(world: string, kind: BattleMusicKind): string | null {
+  if (kind === 'common') return null;
+  return kind === 'final' ? FINAL_BOSS_SOUNDTRACK : UNIT_BATTLE_SOUNDTRACKS[world] ?? null;
 }
 let cur: { name: string; intensity: number } | null = null;
 let timer = 0, nextT = 0, step = 0, bar = 0, rngS = 1;
@@ -235,10 +241,10 @@ function resumeBattleSoundtrack(): void {
     });
   }
 }
-export function playBattleMusic(world: string, isBoss: boolean, finalBoss = false): void {
+export function playBattleMusic(world: string, kind: BattleMusicKind): void {
   const trackName = TRACKS[world] ? world : 'menu';
-  const path = battleSoundtrackPath(world, isBoss, finalBoss);
-  if (!path || typeof Audio === 'undefined') { playMusic(trackName, isBoss ? 2 : 1); return; }
+  const path = battleSoundtrackPath(world, kind);
+  if (!path || typeof Audio === 'undefined') { playMusic(trackName, kind === 'common' ? 1 : 2); return; }
   stopBattleSoundtrack();
   fileStop(250);
   cur = { name: trackName, intensity: 2 };

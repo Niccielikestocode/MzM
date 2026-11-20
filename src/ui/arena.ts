@@ -8,7 +8,7 @@ import { BattleView, GY } from '../gfx/battle';
 import { gfxFlags } from '../gfx/scene';
 import { drawGraph, drawNumberLine } from '../gfx/plot';
 import { pickQuestion } from '../game/picker';
-import { sfx, sfxForCard, playMusic, playBattleMusic, playAmbient, setIntensity } from './audio';
+import { sfx, sfxForCard, playMusic, playBattleMusic, battleMusicKind, playAmbient, setIntensity } from './audio';
 import * as A from '../game/arena';
 import { artCanvas } from './cards';
 import { victorySequence } from '../gfx/finale';
@@ -232,7 +232,8 @@ export function startArena(o: ArenaOpts): void {
   };
   o.mount(root, cleanup);
   const bossFight = room.type === 'boss' || !!m.boss || !!room.miniBoss;
-  playBattleMusic(level.world, bossFight, bossFight && !!level.final); playAmbient(level.world); setIntensity(bossFight ? 2 : 1);
+  const musicKind = battleMusicKind(bossFight, !!level.boss, !!level.final);
+  playBattleMusic(level.world, musicKind); playAmbient(level.world); setIntensity(bossFight ? 2 : 1);
   off = ticker.add(rawDt => { view.step(rawDt); frame(rawDt); });
   view.frontHook = drawFront; view.backHook = drawBack;
 
